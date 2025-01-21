@@ -13,7 +13,7 @@ Configuration of the UDP Send module:
 
 ## Python
 
-the UDP Recieve code:
+The UDP Recieve code:
  ```
   import socket
   import struct
