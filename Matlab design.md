@@ -13,10 +13,8 @@ Configuration of the UDP Send module:
 
 ## Python
  ```
-{
   import socket
   import struct
   udp_ip = "127.0.0.1"  
   udp_port = 52001       
-}
 ```
