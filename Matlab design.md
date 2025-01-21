@@ -12,5 +12,11 @@ Configuration of the UDP Send module:
 ![image](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/123.png)
 
 ## Python
-> import socket
-import struct
+ ```
+{
+  import socket
+  import struct
+  udp_ip = "127.0.0.1"  
+  udp_port = 52001       
+}
+```
