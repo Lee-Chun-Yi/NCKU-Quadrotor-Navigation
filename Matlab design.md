@@ -22,13 +22,14 @@ Configuration of the UDP Send module:
   sock.bind((udp_ip, udp_port))
 
   while True:
-
+        # Receive data with a maximum buffer size of 1024 bytes
         data, addr = sock.recvfrom(1024)
 
+        # Verify if the data length matches the expected size (6 bytes)
         if len(data) != 6:
             print(f"Unexpected data length: {len(data)} bytes. Skipping...")
             continue
 
+         # Decode the data: 3 int16 values (little-endian format)
         desired_roll, desired_pitch, desired_yaw = struct.unpack('<hhh', data)
-
 ```
