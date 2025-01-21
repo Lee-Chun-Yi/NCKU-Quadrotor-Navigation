@@ -16,5 +16,19 @@ Configuration of the UDP Send module:
   import socket
   import struct
   udp_ip = "127.0.0.1"  
-  udp_port = 52001       
+  udp_port = 52001
+
+  sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
+  sock.bind((udp_ip, udp_port))
+
+  while True:
+
+        data, addr = sock.recvfrom(1024)
+
+        if len(data) != 6:
+            print(f"Unexpected data length: {len(data)} bytes. Skipping...")
+            continue
+
+        desired_roll, desired_pitch, desired_yaw = struct.unpack('<hhh', data)
+
 ```
