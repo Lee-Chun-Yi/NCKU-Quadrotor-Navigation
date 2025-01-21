@@ -4,7 +4,7 @@
 
 UDP is a lightweight communication protocol, suitable for applications with high real-time requirements but a higher tolerance for data loss (such as control command transmission). 
 
-## Matlab
+## 1.Matlab
 
 Configuration of the UDP Send module:
 
@@ -13,7 +13,7 @@ Configuration of the UDP Send module:
 - **Input format**: Based on the toarray function code, it is an array containing three `int16` integers, representing `desiredroll`, `desiredpitch`, and `desiredyaw`. These data will be transmitted to Python via Simulink using the UDP Send module. 
 ![image](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/123.png)
 
-## Python
+## 2.Python
 
 The UDP Recieve code:
  ```
