@@ -18,22 +18,28 @@ Configuration of the UDP Send module:
 The UDP Recieve code:
  ```
   import socket
-  import struct
-  udp_ip = "127.0.0.1"  
-  udp_port = 52001
+import struct
 
-  sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
-  sock.bind((udp_ip, udp_port))
+udp_ip = "127.0.0.1"  
+udp_port = 52001       
 
-  while True:
-        # Receive data with a maximum buffer size of 1024 bytes
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.bind((udp_ip, udp_port))  
+
+print(f"Listening on {udp_ip}:{udp_port}...")
+
+while True:
+        # receive data
         data, addr = sock.recvfrom(1024)
 
-        # Verify if the data length matches the expected size (6 bytes)
-        if len(data) != 6:
+        if len(data) != 8:
             print(f"Unexpected data length: {len(data)} bytes. Skipping...")
             continue
 
-         # Decode the data: 3 int16 values (little-endian format)
-        desired_roll, desired_pitch, desired_yaw = struct.unpack('<hhh', data)
+        # Decode data: 4 int16 values (little-endian format)
+        desired_roll, desired_pitch, desired_yaw, desired_throttle = struct.unpack('<hhhh', data)
+
+        # Print the decoded values
+        print(f"Decoded values - Roll: {desired_roll}, Pitch: {desired_pitch}, Yaw: {desired_yaw}, Throttle: {desired_throttle}")
+
 ```
