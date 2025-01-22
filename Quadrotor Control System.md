@@ -48,5 +48,4 @@ while True:
 
         # Testing whether the data is recieved
         print(f"Decoded values - Roll: {desired_roll}, Pitch: {desired_pitch}, Yaw: {desired_yaw}, Throttle: {desired_throttle}")
-
 ```
