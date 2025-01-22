@@ -46,7 +46,7 @@ while True:
         # Decode data: 4 int16 values (little-endian format)
         desired_roll, desired_pitch, desired_yaw, desired_throttle = struct.unpack('<hhhh', data)
 
-        # Print the decoded values
+        # Testing whether the data is recieved
         print(f"Decoded values - Roll: {desired_roll}, Pitch: {desired_pitch}, Yaw: {desired_yaw}, Throttle: {desired_throttle}")
 
 ```
