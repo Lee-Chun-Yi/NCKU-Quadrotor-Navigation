@@ -4,6 +4,8 @@
 
 The Vicon Data Receiver is a module designed to interface with the Vicon motion capture system, which provides precise 3D positional and orientation data of objects in real-time. This module acts as the entry point for the data stream from the Vicon system, decoding the incoming data and making it available for downstream processing.
 
+- **Remote IP port**: Set it to `51001`.
+  
 # Connect Matlab and Python
 
 UDP is a lightweight communication protocol, suitable for applications with high real-time requirements but a higher tolerance for data loss (such as control command transmission). 
