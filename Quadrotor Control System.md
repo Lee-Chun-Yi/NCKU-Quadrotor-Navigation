@@ -22,7 +22,7 @@ Configuration of the UDP Send module:
 
 ## 2.Python
 
-The UDP Recieve code:
+The UDP Motion Control Data Receiver:
  ```
  import socket
 import struct
