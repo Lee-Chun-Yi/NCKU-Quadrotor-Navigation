@@ -1,4 +1,4 @@
-# Quadrotor Control System with Real-Time Feedback
+# Indoor Navigation of Quadrotors Using a Motion Capture System
 
 # Vicon Data Receiver
 
