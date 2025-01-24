@@ -1,4 +1,4 @@
-# NCKU-Projects
+# NCKU-Quadrotor-Navigation
 
 The following repository encompasses both completed and ongoing research projects under the guidance of Professor Woei-Leong Chen.
 
