@@ -34,7 +34,7 @@
 ## 開源資料分析器
 [Wireshark](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/development/wireshark/)
 
-## 記憶體重置
+## 無線通訊異常、飛行參數錯誤、恢復初廠設置
 1. 拔掉你的 Crazyradio
 2. 使用 USB 線將 Crazyflie 連接到 PC
 3. 在 CMD 執行
