@@ -1,4 +1,4 @@
-# 控制方法
+# 1. 控制方法
 ### 軌跡飛行
 [建立 Craztflie 的虛擬坐標系 執行 多點飛行](https://github.com/bitcraze/crazyflie-lib-python/blob/master/examples/positioning/initial_position.py)
 [利用 RPYT 執行 懸停+8字飛行](https://github.com/bitcraze/crazyflie-lib-python/blob/master/examples/positioning/flowsequenceSync.py)
@@ -9,7 +9,7 @@
 ### 懸停
 [利用水平速度與高度 執行 懸停](https://github.com/ataffanel/crazyflie-push-demo/blob/8b9b2e8/src/push.c#L105-L106)
 
-# Crazyflie Python Library
+# 2. Crazyflie Python Library
 ### Cflib Library
 [RPYT控制 & 座標系控制 指令](https://github.com/bitcraze/crazyflie-lib-python/blob/master/cflib/crazyflie/commander.py)
 
