@@ -28,4 +28,20 @@
 ## Reset
 [Crazyflie 關閉, 重啟, ]https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/utils/power_switch/
 
+## 遠端連線驅動程式
+[官網](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/crtp/crtpdriver/)
+
+## 開源資料分析器
+[Wireshark](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/development/wireshark/)
+
+## 記憶體重置
+1. 拔掉你的 Crazyradio
+2. 使用 USB 線將 Crazyflie 連接到 PC
+3. 在 CMD 執行
+```
+{
+  python3 write-eeprom.py
+}
+```
+
 [title](https://www.example.com)
