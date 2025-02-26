@@ -39,9 +39,7 @@
 2. 使用 USB 線將 Crazyflie 連接到 PC
 3. 在 CMD 執行
 ```
-{
   python3 write-eeprom.py
-}
 ```
 
 [title](https://www.example.com)
