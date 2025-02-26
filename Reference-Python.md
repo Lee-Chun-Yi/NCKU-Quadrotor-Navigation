@@ -26,7 +26,7 @@
 [回報電池狀態](https://github.com/bitcraze/crazyflie-firmware/blob/crazyflie2/hal/src/pm_f405.c#L172)
 
 ## Reset
-[Crazyflie 關閉, 重啟, ]https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/utils/power_switch/
+[Crazyflie 關閉, 重啟, ](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/utils/power_switch/)
 
 ## 遠端連線驅動程式
 [官網](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/crtp/crtpdriver/)
