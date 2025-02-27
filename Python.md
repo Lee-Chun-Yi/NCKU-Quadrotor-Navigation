@@ -33,6 +33,7 @@
 ### 開源資料分析器
 - [Wireshark](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/development/wireshark/)
 
+# 故障排除
 ### 無線通訊異常、飛行參數錯誤、恢復初廠設置
 1. 拔掉你的 Crazyradio
 2. 使用 USB 線將 Crazyflie 連接到 PC
@@ -40,6 +41,11 @@
 ```
   python3 write-eeprom.py
 ```
+### Crazyflie 不平衡
+
+1. 確保電池位於中央。
+2. 檢查螺旋槳是否能自由旋轉。
+3. 檢查螺旋槳是否平衡，[平衡螺旋槳](https://www.bitcraze.io/documentation/tutorials/balancing-propellers/)
 
 ### 回報當前位置
 - [官網](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/crazyflie/extpos/)
