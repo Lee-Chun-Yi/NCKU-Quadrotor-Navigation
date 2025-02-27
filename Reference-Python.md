@@ -14,12 +14,12 @@
 [RPYT控制 & 座標系控制 指令](https://github.com/bitcraze/crazyflie-lib-python/blob/master/cflib/crazyflie/commander.py)
 
 ### MotionCommander
-[利用速度 or 座標系 執行上升, 下降, 圓型 飛行](https://github.com/bitcraze/crazyflie-lib-python/blob/master/examples/autonomy/motion_commander_demo.py)
-[官網](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/positioning/motion_commander/)
+- [利用速度 or 座標系 執行上升, 下降, 圓型 飛行](https://github.com/bitcraze/crazyflie-lib-python/blob/master/examples/autonomy/motion_commander_demo.py)
+- [官網](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/positioning/motion_commander/)
 
 ### PositionHlCommander
-[起飛, 降落, 移動到指定位置, 獲取當前座標](https://github.com/bitcraze/crazyflie-lib-python/blob/master/cflib/positioning/position_hl_commander.py)
-[官網](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/positioning/position_hl_commander/)
+- [起飛, 降落, 移動到指定位置, 獲取當前座標](https://github.com/bitcraze/crazyflie-lib-python/blob/master/cflib/positioning/position_hl_commander.py)
+- [官網](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/positioning/position_hl_commander/)
 
 ### 電池電量管理
 [官網](https://github.com/bitcraze/crazyflie-firmware/blob/crazyflie2/hal/src/pm_f405.c#L172)
