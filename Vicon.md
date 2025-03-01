@@ -1,6 +1,4 @@
-# Instruction Manual: VICON + MATLAB + Python + Crazyflie
-
-## VICON System
+# VICON System
 
 1. Start vicon Tracker - Tracker 3.10
     - 確保 Usb licence 有被正確插入
