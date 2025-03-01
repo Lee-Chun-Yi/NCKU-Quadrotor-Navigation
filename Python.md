@@ -49,3 +49,16 @@
 
 ### 回報當前位置
 - [官網](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/crazyflie/extpos/)
+- 
+### UDP port 強制關閉
+1. 開啟cmd
+
+2. 根據欲關閉的port(52001)，填入
+```
+netstat -ano | findstr :52001
+```
+3. 根據CMD顯示的值(52112)，填入
+```
+taskkill /PID  52112 /F
+```
+
