@@ -1,4 +1,4 @@
-# 1. 控制方法
+# Part1. 控制方法
 ### 1. 軌跡飛行
 - [建立 Craztflie 的虛擬坐標系 執行 多點飛行](https://github.com/bitcraze/crazyflie-lib-python/blob/master/examples/positioning/initial_position.py)
 - [利用 RPYT 執行 懸停+8字飛行](https://github.com/bitcraze/crazyflie-lib-python/blob/master/examples/positioning/flowsequenceSync.py)
@@ -9,7 +9,7 @@
 ### 3. 懸停
 - [利用水平速度與高度 執行 懸停](https://github.com/ataffanel/crazyflie-push-demo/blob/8b9b2e8/src/push.c#L105-L106)
 
-# 2. Crazyflie Python Library
+# Part2. Crazyflie Python Library
 ### 1. Cflib Library
 - [RPYT控制 & 座標系控制 指令](https://github.com/bitcraze/crazyflie-lib-python/blob/master/cflib/crazyflie/commander.py)
 
@@ -33,7 +33,7 @@
 ### 7. 開源資料分析器
 - [Wireshark](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/development/wireshark/)
 
-# 故障排除
+# Part3.故障排除
 ### 1. 無線通訊異常、飛行參數錯誤、恢復初廠設置
 1. 拔掉你的 Crazyradio
 2. 使用 USB 線將 Crazyflie 連接到 PC
