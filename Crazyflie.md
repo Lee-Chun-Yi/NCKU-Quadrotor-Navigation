@@ -8,6 +8,7 @@
 3. **\( K_d \)：** 根據誤差變化率來調整響應。較高的 \( K_d \) 能夠提供阻尼效果，減少超調和震盪。  
 
 調整 PID 控制器的關鍵在於平衡這些增益，以實現穩定且精確的控制。  
+
 [官網PID tuning 操作](https://www.bitcraze.io/documentation/tutorials/pid-tuning-guide/)
 
 # Part2. 故障排除
