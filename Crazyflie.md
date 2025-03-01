@@ -26,7 +26,7 @@
 3. 檢查螺旋槳是否平衡，[平衡螺旋槳](https://www.bitcraze.io/documentation/tutorials/balancing-propellers/)
 
 ### 3. UDP port 強制關閉
-1. 開啟cmd
+1. 開啟 CMD
 
 2. 根據欲關閉的port(52001)，填入
 ```
