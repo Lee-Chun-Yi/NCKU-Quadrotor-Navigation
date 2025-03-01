@@ -1,5 +1,7 @@
 # Part1. 基本操作
-### 1. PID tuning
+### 1. The Coordinate System of the Crazyflie
+![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-03-02%20030438.png)
+### 2. PID tuning
 
 增益 ( Kp )（比例增益）、( Ki )（積分增益）和 ( Kd )（微分增益）用於調整 PID 控制器：
 
