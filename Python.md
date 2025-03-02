@@ -21,8 +21,8 @@
 - [起飛, 降落, 移動到指定位置, 獲取當前座標](https://github.com/bitcraze/crazyflie-lib-python/blob/master/cflib/positioning/position_hl_commander.py)
 - [官網](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/positioning/position_hl_commander/)
 
-### 4. 電池電量管理
-- [官網](https://github.com/bitcraze/crazyflie-firmware/blob/crazyflie2/hal/src/pm_f405.c#L172)
+### 4. 紀錄：電池電壓, Cureent position, attitude 
+- [使用logging 紀錄](https://github.com/bitcraze/crazyflie-lib-python/blob/master/examples/logging/basiclog.py)
 
 ### 5. Crazyflie 關閉, 重啟, 
 - [官網](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/utils/power_switch/)
