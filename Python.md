@@ -36,4 +36,8 @@
 ### 8. 回報當前位置
 - [官網](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/crazyflie/extpos/)
 
+### 9. Crazyflie library 本地地址
+```
+C:\Users\PC\AppData\Local\Programs\Python\Python312\Lib\site-packages\cflib\crazyflie
+```
 
