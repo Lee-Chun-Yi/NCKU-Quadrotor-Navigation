@@ -23,6 +23,7 @@
 
 ### 4. 紀錄：電池電壓, Cureent position, attitude 
 - [使用logging 紀錄](https://github.com/bitcraze/crazyflie-lib-python/blob/master/examples/logging/basiclog.py)
+- [官網：回報當前位置](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/crazyflie/extpos/)
 
 ### 5. Crazyflie 關閉, 重啟, 
 - [官網](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/utils/power_switch/)
@@ -33,10 +34,7 @@
 ### 7. 開源資料分析器
 - [Wireshark](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/development/wireshark/)
 
-### 8. 回報當前位置
-- [官網](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/crazyflie/extpos/)
-
-### 9. Crazyflie library 本地地址
+### 8. Crazyflie library 本地地址
 ```
 C:\Users\PC\AppData\Local\Programs\Python\Python312\Lib\site-packages\cflib\crazyflie
 ```
