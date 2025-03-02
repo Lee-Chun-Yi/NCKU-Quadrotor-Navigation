@@ -25,7 +25,7 @@
 - [使用logging 紀錄](https://github.com/bitcraze/crazyflie-lib-python/blob/master/examples/logging/basiclog.py)
 - [官網：回報當前位置](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/crazyflie/extpos/)
 
-### 5. Crazyflie 關閉, 重啟, 
+### 5. Crazyflie 關閉, 重啟
 - [官網](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/api/cflib/utils/power_switch/)
 
 ### 6. 遠端連線驅動程式
@@ -38,4 +38,5 @@
 ```
 C:\Users\PC\AppData\Local\Programs\Python\Python312\Lib\site-packages\cflib\crazyflie
 ```
-
+### 9. Python to Excel
+[使用openpyxl](https://hackmd.io/@howkii-studio/python_autoporcessing_xl)
