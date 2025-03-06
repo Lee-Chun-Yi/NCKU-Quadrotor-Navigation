@@ -164,38 +164,70 @@
               .catch(err => console.error(err));
       });
 
-      // 控制圖表初始化
+      // 控制圖表初始化，新增雙 Y 軸設定：
       let ctxControl = document.getElementById('controlChart').getContext('2d');
       let controlChart = new Chart(ctxControl, {
           type: "line",
           data: {
               labels: controlTimestamps,
               datasets: [
-                  { label: "Roll", data: controlValues.roll, borderColor: "red", fill: false },
-                  { label: "Pitch", data: controlValues.pitch, borderColor: "blue", fill: false },
-                  { label: "Yaw", data: controlValues.yaw, borderColor: "green", fill: false },
-                  { label: "Thrust", data: controlValues.thrust, borderColor: "purple", fill: false }
+                  { label: "Roll", data: controlValues.roll, borderColor: "red", fill: false, yAxisID: 'y' },
+                  { label: "Pitch", data: controlValues.pitch, borderColor: "blue", fill: false, yAxisID: 'y' },
+                  { label: "Yaw", data: controlValues.yaw, borderColor: "green", fill: false, yAxisID: 'y' },
+                  { label: "Thrust", data: controlValues.thrust, borderColor: "purple", fill: false, yAxisID: 'y1' }
               ]
           },
-          options: { responsive: true, scales: { x: { display: true }, y: { display: true } } }
+          options: {
+              responsive: true,
+              scales: {
+                  x: { display: true },
+                  y: {
+                      type: 'linear',
+                      position: 'left',
+                      display: true
+                  },
+                  y1: {
+                      type: 'linear',
+                      position: 'right',
+                      display: true,
+                      grid: { drawOnChartArea: false }
+                  }
+              }
+          }
       });
 
-      // Vicon 圖表初始化，新增 rot_x, rot_y, rot_z 的資料集
+      // Vicon 圖表初始化，tran_* 使用左側 Y 軸，rot_* 使用右側 Y 軸
       let ctxVicon = document.getElementById('viconChart').getContext('2d');
       let viconChart = new Chart(ctxVicon, {
           type: "line",
           data: {
               labels: viconTimestamps,
               datasets: [
-                  { label: "tran_x", data: viconValues.tran_x, borderColor: "red", fill: false },
-                  { label: "tran_y", data: viconValues.tran_y, borderColor: "blue", fill: false },
-                  { label: "tran_z", data: viconValues.tran_z, borderColor: "green", fill: false },
-                  { label: "rot_x",  data: viconValues.rot_x,  borderColor: "orange", fill: false },
-                  { label: "rot_y",  data: viconValues.rot_y,  borderColor: "purple", fill: false },
-                  { label: "rot_z",  data: viconValues.rot_z,  borderColor: "brown", fill: false }
+                  { label: "tran_x", data: viconValues.tran_x, borderColor: "red", fill: false, yAxisID: 'y' },
+                  { label: "tran_y", data: viconValues.tran_y, borderColor: "blue", fill: false, yAxisID: 'y' },
+                  { label: "tran_z", data: viconValues.tran_z, borderColor: "green", fill: false, yAxisID: 'y' },
+                  { label: "rot_x",  data: viconValues.rot_x,  borderColor: "orange", fill: false, yAxisID: 'y1' },
+                  { label: "rot_y",  data: viconValues.rot_y,  borderColor: "purple", fill: false, yAxisID: 'y1' },
+                  { label: "rot_z",  data: viconValues.rot_z,  borderColor: "brown", fill: false, yAxisID: 'y1' }
               ]
           },
-          options: { responsive: true, scales: { x: { display: true }, y: { display: true } } }
+          options: {
+              responsive: true,
+              scales: {
+                  x: { display: true },
+                  y: {
+                      type: 'linear',
+                      position: 'left',
+                      display: true
+                  },
+                  y1: {
+                      type: 'linear',
+                      position: 'right',
+                      display: true,
+                      grid: { drawOnChartArea: false }
+                  }
+              }
+          }
       });
   </script>
 </body>
