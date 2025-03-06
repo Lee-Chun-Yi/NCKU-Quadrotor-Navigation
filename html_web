@@ -116,7 +116,7 @@
 
               socket.on("vicon_data", function (data) {
                   document.getElementById("vicon-data").innerText =
-                      `tran_x: ${data.tran_x}, tran_y: ${data.tran_y}, tran_z: ${data.tran_z}, rot_x: ${data.rot_x}`;
+                      `tran_x: ${data.tran_x}, tran_y: ${data.tran_y}, tran_z: ${data.tran_z}, rot_x: ${data.rot_x}, rot_y: ${data.rot_y}, rot_z: ${data.rot_z}`;
 
                   let timestamp = new Date().toLocaleTimeString("zh-TW", { hour12: true });
                   let historyStr = `${timestamp} - <br>` +
