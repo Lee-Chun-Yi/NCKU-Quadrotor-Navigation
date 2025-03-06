@@ -6,9 +6,12 @@
   <title>WebSocket 數據監控</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
   <style>
       /* 按鈕樣式 */
-      #startButton, #stopButton {
+      #startButton, #stopButton ,#recordButton{
           font-size: 24px;
           padding: 15px 30px;
           margin: 20px;
@@ -20,6 +23,8 @@
       #stopButton { background-color: #dc3545; color: white; }
       #startButton:hover { background-color: #218838; }
       #stopButton:hover { background-color: #c82333; }
+      #recordButton { background-color: #28a745; color: white; }
+      #recordButton:hover { background-color: #0056b3; }
       body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
       .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
       .data-container { width: 90%; max-width: 600px; padding: 10px; border: 1px solid #ccc; }
@@ -35,6 +40,8 @@
   <!-- 控制按鈕 -->
   <button id="startButton">開始</button>
   <button id="stopButton">停止</button>
+  <button id="recordButton" class="button">開始記錄</button>
+
 
   <div class="container">
       <div class="data-container">
@@ -232,6 +239,99 @@
               }
           }
       });
+      // 新增的記錄按鈕狀態
+let recording = false;
+let recordedControlData = [];
+let recordedViconData = [];
+
+// 按下「開始記錄」按鈕
+document.getElementById("recordButton").addEventListener("click", function() {
+    recording = true; // 啟動記錄
+    console.log("🔴 已開始記錄數據");
+
+    controlTimestamps.length = 0;
+    controlValues.roll.length = 0;
+    controlValues.pitch.length = 0;
+    controlValues.yaw.length = 0;
+    controlValues.thrust.length = 0;
+
+    viconTimestamps.length = 0;
+    viconValues.tran_x.length = 0;
+    viconValues.tran_y.length = 0;
+    viconValues.tran_z.length = 0;
+    viconValues.rot_x.length = 0;
+    viconValues.rot_y.length = 0;
+    viconValues.rot_z.length = 0;
+
+
+});
+
+
+
+
+
+// 修改原本的停止按鈕（不影響原有邏輯）
+document.getElementById("stopButton").addEventListener("click", function() {
+    if (!recording) return;
+
+    let wb = XLSX.utils.book_new();
+
+    // 🛠 修正 Control Sheet 生成
+    let controlSheetData = [["Time", "Roll", "Pitch", "Yaw", "Thrust"]];
+    for (let i = 0; i < controlTimestamps.length; i++) {
+        // 🛠 檢查數據是否為 undefined，若為 undefined 則填入 0
+        let roll = controlValues.roll[i] !== undefined ? controlValues.roll[i] : 0;
+        let pitch = controlValues.pitch[i] !== undefined ? controlValues.pitch[i] : 0;
+        let yaw = controlValues.yaw[i] !== undefined ? controlValues.yaw[i] : 0;
+        let thrust = controlValues.thrust[i] !== undefined ? controlValues.thrust[i] : 0;
+
+        controlSheetData.push([
+            controlTimestamps[i],
+            roll, pitch, yaw, thrust
+        ]);
+    }
+
+    // 🛠 修正 Vicon Sheet 生成
+    let viconSheetData = [["Time", "tran_x", "tran_y", "tran_z", "rot_x", "rot_y", "rot_z"]];
+    for (let i = 0; i < viconTimestamps.length; i++) {
+        let tran_x = viconValues.tran_x[i] !== undefined ? viconValues.tran_x[i] : 0;
+        let tran_y = viconValues.tran_y[i] !== undefined ? viconValues.tran_y[i] : 0;
+        let tran_z = viconValues.tran_z[i] !== undefined ? viconValues.tran_z[i] : 0;
+        let rot_x = viconValues.rot_x[i] !== undefined ? viconValues.rot_x[i] : 0;
+        let rot_y = viconValues.rot_y[i] !== undefined ? viconValues.rot_y[i] : 0;
+        let rot_z = viconValues.rot_z[i] !== undefined ? viconValues.rot_z[i] : 0;
+
+        viconSheetData.push([
+            viconTimestamps[i],
+            tran_x, tran_y, tran_z, rot_x, rot_y, rot_z
+        ]);
+    }
+
+    let controlWs = XLSX.utils.aoa_to_sheet(controlSheetData);
+    let viconWs = XLSX.utils.aoa_to_sheet(viconSheetData);
+
+    XLSX.utils.book_append_sheet(wb, controlWs, "Control_Data");
+    XLSX.utils.book_append_sheet(wb, viconWs, "Vicon_Data");
+
+    XLSX.writeFile(wb, `Drone_Data_${new Date().toISOString().slice(0,19).replace(/:/g,"-")}.xlsx`);
+
+    recording = false;
+    alert("🟢 已停止記錄，數據已下載！");
+});
+
+
+socket.on("vicon_data", function (data) {
+  if (recording) {
+      viconTimestamps.push(new Date().toLocaleTimeString("zh-TW", { hour12: true }));
+      viconValues.tran_x.push(data.tran_x);
+      viconValues.tran_y.push(data.tran_y);
+      viconValues.tran_z.push(data.tran_z);
+      viconValues.rot_x.push(data.rot_x);
+      viconValues.rot_y.push(data.rot_y);
+      viconValues.rot_z.push(data.rot_z);
+  }
+});
+
   </script>
 </body>
 </html>
