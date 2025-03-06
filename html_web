@@ -11,7 +11,7 @@
 
   <style>
       /* 按鈕樣式 */
-      #startButton, #stopButton ,#recordButton{
+      #startButton, #stopButton {
           font-size: 24px;
           padding: 15px 30px;
           margin: 20px;
@@ -19,12 +19,21 @@
           border: none;
           cursor: pointer;
       }
+
+      #recordButton{
+          font-size: 24px;
+          padding: 10px 20px;
+          margin: 20px;
+          border-radius: 10px;
+          border: none;
+          cursor: pointer;
+      }
       #startButton { background-color: #28a745; color: white; }
       #stopButton { background-color: #dc3545; color: white; }
-      #startButton:hover { background-color: #218838; }
+      #startButton:hover { background-color: #c82333; }
       #stopButton:hover { background-color: #c82333; }
-      #recordButton { background-color: #28a745; color: white; }
-      #recordButton:hover { background-color: #0056b3; }
+      #recordButton { background-color: #6c757d; color: white; }
+      #recordButton:hover { background-color: #c82333; }
       body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
       .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
       .data-container { width: 90%; max-width: 600px; padding: 10px; border: 1px solid #ccc; }
@@ -262,6 +271,12 @@ document.getElementById("recordButton").addEventListener("click", function() {
     viconValues.rot_x.length = 0;
     viconValues.rot_y.length = 0;
     viconValues.rot_z.length = 0;
+
+    let isRed = false;
+    recordInterval = setInterval(() => {
+        recordButton.style.backgroundColor = isRed ? "#6c757d" : "red";
+        isRed = !isRed;
+    }, 500);
 
 
 });
