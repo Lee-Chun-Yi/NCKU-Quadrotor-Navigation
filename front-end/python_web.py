@@ -22,13 +22,13 @@ running.clear()  # 讓程式啟動時不接收 UDP 數據
 @app.route('/start', methods=['POST'])
 def start_control():
     running.set()
-    print("✅ 系統開始運行")
+    print(" 系統開始運行")
     return jsonify({"status": "started", "message": "系統已開始運行"})
 
 @app.route('/stop', methods=['POST'])
 def stop_control():
     running.clear()
-    print("🛑 系統已停止")
+    print(" 系統已停止")
     return jsonify({"status": "stopped", "message": "系統已停止運行"})
 
 def parse_udp_data(data):
@@ -70,7 +70,7 @@ def update_vicon_data(data):
         "rot_y": round(data[4], 3),
         "rot_z": round(data[5], 3),
     }
-    print(f"✅ [Port 8889] {vicon_data}")
+    print(f" [Port 8889] {vicon_data}")
     socketio.emit("vicon_data", vicon_data)
 
 def update_control_data(data):
@@ -81,7 +81,7 @@ def update_control_data(data):
         "yaw": round(data[2], 3),
         "thrust": round(data[3], 3),
     }
-    print(f"✅ [Port 8888] {control_data}")
+    print(f" [Port 8888] {control_data}")
     socketio.emit("control_data", control_data)
 
 @app.route('/')
