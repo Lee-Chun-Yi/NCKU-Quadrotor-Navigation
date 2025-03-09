@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crazyflie 數據監控</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <style>
+      /* 按鈕樣式 */
+      #startButton, #stopButton {
+          font-size: 24px;
+          padding: 15px 30px;
+          margin: 20px;
+          border-radius: 10px;
+          border: none;
+          cursor: pointer;
+      }
+
+      #recordButton{
+          font-size: 24px;
+          padding: 10px 20px;
+          margin: 20px;
+          border-radius: 10px;
+          border: none;
+          cursor: pointer;
+      }
+      #startButton { background-color: #28a745; color: white; }
+      #stopButton { background-color: #dc3545; color: white; }
+      #startButton:hover { background-color: #c82333; }
+      #stopButton:hover { background-color: #c82333; }
+      #recordButton { background-color: #6c757d; color: white; }
+      #recordButton:hover { background-color: #c82333; }
+      body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+      .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+      .data-container { width: 90%; max-width: 600px; padding: 10px; border: 1px solid #ccc; }
+      .history-container { width: 90%; max-width: 600px; height: 200px; overflow-y: auto; border: 1px solid #ddd; text-align: left; padding: 10px; display: flex; flex-direction: column; }
+      h2 { color: #333; }
+      p { font-size: 18px; color: #555; }
+  </style>
+</head>
+<body>
+
+  <h1>📡 Crazyflie 數據監控 📡 </h1>
+
+  <!-- 控制按鈕 -->
+  <button id="startButton">開始</button>
+  <button id="stopButton">停止</button>
+  <button id="recordButton" class="button">開始記錄</button>
+
+
+  <div class="container">
+      <div class="data-container">
+          <h2>🟠 來自 8888 (Roll, Pitch, Yaw, Thrust)</h2>
+          <p id="control-data">等待數據...</p>
+          <canvas id="controlChart"></canvas>
+          <h3>📜 歷史數據</h3>
+          <div class="history-container" id="control-history"></div>
+      </div>
+
+      <div class="data-container">
+          <h2>🔵 來自 8889 (Translation/Rotation)</h2>
+          <p id="vicon-data">等待數據...</p>
+          <canvas id="viconChart"></canvas>
+          <h3>📜 歷史數據</h3>
+          <div class="history-container" id="vicon-history"></div>
+      </div>
+  </div>
+
+  <script>
+      // 輔助函式：依指定小數位格式化數字，並去除多餘的尾零
+      function formatNumber(num, decimals) {
+          let fixed = parseFloat(num).toFixed(decimals);
+          return fixed.replace(/\.?0+$/, '');
+      }
+
+      // 自動捲動到最新的函式
+      function scrollToBottom(id) {
+          var element = document.getElementById(id);
+          element.scrollTop = element.scrollHeight;
+      }
+
+      // WebSocket 變數與歷史資料陣列
+      let socket;
+      let controlHistory = [];
+      let viconHistory = [];
+      let controlTimestamps = [];
+      let controlValues = { roll: [], pitch: [], yaw: [], thrust: [] };
+      let viconTimestamps = [];
+      let viconValues = { tran_x: [], tran_y: [], tran_z: [], rot_x: [], rot_y: [], rot_z: [] };
+
+      function startWebSocket() {
+          if (!socket || socket.disconnected) {
+              socket = io.connect("http://" + window.location.hostname + ":5000", { transports: ["websocket", "polling"] });
+
+              socket.on("connect", function () {
+                  console.log("✅ WebSocket 連線成功！");
+              });
+
+              socket.on("disconnect", function () {
+                  console.warn("⚠️ WebSocket 連線中斷，嘗試重新連線...");
+                  setTimeout(() => { socket.connect(); }, 3000);
+              });
+
+              // 監聽控制數據 (8888)
+              socket.on("control_data", function (data) {
+                  document.getElementById("control-data").innerHTML =
+                      `roll: ${data.roll}, pitch: ${data.pitch}, yaw: ${data.yaw}<br>` +
+                      `thrust: ${data.thrust}`;
+
+                  let timestamp = new Date().toLocaleTimeString("zh-TW", { hour12: true });
+                  let historyStr = `${timestamp} - ` +
+                      `roll:${formatNumber(data.roll, 3)}, ` +
+                      `pitch:${formatNumber(data.pitch, 3)}, ` +
+                      `yaw:${formatNumber(data.yaw, 3)} ` +
+                      `thrust:${formatNumber(data.thrust, 2)}`;
+
+                  controlHistory.push(historyStr);
+                  if (controlHistory.length > 50) controlHistory.shift();
+                  document.getElementById("control-history").innerHTML = controlHistory.join("<br>");
+                  scrollToBottom("control-history");
+
+                  controlTimestamps.push(timestamp);
+                  controlValues.roll.push(data.roll);
+                  controlValues.pitch.push(data.pitch);
+                  controlValues.yaw.push(data.yaw);
+                  controlValues.thrust.push(data.thrust);
+                  controlChart.update();
+              });
+
+              // 監聽 Vicon 數據 (8889)
+              socket.on("vicon_data", function (data) {
+                  // 改用 innerHTML 並以 <br> 分兩行顯示
+                  document.getElementById("vicon-data").innerHTML =
+                      `tran_x: ${data.tran_x}, tran_y: ${data.tran_y}, tran_z: ${data.tran_z}<br>` +
+                      `rot_x: ${data.rot_x}, rot_y: ${data.rot_y}, rot_z: ${data.rot_z}`;
+
+                  let timestamp = new Date().toLocaleTimeString("zh-TW", { hour12: true });
+                  let historyStr = `${timestamp} - <br>` +
+                      `tran_x:${formatNumber(data.tran_x, 3)}, ` +
+                      `tran_y:${formatNumber(data.tran_y, 3)}, ` +
+                      `tran_z:${formatNumber(data.tran_z, 3)}, ` +
+                      `rot_x:${formatNumber(data.rot_x, 3)}, ` +
+                      `rot_y:${formatNumber(data.rot_y, 3)}, ` +
+                      `rot_z:${formatNumber(data.rot_z, 3)}`;
+
+                  viconHistory.push(historyStr);
+                  if (viconHistory.length > 50) viconHistory.shift();
+                  document.getElementById("vicon-history").innerHTML = viconHistory.join("<br>");
+                  scrollToBottom("vicon-history");
+
+                  viconTimestamps.push(timestamp);
+                  viconValues.tran_x.push(data.tran_x);
+                  viconValues.tran_y.push(data.tran_y);
+                  viconValues.tran_z.push(data.tran_z);
+                  viconValues.rot_x.push(data.rot_x);
+                  viconValues.rot_y.push(data.rot_y);
+                  viconValues.rot_z.push(data.rot_z);
+                  viconChart.update();
+              });
+          }
+      }
+
+      document.getElementById("startButton").addEventListener("click", function() {
+          fetch("/start", { method: "POST" })
+              .then(response => response.json())
+              .then(data => {
+                  console.log("收到開始回應:", data);
+                  startWebSocket();
+              })
+              .catch(err => console.error(err));
+      });
+
+      document.getElementById("stopButton").addEventListener("click", function() {
+          fetch("/stop", { method: "POST" })
+              .then(response => response.json())
+              .then(data => {
+                  console.log("收到停止回應:", data);
+              })
+              .catch(err => console.error(err));
+      });
+
+      // 控制圖表初始化
+      let ctxControl = document.getElementById('controlChart').getContext('2d');
+      let controlChart = new Chart(ctxControl, {
+          type: "line",
+          data: {
+              labels: controlTimestamps,
+              datasets: [
+                  { label: "Roll", data: controlValues.roll, borderColor: "red", fill: false, yAxisID: 'y' },
+                  { label: "Pitch", data: controlValues.pitch, borderColor: "blue", fill: false, yAxisID: 'y' },
+                  { label: "Yaw", data: controlValues.yaw, borderColor: "green", fill: false, yAxisID: 'y' },
+                  { label: "Thrust", data: controlValues.thrust, borderColor: "purple", fill: false, yAxisID: 'y1' }
+              ]
+          },
+          options: {
+              responsive: true,
+              scales: {
+                  x: { display: true },
+                  y: {
+                      type: 'linear',
+                      position: 'left',
+                      display: true
+                  },
+                  y1: {
+                      type: 'linear',
+                      position: 'right',
+                      display: true,
+                      grid: { drawOnChartArea: false }
+                  }
+              }
+          }
+      });
+
+      // Vicon 圖表初始化
+      let ctxVicon = document.getElementById('viconChart').getContext('2d');
+      let viconChart = new Chart(ctxVicon, {
+          type: "line",
+          data: {
+              labels: viconTimestamps,
+              datasets: [
+                  { label: "tran_x", data: viconValues.tran_x, borderColor: "red", fill: false, yAxisID: 'y' },
+                  { label: "tran_y", data: viconValues.tran_y, borderColor: "blue", fill: false, yAxisID: 'y' },
+                  { label: "tran_z", data: viconValues.tran_z, borderColor: "green", fill: false, yAxisID: 'y' },
+                  { label: "rot_x",  data: viconValues.rot_x,  borderColor: "orange", fill: false, yAxisID: 'y1' },
+                  { label: "rot_y",  data: viconValues.rot_y,  borderColor: "purple", fill: false, yAxisID: 'y1' },
+                  { label: "rot_z",  data: viconValues.rot_z,  borderColor: "brown", fill: false, yAxisID: 'y1' }
+              ]
+          },
+          options: {
+              responsive: true,
+              scales: {
+                  x: { display: true },
+                  y: {
+                      type: 'linear',
+                      position: 'left',
+                      display: true
+                  },
+                  y1: {
+                      type: 'linear',
+                      position: 'right',
+                      display: true,
+                      grid: { drawOnChartArea: false }
+                  }
+              }
+          }
+      });
+      // 新增的記錄按鈕狀態
+let recording = false;
+let recordedControlData = [];
+let recordedViconData = [];
+
+// 按下「開始記錄」按鈕
+document.getElementById("recordButton").addEventListener("click", function() {
+    recording = true; // 啟動記錄
+    console.log("🔴 已開始記錄數據");
+
+    controlTimestamps.length = 0;
+    controlValues.roll.length = 0;
+    controlValues.pitch.length = 0;
+    controlValues.yaw.length = 0;
+    controlValues.thrust.length = 0;
+
+    viconTimestamps.length = 0;
+    viconValues.tran_x.length = 0;
+    viconValues.tran_y.length = 0;
+    viconValues.tran_z.length = 0;
+    viconValues.rot_x.length = 0;
+    viconValues.rot_y.length = 0;
+    viconValues.rot_z.length = 0;
+
+    let isRed = false;
+    recordInterval = setInterval(() => {
+        recordButton.style.backgroundColor = isRed ? "#6c757d" : "red";
+        isRed = !isRed;
+    }, 500);
+
+
+});
+
+
+
+
+
+// 修改原本的停止按鈕（不影響原有邏輯）
+document.getElementById("stopButton").addEventListener("click", function() {
+    if (!recording) return;
+
+    let wb = XLSX.utils.book_new();
+
+    // 🛠 修正 Control Sheet 生成
+    let controlSheetData = [["Time", "Roll", "Pitch", "Yaw", "Thrust"]];
+    for (let i = 0; i < controlTimestamps.length; i++) {
+        // 🛠 檢查數據是否為 undefined，若為 undefined 則填入 0
+        let roll = controlValues.roll[i] !== undefined ? controlValues.roll[i] : 0;
+        let pitch = controlValues.pitch[i] !== undefined ? controlValues.pitch[i] : 0;
+        let yaw = controlValues.yaw[i] !== undefined ? controlValues.yaw[i] : 0;
+        let thrust = controlValues.thrust[i] !== undefined ? controlValues.thrust[i] : 0;
+
+        controlSheetData.push([
+            controlTimestamps[i],
+            roll, pitch, yaw, thrust
+        ]);
+    }
+
+    // 🛠 修正 Vicon Sheet 生成
+    let viconSheetData = [["Time", "tran_x", "tran_y", "tran_z", "rot_x", "rot_y", "rot_z"]];
+    for (let i = 0; i < viconTimestamps.length; i++) {
+        let tran_x = viconValues.tran_x[i] !== undefined ? viconValues.tran_x[i] : 0;
+        let tran_y = viconValues.tran_y[i] !== undefined ? viconValues.tran_y[i] : 0;
+        let tran_z = viconValues.tran_z[i] !== undefined ? viconValues.tran_z[i] : 0;
+        let rot_x = viconValues.rot_x[i] !== undefined ? viconValues.rot_x[i] : 0;
+        let rot_y = viconValues.rot_y[i] !== undefined ? viconValues.rot_y[i] : 0;
+        let rot_z = viconValues.rot_z[i] !== undefined ? viconValues.rot_z[i] : 0;
+
+        viconSheetData.push([
+            viconTimestamps[i],
+            tran_x, tran_y, tran_z, rot_x, rot_y, rot_z
+        ]);
+    }
+
+    let controlWs = XLSX.utils.aoa_to_sheet(controlSheetData);
+    let viconWs = XLSX.utils.aoa_to_sheet(viconSheetData);
+
+    XLSX.utils.book_append_sheet(wb, controlWs, "Control_Data");
+    XLSX.utils.book_append_sheet(wb, viconWs, "Vicon_Data");
+
+    XLSX.writeFile(wb, `Drone_Data_${new Date().toISOString().slice(0,19).replace(/:/g,"-")}.xlsx`);
+
+    recording = false;
+    alert("🟢 已停止記錄，數據已下載！");
+});
+
+
+socket.on("vicon_data", function (data) {
+  if (recording) {
+      viconTimestamps.push(new Date().toLocaleTimeString("zh-TW", { hour12: true }));
+      viconValues.tran_x.push(data.tran_x);
+      viconValues.tran_y.push(data.tran_y);
+      viconValues.tran_z.push(data.tran_z);
+      viconValues.rot_x.push(data.rot_x);
+      viconValues.rot_y.push(data.rot_y);
+      viconValues.rot_z.push(data.rot_z);
+  }
+});
+
+  </script>
+</body>
+</html>
