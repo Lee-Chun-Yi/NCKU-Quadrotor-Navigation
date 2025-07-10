@@ -19,7 +19,7 @@ When attempting to connect, check if the **green LED** on the Crazyflie lights u
 ## 2. Crazyflie Unbalanced During Flight
 
 1. If the Crazyflie crashes immediately after takeoff while RPYT outputs appear normal, this indicates a **hardware fault**.
-  - 🔍 Step-by-step hardware inspection:
+    - 🔍 Step-by-step hardware inspection:
 
   1. **Propellers** – Check for physical damage or cracks.
   2. **Motors** – Listen for abnormal noise during rotation.
