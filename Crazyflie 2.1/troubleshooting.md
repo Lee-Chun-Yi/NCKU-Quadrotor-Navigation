@@ -18,27 +18,33 @@ When attempting to connect, check if the **green LED** on the Crazyflie lights u
 
 ## 2. Crazyflie Unbalanced During Flight
 
-### Case I. If the Crazyflie crashes immediately after takeoff 
-- If RPYT outputs appear normal, this indicates a **hardware fault**.
-  🔍 Step-by-step hardware inspection:
+### Case I. Crashes Immediately After Takeoff
 
-1. **Propellers** – Check for physical damage or cracks.
-2. **Motors** – Listen for abnormal noise during rotation.
-3. **Motor mounts** – Ensure they are securely fixed to the frame.
+If the Crazyflie crashes as soon as it lifts off and RPYT outputs appear normal, this likely indicates a **hardware fault**.
+
+🔍 **Step-by-step hardware inspection:**
+
+1. **Propellers** – Check for physical damage or cracks.  
+2. **Motors** – Listen for abnormal noise during rotation.  
+3. **Motor mounts** – Ensure they are securely fixed to the frame.  
 
 To assist with diagnosis, use the `cfclient` software:
-  - Open `Console`
-  - Select **Propeller Test** to check individual motor response
 
-### CaseII. If the Crazyflie lifts off briefly and then crashes:
+- Open the `Console` tab  
+- Select **Propeller Test** to check individual motor response  
 
-- It may be caused by **excessive attitude output (RPYT)** from the controller.
-- If this happens **repeatedly**, it's recommended to re-check the **hardware integrity** as above.
+---
 
+### Case II. Lifts Off Briefly Then Crashes
 
+- This may be caused by **excessive RPYT output** from the controller.
+- If this occurs **repeatedly**, it is recommended to re-check all hardware components as listed above.
 
-### CaseIII. If the Crazyflie **drifts after takeoff**
-- This is **considered normal** and expected due to external disturbances and sensor limitations.
+---
+
+### Case III. Drifts After Takeoff
+
+- This behavior is **considered normal**, often due to external disturbances or lack of position correction (e.g., no external tracking).
 
 
 ## 3. Forcibly Closing a UDP Port (e.g., 52001 Occupied)
