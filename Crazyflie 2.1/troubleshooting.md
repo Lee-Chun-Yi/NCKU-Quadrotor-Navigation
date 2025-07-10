@@ -25,7 +25,7 @@ When attempting to connect, check if the **green LED** on the Crazyflie lights u
   2. **Motors** – Listen for abnormal noise during rotation.
   3. **Motor mounts** – Ensure they are securely fixed to the frame.
 
-  -To assist with diagnosis, use the `cfclient` software:
+  To assist with diagnosis, use the `cfclient` software:
 
     - Open `Console`
     - Select **Propeller Test** to check individual motor response
