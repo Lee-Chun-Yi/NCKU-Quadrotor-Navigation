@@ -9,7 +9,7 @@ When attempting to connect, check if the **green LED** on the Crazyflie lights u
   - Try **unplugging and replugging** the Crazyflie battery.
 
 - ❌ If the green LED does **not** light up:
-  1. Verify that the correct **radio URI or USB serial** is being used.
+  1. Verify that the correct **radio URI** in the Python code is being used.
   2. Unplug and replug the **Crazyradio PA** dongle.
   3. Use **Zadig** to check and install the correct USB driver:  
      🔗 [Zadig USB Driver Setup – Bitcraze Documentation](https://www.bitcraze.io/documentation/repository/crazyradio-firmware/master/building/usbwindows/)
