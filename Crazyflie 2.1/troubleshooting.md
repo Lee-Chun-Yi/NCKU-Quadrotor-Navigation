@@ -33,30 +33,12 @@ To assist with diagnosis, use the `cfclient` software:
 - Open the `Console` tab  
 - Select **Propeller Test** to check individual motor response  
 
----
 
 ### Case II. Lifts Off Briefly Then Crashes
 
 - This may be caused by **excessive RPYT output** from the controller.
 - If this occurs **repeatedly**, it is recommended to re-check all hardware components as listed above.
 
----
-
 ### Case III. Drifts After Takeoff
 
 - This behavior is **considered normal**, often due to external disturbances or lack of position correction (e.g., no external tracking).
-
-
-## 3. Forcibly Closing a UDP Port (e.g., 52001 Occupied)
-
-If a UDP port remains occupied due to a crashed process:
-
-1. Open Command Prompt.
-2. Run the following to find the process ID (PID) using port 52001:
-```
-netstat -ano | findstr :52001
-```
-3. Use the PID value from the output (e.g., 52112) to terminate the process:
-```
-taskkill /PID  52112 /F
-```
