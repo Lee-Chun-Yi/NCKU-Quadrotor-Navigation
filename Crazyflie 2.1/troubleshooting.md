@@ -2,13 +2,18 @@
 
 ## 1. Wireless Communication Failure or Parameter Errors (Reset to Default)
 
-If Crazyflie is not responding correctly due to communication or parameter issues:
+When attempting to connect, check if the **green LED** on the Crazyflie lights up:
 
-1. Unplug your Crazyradio PA.
-2. Connect the Crazyflie to your PC via USB.
-3. Open Command Prompt and run:
+- ✅ If the green LED is on but the drone does not respond:
+  - This means the connection was successful, but **initialization was not completed**.
+  - Try **unplugging and replugging** the Crazyflie battery.
 
-This will reset the EEPROM to factory defaults.
+- ❌ If the green LED does **not** light up:
+  1. Verify that the correct **radio URI or USB serial** is being used.
+  2. Unplug and replug the **Crazyradio PA** dongle.
+  3. Use **Zadig** to check and install the correct USB driver:  
+     🔗 [Zadig USB Driver Setup – Bitcraze Documentation](https://www.bitcraze.io/documentation/repository/crazyradio-firmware/master/building/usbwindows/)
+
 
 
 ## 2. Crazyflie Unbalanced During Flight
