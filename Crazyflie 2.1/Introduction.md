@@ -14,6 +14,7 @@ A lightweight, modular quadrotor platform designed for indoor research and devel
 
 ##  Motion Capture Marker Deck 
 🔗 [Motion Capture Marker Deck – Bitcraze](https://www.bitcraze.io/products/motion-capture-marker-deck/)
+
 An add-on deck for motion capture systems like **Vicon** or **OptiTrack**, allowing sub-millimeter tracking accuracy.
 
 **Used in this project for:**
@@ -23,6 +24,7 @@ An add-on deck for motion capture systems like **Vicon** or **OptiTrack**, allow
 
 ##  Crazyradio PA 
 🔗 [Crazyradio PA – Bitcraze](https://www.bitcraze.io/products/crazyradio-pa/)
+
 A long-range 2.4GHz USB radio dongle used for communicating with Crazyflie over the **CRTP protocol**.
 
 **Used in this project for:**
