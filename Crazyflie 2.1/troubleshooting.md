@@ -31,14 +31,14 @@ To assist with diagnosis, use the `cfclient` software:
 - Open `Console`
 - Select **Propeller Test** to check individual motor response
 
----
+
 
 If the Crazyflie lifts off briefly and then crashes:
 
 - It may be caused by **excessive attitude output (RPYT)** from the controller.
 - If this happens **repeatedly**, it's recommended to re-check the **hardware integrity** as above.
 
----
+
 
 If the Crazyflie **drifts after takeoff**, this is **considered normal** and expected due to external disturbances and sensor limitations.
 
