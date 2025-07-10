@@ -10,7 +10,6 @@ If Crazyflie is not responding correctly due to communication or parameter issue
 
 This will reset the EEPROM to factory defaults.
 
----
 
 ## 2. Crazyflie Unbalanced During Flight
 
@@ -20,8 +19,6 @@ If Crazyflie tilts or spins uncontrollably:
 2. Check that the propellers can rotate freely without obstruction.
 3. Check for imbalance and follow this tutorial:  
 🔗 [Balancing Propellers – Bitcraze](https://www.bitcraze.io/documentation/tutorials/balancing-propellers/)
-
----
 
 ## 3. Forcibly Closing a UDP Port (e.g., 52001 Occupied)
 
