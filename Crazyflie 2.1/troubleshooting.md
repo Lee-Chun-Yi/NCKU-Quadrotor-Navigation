@@ -26,9 +26,8 @@ When attempting to connect, check if the **green LED** on the Crazyflie lights u
   3. **Motor mounts** – Ensure they are securely fixed to the frame.
 
   To assist with diagnosis, use the `cfclient` software:
-
-    - Open `Console`
-    - Select **Propeller Test** to check individual motor response
+Open `Console`
+Select **Propeller Test** to check individual motor response
 
 ### 2. If the Crazyflie lifts off briefly and then crashes:
 
