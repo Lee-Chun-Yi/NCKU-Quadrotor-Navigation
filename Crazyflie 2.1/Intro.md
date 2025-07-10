@@ -29,8 +29,25 @@ A long-range 2.4GHz USB radio dongle used for communicating with Crazyflie over 
 - Essential for real-time command and feedback when not using Bluetooth
   
 ### 2. Commander Framework
+🔗 [Commander setpoints documentation](https://www.bitcraze.io/documentation/repository/crazyflie-firmware/master/functional-areas/sensor-to-control/commanders_setpoints/)
+
+The **Commander** is the firmware layer responsible for translating external setpoints (e.g., velocity, position, attitude) into flight control actions.  
+This project bypasses the Crazyflie onboard controller and sends **PWM signals directly**, forming a fully custom outer-loop system.
 
 ### 3. Firmware and Software Resources
+The following open-source Bitcraze repositories were used and referenced in this project:
+
+-  [Crazyflie Firmware (C)](https://github.com/bitcraze/crazyflie-firmware/tree/master)  
+  Handles onboard attitude estimation, motor mixing, and stabilization.  
+  Referenced for motor PWM logic and commander structure.
+
+-  [Crazyflie Clients (Python GUI)](https://github.com/bitcraze/crazyflie-clients-python)  
+  Official PC GUI for controlling Crazyflie.  
+  Used for early testing and packet format reference.
+
+-  [Crazyflie Python Library](https://github.com/bitcraze/crazyflie-lib-python)  
+  Python API to send setpoints, read logs, and access low-level communication.  
+  Extensively used in this project to build real-time control loops and interface with Vicon.
 
 
 # Part2. 故障排除
