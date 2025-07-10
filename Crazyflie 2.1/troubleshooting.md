@@ -36,7 +36,8 @@ When attempting to connect, check if the **green LED** on the Crazyflie lights u
 
 
 
-### CaseIII. If the Crazyflie **drifts after takeoff**, this is **considered normal** and expected due to external disturbances and sensor limitations.
+### CaseIII. If the Crazyflie **drifts after takeoff**
+This is **considered normal** and expected due to external disturbances and sensor limitations.
 
 
 ## 3. Forcibly Closing a UDP Port (e.g., 52001 Occupied)
