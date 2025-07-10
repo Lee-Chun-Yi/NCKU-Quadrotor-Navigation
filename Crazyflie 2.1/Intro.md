@@ -1,17 +1,28 @@
-# Part1. Getting started with Crazyflie
-### 1. The Coordinate System of the Crazyflie
+# Part1.  Crazyflie 2.1 Custom Control System Overview
+### 1. Hardware Platform
 ![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-03-02%20030438.png)
-### 2. PID tuning
+[Crazyflie 2.1](https://www.bitcraze.io/products/crazyflie-2-1-plus/)
+A lightweight, modular quadrotor platform designed for indoor research and development.
 
-增益 ( Kp )（比例增益）、( Ki )（積分增益）和 ( Kd )（微分增益）用於調整 PID 控制器：
+**Key Features:**
+- Size: 92 mm motor-to-motor  
+- Weight: ~27g (with battery)  
+- Open-source hardware & firmware  
+- Bluetooth & radio communication  
+- Support for sensor decks and extensions
 
-1. **( Kp )：** 調整對當前誤差的響應靈敏度。較高的 ( Kp ) 會提高響應速度，但可能導致overshoot。  
-2. **( Ki )：** 根據過去誤差的累積來調整響應。較高的 ( Ki ) 能夠消除穩態誤差，但可能導致系統不穩定。  
-3. **( Kd )：** 根據誤差變化率來調整響應。較高的 ( Kd ) 能夠提供阻尼效果，減少超調和震盪。  
+###  [Motion Capture Marker Deck](https://www.bitcraze.io/products/motion-capture-marker-deck/)
+An add-on deck for motion capture systems like **Vicon** or **OptiTrack**, allowing sub-millimeter tracking accuracy.
 
-調整 PID 控制器的關鍵在於平衡這些增益，以實現穩定且精確的控制。  
+**Used in this project for:**
+- Real-time 6DoF position feedback  
+- Replacing the onboard IMU  
+- Accurate external pose estimation
 
-[官網PID tuning 操作](https://www.bitcraze.io/documentation/tutorials/pid-tuning-guide/)
+### 2. Commander Framework
+
+### 3. Firmware and Software Resources
+
 
 # Part2. 故障排除
 ### 1. 無線通訊異常、飛行參數錯誤、恢復初廠設置
