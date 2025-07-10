@@ -1,5 +1,5 @@
 # 1. Hardware Platform
-## [Crazyflie 2.1](https://www.bitcraze.io/products/crazyflie-2-1-plus/)
+## [Crazyflie 2.1 – Bitcraze](https://www.bitcraze.io/products/crazyflie-2-1-plus/)
 
 A lightweight, modular quadrotor platform designed for indoor research and development.
 ![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-03-02%20030438.png)
@@ -11,7 +11,7 @@ A lightweight, modular quadrotor platform designed for indoor research and devel
 - Bluetooth & radio communication  
 - Support for sensor decks and extensions
 
-##  [Motion Capture Marker Deck](https://www.bitcraze.io/products/motion-capture-marker-deck/)
+##  [Motion Capture Marker Deck – Bitcraze](https://www.bitcraze.io/products/motion-capture-marker-deck/)
 An add-on deck for motion capture systems like **Vicon** or **OptiTrack**, allowing sub-millimeter tracking accuracy.
 
 **Used in this project for:**
@@ -19,7 +19,7 @@ An add-on deck for motion capture systems like **Vicon** or **OptiTrack**, allow
 - Replacing the onboard IMU  
 - Accurate external pose estimation
 
-##  [Crazyradio PA](https://www.bitcraze.io/products/crazyradio-pa/)
+##  [Crazyradio PA – Bitcraze](https://www.bitcraze.io/products/crazyradio-pa/)
 A long-range 2.4GHz USB radio dongle used for communicating with Crazyflie over the **CRTP protocol**.
 
 **Used in this project for:**
