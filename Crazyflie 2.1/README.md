@@ -5,10 +5,9 @@ This folder provides hardware reference and usage notes for the **Crazyflie 2.1*
 ---
 
 ## 📁 Folder Structure
-
-- `docs/` – Project documentation  
-  - `platform_overview.md` – Hardware, commander framework, and firmware summary  
-  - `troubleshooting.md` – Common connection, stability, and port-related fixes  
+ 
+- `platform_overview/` – Hardware, commander framework, and firmware summary  
+- `troubleshooting/` – Common connection, stability, and port-related fixes  
 
 ## Overview
 
