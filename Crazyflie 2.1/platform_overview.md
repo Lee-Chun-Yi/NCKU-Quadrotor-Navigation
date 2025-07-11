@@ -130,6 +130,6 @@ cf.commander.send_setpoint(roll, pitch, yaw_rate, thrust)
 
 Each method serves a unique purpose, and many users combine them—e.g., using cfclient for calibration, and Python for mission control.
 
->  Note: This folder also contains frequently used Python functions used in this project, including communication handlers, control pipelines, and safety utilities.
+>  Note: The `python/` `control_reference` folder also contains frequently used Python functions used in this project, including communication handlers, control pipelines, and safety utilities.
 
 
