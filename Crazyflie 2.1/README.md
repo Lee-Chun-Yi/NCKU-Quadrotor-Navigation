@@ -43,8 +43,4 @@ Crazyflie 2.1 is a lightweight, modular, and open-source nano quadcopter platfor
 * Motor PWM values are set via Python over CRTP
 * Nominal takeoff thrust: 40000 (approx. 33g lift)
 
----
 
-## License
-
-Hardware by Bitcraze AB (open-source), control implementation MIT License
