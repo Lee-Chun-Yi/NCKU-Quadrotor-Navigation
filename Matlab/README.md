@@ -6,15 +6,11 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 
 ## Folder Structure
 
-* `controller/`
-  Dual-loop PID controllers for position and velocity control.
+* `controller/`  
+  Main Simulink models for autonomous flight control, including position and velocity PID loops.
 
-* `udp_io/`
-  UDP input/output modules for receiving Vicon motion data and sending control commands to Python.
-
-* `utilities/`
-  Helper functions for velocity smoothing, attitude limiting, and thrust mapping.
-
+* `data_analysis/`  
+  MATLAB scripts for 2D/3D trajectory plotting (single-point and multi-point), as well as response analysis (e.g., rise time, overshoot, steady-state error).
 
 ## Core Control Logic
 
