@@ -21,7 +21,7 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 * `model/`
   Simulink system model and subsystem references.
 
----
+
 
 ## Core Control Logic
 
@@ -38,7 +38,7 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 * Low-pass filtering on noisy channels (rot\_z)
 * Unit conversions from mm → m and radians → degrees
 
----
+
 
 ## Execution
 
@@ -46,7 +46,7 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 * Output control signals are sent via UDP to Python at each timestep
 * Uses user-defined functions to package \[Roll, Pitch, Yaw, Throttle] into float32 arrays
 
----
+
 
 ## Example Functions
 
@@ -70,7 +70,7 @@ Converts velocity error to normalized thrust using:
 Throttle = (error + g) * (m / Fmax * 20000)
 ```
 
----
+
 
 ## Requirements
 
@@ -78,8 +78,3 @@ Throttle = (error + g) * (m / Fmax * 20000)
 * Simulink
 * Instrument Control Toolbox (for UDP communication)
 
----
-
-## License
-
-MIT License.
