@@ -34,6 +34,7 @@ A long-range 2.4GHz USB radio dongle used for communicating with Crazyflie over 
   
 # 2. Commander Framework
 🔗 [Commander setpoints documentation](https://www.bitcraze.io/documentation/repository/crazyflie-firmware/master/functional-areas/sensor-to-control/commanders_setpoints/)
+🔗 [Controllers in the Crazyflie](https://www.bitcraze.io/documentation/repository/crazyflie-firmware/master/functional-areas/sensor-to-control/controllers/)
 
 The **Commander** is the firmware layer responsible for translating external setpoints (e.g., velocity, position, attitude) into flight control actions.  
 This project bypasses the Crazyflie onboard controller and sends **PWM signals directly**, forming a fully custom outer-loop system.
