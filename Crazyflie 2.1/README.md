@@ -4,6 +4,12 @@ This folder provides hardware reference and usage notes for the **Crazyflie 2.1*
 
 ---
 
+## 📁 Folder Structure
+
+- `docs/` – Project documentation  
+  - `platform_overview.md` – Hardware, commander framework, and firmware summary  
+  - `troubleshooting.md` – Common connection, stability, and port-related fixes  
+
 ## Overview
 
 [Crazyflie 2.1 – Bitcraze](https://www.bitcraze.io/products/crazyflie-2-1-plus/)
