@@ -11,3 +11,5 @@ The overall system consists of several **key modules**: a **Vicon motion capture
 Within the control logic, **position errors** are first processed by a position PID controller to compute the **desired velocity**, which is then passed to a velocity PID controller to produce the appropriate Roll, Pitch, and Throttle commands. Yaw is separately adjusted based on the yaw angle error.
 
 The resulting control commands are sent from **MATLAB to a Python script**, which then transmits them to the **Crazyflie 2.1 quadrotor** via **Crazyradio PA** for execution.
+
+![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-11%20204155.png)
