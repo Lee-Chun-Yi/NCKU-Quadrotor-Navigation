@@ -9,18 +9,11 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 * `controller/`
   Dual-loop PID controllers for position and velocity control.
 
+* `udp_io/`
+  UDP input/output modules for receiving Vicon motion data and sending control commands to Python.
+
 * `utilities/`
   Helper functions for velocity smoothing, attitude limiting, and thrust mapping.
-
-* `vicon/`
-  UDP decoding functions for 6DoF motion capture data.
-
-* `analysis/`
-  Post-processing tools for flight data plotting and error analysis.
-
-* `model/`
-  Simulink system model and subsystem references.
-
 
 
 ## Core Control Logic
@@ -39,36 +32,11 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 * Unit conversions from mm → m and radians → degrees
 
 
-
 ## Execution
 
 * Simulink runs at 100Hz (Fixed step = 0.01s)
 * Output control signals are sent via UDP to Python at each timestep
 * Uses user-defined functions to package \[Roll, Pitch, Yaw, Throttle] into float32 arrays
-
-
-
-## Example Functions
-
-### `takeoff_smooth.m`
-
-Generates a smooth target height trajectory using:
-
-```
-z_target(t) = z_max * (1 - cos(pi*t/T)) / 2
-```
-
-### `accel_to_pitch_deg.m`
-
-Limits pitch angle based on acceleration input, with defined saturation bounds.
-
-### `scale_error.m`
-
-Converts velocity error to normalized thrust using:
-
-```
-Throttle = (error + g) * (m / Fmax * 20000)
-```
 
 
 
