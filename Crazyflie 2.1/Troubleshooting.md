@@ -41,4 +41,4 @@ To assist with diagnosis, use the `cfclient` software:
 
 ### Case III. Drifts After Takeoff
 
-- This behavior is **considered normal**, often due to external disturbances or lack of position correction (e.g., no external tracking).
+- This behavior is **considered normal**, often due to pre-existing roll / pitch angle.
