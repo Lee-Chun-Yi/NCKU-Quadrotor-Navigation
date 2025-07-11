@@ -1,4 +1,4 @@
-# Part1. Control Methods
+# 1. Control Methods
 
 ### 1. Trajectory Flight
 - [Create a virtual coordinate frame for multi-point flight](https://github.com/bitcraze/crazyflie-lib-python/blob/master/examples/positioning/initial_position.py)
@@ -9,7 +9,7 @@
 
 
 
-# Part2. Crazyflie Python Library
+# 2. Crazyflie Python Library
 
 ### 1. Cflib Library
 - [RPYT control & coordinate-based control commands](https://github.com/bitcraze/crazyflie-lib-python/blob/master/cflib/crazyflie/commander.py)
