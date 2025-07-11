@@ -13,3 +13,14 @@ Within the control logic, **position errors** are first processed by a position 
 The resulting control commands are sent from **MATLAB to a Python script**, which then transmits them to the **Crazyflie 2.1 quadrotor** via **Crazyradio PA** for execution.
 
 ![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-11%20204155.png)
+
+##  Folder Structure
+
+- `Crazyflie 2.1/`  
+  Contains basic usage documentation for Crazyflie and a troubleshooting guide for hardware and connectivity issues.
+
+- `Python/`  
+  Includes the main flight control script and various utility scripts such as motor testing and communication handlers.
+
+- `Matlab/`  
+  Contains the core flight control system built in Simulink, as well as plotting and response analysis scripts (e.g., trajectory visualization, PID tuning).
