@@ -59,7 +59,6 @@ The following open-source Bitcraze repositories were used and referenced in this
 
 This section introduces three common ways to control the Crazyflie 2.1 quadrotor, ranging from manual operation to full programmatic control.
 
----
 
 ## 1. Using a Remote Controller
 
@@ -75,7 +74,7 @@ These controllers map user input directly to thrust and attitude setpoints. Suit
 * Emergency override
 * Basic flight testing
 
----
+
 
 ## 2. Using Crazyflie Client (cfclient)
 
@@ -98,7 +97,7 @@ cd crazyflie-clients-python
 python3 bin/cfclient
 ```
 
----
+
 
 ## 3. Using Python Scripts (cflib)
 
