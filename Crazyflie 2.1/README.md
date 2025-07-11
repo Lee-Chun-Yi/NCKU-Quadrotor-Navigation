@@ -11,7 +11,7 @@ This folder provides hardware reference and usage notes for the **Crazyflie 2.1*
 
 ## Overview
 
-[Crazyflie 2.1 – Bitcraze](https://www.bitcraze.io/products/crazyflie-2-1-plus/)
+🔗 [Crazyflie 2.1 – Bitcraze](https://www.bitcraze.io/products/crazyflie-2-1-plus/)
 
 Crazyflie 2.1 is a lightweight, modular, and open-source nano quadcopter platform designed for indoor research and educational use.
 
