@@ -55,6 +55,77 @@ The following open-source Bitcraze repositories were used and referenced in this
   Python API to send setpoints, read logs, and access low-level communication.  
   Extensively used in this project to build real-time control loops and interface with Vicon.
 
+# 4. How to Control Crazyflie
+
+This section introduces three common ways to control the Crazyflie 2.1 quadrotor, ranging from manual operation to full programmatic control.
+
+
+
+## 1. Using a Remote Controller
+
+Crazyflie supports manual flight using various types of RC input:
+
+* **Bluetooth gamepad** (e.g., PS4/PS5, Xbox Controller)
+* **USB Joystick** connected to PC
+* **Custom RC transmitters** via radio modules (e.g., Devo 7E)
+
+These controllers map user input directly to thrust and attitude setpoints. Suitable for:
+
+* Pilot training
+* Emergency override
+* Basic flight testing
+
+
+
+## 2. Using Crazyflie Client (cfclient)
+
+🔗 [cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python)
+
+cfclient is Bitcraze's official GUI-based control platform.
+
+**Main Functions:**
+
+* Manual control via keyboard/gamepad
+* Real-time sensor data monitoring (IMU, battery, altitude)
+* Parameter tuning and logging
+* Flight mode selection
+
+**Installation:**
+
+```
+git clone https://github.com/bitcraze/crazyflie-clients-python
+cd crazyflie-clients-python
+python3 bin/cfclient
+```
+
+
+## 3. Using Python Scripts (cflib)
+
+🔗 [Crazyflie Python Library](https://github.com/bitcraze/crazyflie-lib-python)
+
+For advanced users and custom control, Python + cflib offers full programmatic access to the Crazyflie via CRTP protocol.
+
+**Control Options:**
+
+* Low-Level: Send raw RPYT commands (`send_setpoint()`)
+* High-Level: Use `MotionCommander` or `PositionHlCommander` for movement commands like `takeoff()`, `go_to()`, `circle()`
+* Logging: Read real-time battery, position, attitude data
+
+**Advantages:**
+
+* Full autonomy possible
+* Integration with external systems (e.g., Vicon, MATLAB)
+* Suitable for algorithm testing and research
+
+**Quick Start Example:**
+
+```python
+from cflib.crazyflie import Crazyflie
+cf = Crazyflie()
+cf.commander.send_setpoint(roll, pitch, yaw_rate, thrust)
+```
+
+Each method serves a unique purpose, and many users combine them—e.g., using cfclient for calibration, and Python for mission control.
 
 
 
