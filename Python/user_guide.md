@@ -14,9 +14,9 @@ This document provides a step-by-step guide on how to prepare and operate the Py
 
 2. **Confirm port configuration and limits**
 
-   * Port `8888`: receives RPYT commands from MATLAB
-   * Port `8889`: receives 6DoF Vicon data
-   * RPYT value limits:
+* Port `8888`: receives RPYT commands from MATLAB
+* Port `8889`: receives 6DoF Vicon data
+* RPYT value limits:
 
      ```python
      roll, pitch ∈ [-5, 5] degrees
@@ -26,7 +26,7 @@ This document provides a step-by-step guide on how to prepare and operate the Py
 
 3. **Set the send rate**
 
-   * Control loop operates at `100Hz` (every 0.01s)
+* Control loop operates at `100Hz` (every 0.01s)
 
 4. **Set throttle safety condition**
 
@@ -39,7 +39,7 @@ This document provides a step-by-step guide on how to prepare and operate the Py
 
 5. **Set flight duration**
 
-   * Configure duration in seconds:
+* Configure duration in seconds:
 
      ```python
      send_attitude_commands(scf, duration=120)
