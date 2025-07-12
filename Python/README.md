@@ -24,7 +24,7 @@ This folder contains the Python-side implementation for real-time communication 
   * Function explanations and customization tips
   * Data flow diagrams and log examples
 
-* [`reference.md`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_reference.md)
+* [`reference/`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_reference.md)
 
   A reference document summarizing key Python functions and links to relevant **Crazyflie libraries** and control examples. It provides guidance on using:
 
