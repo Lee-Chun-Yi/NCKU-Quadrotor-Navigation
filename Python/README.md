@@ -23,7 +23,7 @@ This folder contains the Python-side implementation for real-time communication 
   * Logging and real-time data retrieval
   * Power management and low-level setpoint control
 
----
+
 
 ## Features
 
@@ -32,7 +32,7 @@ This folder contains the Python-side implementation for real-time communication 
 * Safety modules: smooth landing, port cleanup, battery check
 * Easily extendable for future path tracking, logging, and data saving
 
----
+
 
 ## Dependencies
 
@@ -40,8 +40,4 @@ This folder contains the Python-side implementation for real-time communication 
 * `cflib` (Crazyflie Python library)
 * `socket`, `struct`, `threading`, `time`, `os`
 
----
 
-## License
-
-MIT License
