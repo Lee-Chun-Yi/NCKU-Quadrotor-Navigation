@@ -1,6 +1,6 @@
 # Crazyflie 2.1
 
-This folder provides hardware reference and usage notes for the **Crazyflie 2.1** quadrotor used in our indoor navigation project.
+This folder provides **hardware reference and usage notes** for the Crazyflie 2.1 quadrotor used in our indoor navigation project.
 
 ---
 
