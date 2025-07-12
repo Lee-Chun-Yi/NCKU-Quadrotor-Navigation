@@ -8,7 +8,7 @@ This folder contains the Python-side implementation for real-time communication 
 
 * [`control_system.py`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py)
 
-  Main control script, responsible for:
+  **Main control script**, responsible for:
 
   * Receiving RPYT commands from MATLAB over UDP (port 8888)
   * Receiving 6DoF Vicon motion data (port 8889)
@@ -17,7 +17,7 @@ This folder contains the Python-side implementation for real-time communication 
 
 * [`user_guide/`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/user_guide.md)
 
-  A dedicated folder providing usage instructions and documentation for the Python control system. It includes:
+  A dedicated folder providing **usage instructions** and documentation for the Python control system. It includes:
 
   * Step-by-step usage guide for running the system
   * Troubleshooting common connection and flight issues
