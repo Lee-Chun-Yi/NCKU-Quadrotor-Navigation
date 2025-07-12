@@ -1,6 +1,6 @@
 # Python User Guide
 
-This document provides a step-by-step guide on how to prepare and operate the Python control system for Crazyflie 2.1.
+This document provides a step-by-step guide on how to operate the control system for this project.
 
 ---
 
