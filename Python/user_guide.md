@@ -87,6 +87,6 @@ This document provides a step-by-step guide on how to operate the control system
 For full source code and all function references, see:
 
 * `control_system.py`
-* `control_reference.md`
+* `reference.md`
 
 All safety mechanisms, logging, and communication routines are integrated in a modular structure for easy customization.
