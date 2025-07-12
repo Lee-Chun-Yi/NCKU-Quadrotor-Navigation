@@ -6,24 +6,24 @@ This folder contains the Python-side implementation for real-time communication 
 
 ## Folder Structure
 
-- `control_system.py`
+* `control_system.py`
 
- Main script responsible for:
+  Main script responsible for:
 
-  - Receiving RPYT commands from MATLAB over UDP (port 8888)
-  - Receiving 6DoF Vicon motion data (port 8889)
-  - Sending control commands to Crazyflie at 100Hz via `cf.commander.send_setpoint()`
-  - Handling startup signals, battery voltage monitoring, emergency landing, and cleanup
+  * Receiving RPYT commands from MATLAB over UDP (port 8888)
+  * Receiving 6DoF Vicon motion data (port 8889)
+  * Sending control commands to Crazyflie at 100Hz via `cf.commander.send_setpoint()`
+  * Handling startup signals, battery voltage monitoring, emergency landing, and cleanup
 
-- `control_reference.md`
+* `control_reference.md`
 
- A reference document summarizing key Python functions and links to relevant Crazyflie libraries and control examples. It provides guidance on using:
+  A reference document summarizing key Python functions and links to relevant Crazyflie libraries and control examples. It provides guidance on using:
 
-  - MotionCommander / PositionHlCommander
-  - Logging and real-time data retrieval
-  - Power management and low-level setpoint control
+  * MotionCommander / PositionHlCommander
+  * Logging and real-time data retrieval
+  * Power management and low-level setpoint control
 
-
+---
 
 ## Features
 
@@ -32,7 +32,7 @@ This folder contains the Python-side implementation for real-time communication 
 * Safety modules: smooth landing, port cleanup, battery check
 * Easily extendable for future path tracking, logging, and data saving
 
-
+---
 
 ## Dependencies
 
@@ -40,5 +40,8 @@ This folder contains the Python-side implementation for real-time communication 
 * `cflib` (Crazyflie Python library)
 * `socket`, `struct`, `threading`, `time`, `os`
 
+---
 
+## License
 
+MIT License
