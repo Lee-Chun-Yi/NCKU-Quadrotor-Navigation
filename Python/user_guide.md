@@ -12,7 +12,7 @@ This document provides a step-by-step guide on how to prepare and operate the Py
    URI = uri_helper.uri_from_env(default="radio://0/80/2M")
    ```
 
-2. **Confirm port configuration and limits**
+2. [**Confirm port configuration and limits** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L44)
 
    * Port `8888`: receives RPYT commands from MATLAB
    * Port `8889`: receives 6DoF Vicon data
@@ -24,11 +24,11 @@ This document provides a step-by-step guide on how to prepare and operate the Py
      throttle ∈ [40000, 60000]
      ```
 
-3. **Set the send rate**
+3. [**Set the send rate** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L133)
 
    * Control loop operates at `100Hz` (every 0.01s)
 
-4. **Set throttle safety condition**
+4. [**Set throttle safety condition** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L145)
 
    ```python
    with lock:
@@ -37,7 +37,7 @@ This document provides a step-by-step guide on how to prepare and operate the Py
            roll, pitch, yaw = 0.0, 0.0, 0.0
    ```
 
-5. **Set flight duration**
+5. [**Set flight duration** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L225)
 
    * Configure duration in seconds:
 
