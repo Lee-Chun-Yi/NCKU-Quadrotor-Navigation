@@ -6,7 +6,7 @@ This document provides a step-by-step guide on how to prepare and operate the Py
 
 ##  Pre-flight Setup
 
-1. **Set the URI**
+1. [**Set the URI**](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L19)
 
    ```python
    URI = uri_helper.uri_from_env(default="radio://0/80/2M")
