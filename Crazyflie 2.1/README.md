@@ -6,8 +6,8 @@ This folder provides **hardware reference and usage notes** for the Crazyflie 2.
 
 ## Folder Structure
  
-- [`platform_overview/`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Crazyflie%202.1/platform_overview.md) – Hardware, commander framework, and firmware summary  
-- [`troubleshooting/`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Crazyflie%202.1/troubleshooting.md) – Common connection, stability, and port-related fixes  
+- [`platform_overview.md`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Crazyflie%202.1/platform_overview.md) – Hardware, commander framework, and firmware summary  
+- [`troubleshooting.md`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Crazyflie%202.1/troubleshooting.md) – Common connection, stability, and port-related fixes  
 
 ## Overview
 
