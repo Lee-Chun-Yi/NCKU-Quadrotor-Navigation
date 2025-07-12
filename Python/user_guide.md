@@ -79,7 +79,7 @@ This document provides a step-by-step guide on how to operate the control system
 
    * Press `Ctrl+C`:
 
-     *  **at high altitude**, pressed once.: begins a smooth landing.
+     *  **at high altitude**, pressed once: cut off motors for 0.1s, and begins a smooth landing.
      *  **at low altitude**, pressed twice: immediately cuts off motors.
      * This behavior is intentional to avoid mid-air drop during low-altitude startup.
 
