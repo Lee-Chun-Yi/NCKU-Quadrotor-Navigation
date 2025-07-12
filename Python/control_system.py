@@ -94,10 +94,10 @@ def send_start_signal_to_matlab():
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.sendto(b'start', ('127.0.0.1', 51001))
-        print("🚀 Sent 'start' signal to MATLAB (port 51001)")
+        print(" Sent 'start' signal to MATLAB (port 51001)")
         return True
     except Exception as e:
-        print(f"⚠️ Failed to send 'start' signal: {e}")
+        print(f" Failed to send 'start' signal: {e}")
         return False
     finally:
         sock.close()
@@ -109,7 +109,7 @@ def send_attitude_commands(scf, duration):
     time.sleep(1)
     stop_flight.clear()
 
-    print("🔋 Measuring battery voltage (2 sec)...")
+    print(" Measuring battery voltage (2 sec)...")
     samples = []
     start_time = time.time()
     while time.time() - start_time < 2.0:
@@ -122,10 +122,10 @@ def send_attitude_commands(scf, duration):
     avg_voltage = sum(samples) / len(samples) if samples else 4.0
 
     if not send_start_signal_to_matlab():
-        print("❌ Aborting flight: Failed to send 'start' signal to MATLAB")
+        print(" Aborting flight: Failed to send 'start' signal to MATLAB")
         return
 
-    print("✈️ Starting flight control loop (100Hz)")
+    print("✈ Starting flight control loop (100Hz)")
 
     flight_start_time = time.time()
     last_print_time = 0
@@ -225,7 +225,7 @@ if __name__ == "__main__":
             send_attitude_commands(scf, duration=120)
         except KeyboardInterrupt:
             try:
-                print("🛑 Emergency stop triggered from main! Executing smooth landing...")
+                print(" Emergency stop triggered from main! Executing smooth landing...")
                 stop_flight.set()
                 smooth_landing(scf.cf.commander)
             except KeyboardInterrupt:
