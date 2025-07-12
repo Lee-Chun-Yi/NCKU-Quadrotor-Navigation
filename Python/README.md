@@ -4,7 +4,7 @@ This folder contains the Python-side implementation for real-time communication 
 
 ---
 
-## Files Overview
+## Folder Structure
 
 ### `control_system.py`
 
