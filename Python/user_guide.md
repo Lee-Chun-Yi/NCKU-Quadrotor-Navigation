@@ -1,7 +1,7 @@
 # Python User Guide
 
 This document provides a step-by-step guide on how to operate the control system for this project.
-> Please ensure that all required [dependencies](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/README.md#dependencies). are properly installed on your system before executing the control code. 
+> Please ensure that all required [dependencies](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/README.md#dependencies) are properly installed on your system before executing the control code. 
 ---
 
 ##  Pre-flight Setup
