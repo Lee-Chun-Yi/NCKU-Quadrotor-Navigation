@@ -17,7 +17,7 @@ This folder contains the Python-side implementation for real-time communication 
 
 * `control_reference.md`
 
-  A reference document summarizing key Python functions and links to relevant Crazyflie libraries and control examples. It provides guidance on using:
+  A reference document summarizing key Python functions and links to relevant **Crazyflie libraries**  and control examples. It provides guidance on using:
 
   * MotionCommander / PositionHlCommander
   * Logging and real-time data retrieval
