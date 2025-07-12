@@ -6,12 +6,22 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 
 ## Folder Structure
 
-* `controller/`  
-  Main Simulink models for autonomous flight control, including position and velocity PID loops.
+* `controller/`
 
-* `data_analysis/`  
-  MATLAB scripts for 2D/3D trajectory plotting (single-point and multi-point), as well as response analysis (e.g., rise time, overshoot, steady-state error).
+  Main Simulink control models for:
 
+  * Position PID and velocity PID dual-loop architecture
+  * RPYT (attitude) command generation
+  * Smooth takeoff, trim control, and saturation limits
+
+* `data_analysis/`
+
+  MATLAB scripts for:
+
+  * 2D and 3D trajectory visualization (single-point and multi-point)
+  * Step response evaluation: rise time, overshoot, steady-state error
+  * Statistical plots and filter performance comparison
+  * 
 ## Core Control Logic
 
 ### Position-Velocity Dual PID
