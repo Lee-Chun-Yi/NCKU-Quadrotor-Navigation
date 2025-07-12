@@ -8,7 +8,7 @@ This folder contains the Python-side implementation for real-time communication 
 
 * `control_system.py`
 
-  Main script responsible for:
+  Main control script, responsible for:
 
   * Receiving RPYT commands from MATLAB over UDP (port 8888)
   * Receiving 6DoF Vicon motion data (port 8889)
