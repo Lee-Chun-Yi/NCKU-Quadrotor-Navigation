@@ -15,7 +15,7 @@ This document provides a step-by-step guide on how to prepare and operate the Py
    * **Medium**: Communication type (e.g., radio)
    * **Channel**: Communication channel (e.g., 80)
    * **Speed**: Communication speed (e.g., 2M)
-   * **Address**: Target device address (e.g., E7E7E7E7E7)
+   * **Address**: Target device address, using in swarm. (e.g., E7E7E7E7E7)
 
    Example URI:
 
