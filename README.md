@@ -1,6 +1,6 @@
 # NCKU-Quadrotor-Navigation
 
-The following repository encompasses both completed and ongoing research projects under the guidance of **Professor Woei-Leong Chen**.
+The following repository encompasses both completed and ongoing research projects under the guidance of [**Professor Woei-Leong Chen**](https://iaa.ncku.edu.tw/p/412-1104-29048.php?Lang=en).
 
 ## Indoor Navigation of Quadrotors Using a Motion Capture System
 
