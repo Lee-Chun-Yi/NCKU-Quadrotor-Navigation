@@ -6,7 +6,7 @@ This document provides a step-by-step guide on how to prepare and operate the Py
 
 ##  Pre-flight Setup
 
->  🔗 Click the title to jump to the corresponding code in `control_system.py`.
+>   Click the title to jump to the corresponding code in `control_system.py`.
 
 1. [**Set the URI**](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L19)
 
