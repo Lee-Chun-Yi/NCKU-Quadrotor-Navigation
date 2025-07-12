@@ -16,9 +16,9 @@ This document provides a step-by-step guide on how to prepare and operate the Py
 
 2. [**Confirm port configuration and limits** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L44)
 
-   * Port `8888`: receives RPYT commands from MATLAB
-   * Port `8889`: receives 6DoF Vicon data
-   * RPYT value limits:
+   * Port `8888`: default for receiving RPYT commands from MATLAB
+   * Port `8889`: default for receiving 6DoF Vicon data
+   * RPYT value defaul limits:
 
      ```python
      roll, pitch ∈ [-5, 5] degrees
