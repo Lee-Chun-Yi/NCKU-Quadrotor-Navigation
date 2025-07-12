@@ -15,7 +15,7 @@ This folder contains the Python-side implementation for real-time communication 
   * Sending control commands to Crazyflie at 100Hz via `cf.commander.send_setpoint()`
   * Handling startup signals, battery voltage monitoring, emergency landing, and cleanup
 
-* [`user_guide/`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/user_guide.md)
+* [`user_guide.md`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/user_guide.md)
 
   A dedicated folder providing **usage instructions** and documentation for the Python control system. It includes:
 
@@ -24,7 +24,7 @@ This folder contains the Python-side implementation for real-time communication 
   * Function explanations and customization tips
   * Data flow diagrams and log examples
 
-* [`reference/`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_reference.md)
+* [`reference.md`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_reference.md)
 
   A reference document summarizing key Python functions and links to relevant **Crazyflie libraries** and control examples. It provides guidance on using:
 
