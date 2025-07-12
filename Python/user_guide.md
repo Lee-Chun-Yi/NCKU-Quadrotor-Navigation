@@ -10,8 +10,17 @@ This document provides a step-by-step guide on how to prepare and operate the Py
 
 1. [**Set the URI**](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L19)
 
-   ```python
-   URI = uri_helper.uri_from_env(default="radio://0/80/2M")
+   The Crazyflie uses a unique URI format for communication via the Crazyradio PA using the **CRTP (Crazyradio Real-Time Protocol)**. The URI defines:
+
+   * **Medium**: Communication type (e.g., radio)
+   * **Channel**: Communication channel (e.g., 80)
+   * **Speed**: Communication speed (e.g., 2M)
+   * **Address**: Target device address (e.g., E7E7E7E7E7)
+
+   Example URI:
+
+   ```text
+   radio://0/80/2M/E7E7E7E7E7
    ```
 
 2. [**Confirm port configuration and limits** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L44)
