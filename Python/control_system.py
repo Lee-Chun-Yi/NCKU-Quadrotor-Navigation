@@ -125,7 +125,7 @@ def send_attitude_commands(scf, duration):
         print(" Aborting flight: Failed to send 'start' signal to MATLAB")
         return
 
-    print("✈ Starting flight control loop (100Hz)")
+    print(" Starting flight control loop (100Hz)")
 
     flight_start_time = time.time()
     last_print_time = 0
