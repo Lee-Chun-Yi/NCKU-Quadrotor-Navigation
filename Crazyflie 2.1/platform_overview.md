@@ -59,8 +59,8 @@ The following open-source Bitcraze repositories were used and referenced in this
 
 This section introduces three common ways to control the Crazyflie 2.1 quadrotor, ranging from manual operation to full programmatic control.
 
->  Note: The `python/` `control_reference` folder also contains frequently used Python functions used in this project, including communication handlers, control pipelines, and safety utilities.
-> 
+>  Note: The `python/` `reference` folder contains frequently used Python functions used in this project, including communication handlers, control pipelines, and safety utilities.
+
 ## 1. Using a Remote Controller
 
 Crazyflie supports manual flight using various types of RC input:
