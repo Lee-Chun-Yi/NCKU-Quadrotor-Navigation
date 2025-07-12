@@ -37,7 +37,7 @@ This document provides a step-by-step guide on how to prepare and operate the Py
 
 3. [**Set the send rate** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L133)
 
-   * Control loop operates at `100Hz` (every 0.01s)
+   * Default control loop operates at `100Hz` (every 0.01s)
 
 4. [**Set throttle safety condition** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L145)
 
