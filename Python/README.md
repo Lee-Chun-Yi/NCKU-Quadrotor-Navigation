@@ -6,7 +6,7 @@ This folder contains the Python-side implementation for real-time communication 
 
 ## Folder Structure
 
-*`control_system.py`
+* `control_system.py`
 
  Main script responsible for:
 
