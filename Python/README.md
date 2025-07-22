@@ -61,9 +61,6 @@ To ensure the Python control system runs properly, the following software compon
   > Download: [https://zadig.akeo.ie/](https://zadig.akeo.ie/)
 
 * **MATLAB**
-  Used as the upstream controller that sends RPYT commands and receives motion capture data.
+  Used as the upstream controller that sends commands and receives motion capture data.
 
   > Requires proper UDP communication setup and signal timing coordination.
-
- 
-
