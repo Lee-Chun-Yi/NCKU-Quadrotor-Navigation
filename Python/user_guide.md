@@ -52,9 +52,14 @@ Install dependencies and launch:
 ```bash
 pip3 install cfclient
 ```
+Enter ```cfclient``` to launch:
+
+```bash
+pip3 install cfclient
+```
 
 More information:
-🔗 [Bitcraze – cfclient GitHub]([https://github.com/bitcraze/crazyflie-clients-python](https://github.com/bitcraze/crazyflie-clients-python/blob/master/docs/installation/install.md))
+🔗 [Bitcraze – cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python/blob/master/docs/installation/install.md)
 
 ---
 
