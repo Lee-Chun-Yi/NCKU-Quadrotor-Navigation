@@ -12,16 +12,14 @@ This folder contains the Python-side implementation for real-time communication 
   * [`controller.py`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/2PID/controller.py)
     Main control script responsible for:
 
-    * Receiving RPYT commands from MATLAB over UDP (`port 8888`)
-    * Receiving 6DoF Vicon motion data (`port 8889`)
+    * Receiving RPYT commands from MATLAB over UDP 
+    * Receiving 6DoF Vicon motion data 
     * Sending commands to Crazyflie at **100 Hz** using `cf.commander.send_setpoint()`
-    * Handling startup trigger, battery check, emergency landing, and safe shutdown
 
   * [`user_guide.md`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/2PID/user_guide.md)
     Step-by-step documentation for setup and operation. Includes:
 
     * System usage guide
-    * Troubleshooting instructions
     * Function summaries and customization tips
     * Sample log output and data flow explanations
 
@@ -29,15 +27,13 @@ This folder contains the Python-side implementation for real-time communication 
   Contains the control system for the **four-layer PID architecture**, which directly controls Crazyflie motors via PWM. Designed for low-level, high-frequency control applications.
 
   * `controller.py` 
-    Should include:
 
     * Attitude and attitude-rate PID implemented in Simulink or Python
     * Direct PWM output via `motorPowerSet()` or equivalent
     * Vicon-based position sensing without IMU
     * Support for control loop frequencies up to **500 Hz**
 
-  * `user_guide.md` 
-    Intended to include:
+  * `user_guide.md`
 
     * Low-level control system usage
     * PWM output and safety routines
