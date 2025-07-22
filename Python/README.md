@@ -6,23 +6,29 @@ This folder contains the Python-side implementation for real-time communication 
 
 ## Folder Structure
 
+## Folder Structure
+
+### `2PID/`
+
+Contains the control system for the **two-layer PID architecture**, which sends RPYT commands directly to the Crazyflie.
+
 * [`controller.py`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/2PID/controller.py)
+  Main control script responsible for:
 
-  **Main control script**, responsible for:
-
-  * Receiving RPYT commands from MATLAB over UDP (port 8888)
-  * Receiving 6DoF Vicon motion data (port 8889)
-  * Sending control commands to Crazyflie at 100Hz via `cf.commander.send_setpoint()`
-  * Handling startup signals, battery voltage monitoring, emergency landing, and cleanup
+  * Receiving RPYT commands from MATLAB over UDP (`port 8888`)
+  * Receiving 6DoF Vicon motion data (`port 8889`)
+  * Sending commands to Crazyflie at **100 Hz** using `cf.commander.send_setpoint()`
+  * Handling startup trigger, battery check, emergency landing, and safe shutdown
 
 * [`user_guide.md`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/2PID/user_guide.md)
+  Step-by-step documentation for setup and operation. Includes:
 
-  A dedicated folder providing **usage instructions** and documentation for the Python control system. It includes:
+  * System usage guide
+  * Troubleshooting instructions
+  * Function summaries and customization tips
+  * Sample log output and data flow explanations
 
-  * Step-by-step usage guide for running the system
-  * Troubleshooting common connection and flight issues
-  * Function explanations and customization tips
-  * Data flow diagrams and log examples
+### 4PID
 
 * [`reference.md`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_reference.md)
 
@@ -31,7 +37,12 @@ This folder contains the Python-side implementation for real-time communication 
   * MotionCommander / PositionHlCommander
   * Logging and real-time data retrieval
   * Power management and low-level setpoint control
+### [`reference.md`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_reference.md)
+  Reference document for **Crazyflie-related Python APIs** and tools. Covers:
 
+  * Usage of `MotionCommander`, `PositionHlCommander`
+  * Logging and telemetry handling
+  * Power management and direct PWM / low-level control strategies
 
 
 ## Features
