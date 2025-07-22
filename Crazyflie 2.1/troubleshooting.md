@@ -42,3 +42,63 @@ To assist with diagnosis, use the `cfclient` software:
 ### Case III. Drifts After Takeoff
 
 - This behavior is **considered normal**, often due to pre-existing roll / pitch angle.
+
+Great! Here's the fully **refined and professional English version** of sections 3 and 4 for your `README.md` or `TROUBLESHOOTING.md` file. It follows your existing documentation tone and structure:
+
+---
+
+## 3. Crazyflie LED Indicators
+
+The Crazyflie 2.X features multiple onboard LEDs (M1–M4), each conveying specific status information. Understanding these indicators is critical for diagnosing startup or connection issues.
+
+| **LED (M#)** | **Color** | **State**     | **Meaning**                          |
+| ------------ | --------- | ------------- | ------------------------------------ |
+| M2, M3       | Blue      | Solid ON      | Standby mode (ready, waiting to fly) |
+| M1           | Red       | Slow blinking | Idle mode (powered, not armed)       |
+| M1           | Red       | Solid ON      | Low battery warning                  |
+| M4           | Green     | Solid ON      | Crazyradio successfully connected    |
+| M2           | Blue      | Solid ON      | **Firmware error (not bootable)**    |
+
+More information：[Bitcraze Documentation – CF2 Components](https://www.bitcraze.io/documentation/system/platform/cf2-components/)
+
+---
+
+## 4. Firmware Recovery (M2 Blue LED Solid ON)
+
+If your Crazyflie shows a **solid blue LED on M2 after power-up**, this means the firmware is corrupted and the system **cannot boot or connect wirelessly**.
+
+To recover the firmware, follow the **cold boot procedure** using the official `cfclient`.
+
+### 🔧 Cold Boot (Recovery Mode)
+
+1. **Disconnect and power off** the Crazyflie.
+
+2. Launch `cfclient` and go to:
+
+   ```
+   Crazyflie → Bootloader
+   ```
+
+3. In the bootloader dialog, select the **"Cold boot (recovery)"** tab.
+
+4. **Press and hold** the power button on the Crazyflie.
+
+   * After a few seconds, the blue LED (M2) will **blink slowly** → wireless bootloader stage.
+   * Then it will **blink rapidly** → USB bootloader stage.
+   *  **Release the button immediately once the fast blink begins.**
+
+5. Once the blue LED is blinking rapidly, the bootloader is active.
+
+6. In the dialog, click **"Initiate bootloader cold boot."**
+
+7. Select the firmware:
+
+   * Either the **latest official release**, or
+   * Manually browse to a `.bin` file from the [GitHub Releases](https://github.com/bitcraze/crazyflie-firmware/releases)
+
+8. Click **"Program"**, wait until flashing completes.
+
+9. Click **"Restart in firmware mode"** to reboot and exit recovery.
+
+More information：[Bitcraze-Recovery firmware flashing](https://www.bitcraze.io/documentation/repository/crazyflie-clients-python/master/userguides/recovery-mode/)
+
