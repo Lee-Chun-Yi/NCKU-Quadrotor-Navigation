@@ -8,7 +8,7 @@ This folder contains the Python-side implementation for real-time communication 
 
 ## Folder Structure
 
-### 2PID/
+### `2PID/`
 
 Contains the control system for the **two-layer PID architecture**, which sends RPYT commands directly to the Crazyflie.
 
@@ -28,7 +28,7 @@ Contains the control system for the **two-layer PID architecture**, which sends 
   * Function summaries and customization tips
   * Sample log output and data flow explanations
 
-### 4PID/
+### `4PID/`
 
   
 ### [`reference.md`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_reference.md)
