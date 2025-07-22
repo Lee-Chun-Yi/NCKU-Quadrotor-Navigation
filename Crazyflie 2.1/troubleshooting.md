@@ -100,3 +100,29 @@ To recover the firmware, follow the **cold boot procedure** using the official `
 
 More information：[Bitcraze-Recovery firmware flashing](https://www.bitcraze.io/documentation/repository/crazyflie-clients-python/master/userguides/recovery-mode/)
 
+---
+
+## 5. Crazyflie Not Responding to RPYT Commands
+
+If the Crazyflie does not respond when RPYT commands are being sent, ensure that a proper **arming signal** has been issued beforehand.
+
+### ✅ Required Actions Before Sending Commands:
+
+1. **For standard Crazyflie (brushed motors):**
+   Ensure you send the following command **once before** sending any attitude/thrust control:
+
+   ```python
+   commander.send_setpoint(0, 0, 0, 0)
+   ```
+
+   This acts as a signal to **activate the motor system**.
+
+2. **For Crazyflie Bolt (brushless motors):**
+   Send an **arming request** to enable motor output:
+
+   ```python
+   scf.cf.platform.send_arming_request(True)
+   ```
+
+⚠️ If omitted, the drone will ignore all RPYT commands, even if the radio connection is successful.
+
