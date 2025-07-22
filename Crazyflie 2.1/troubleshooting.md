@@ -12,8 +12,7 @@ When attempting to connect, check if the **green LED** on the Crazyflie lights u
   1. Verify that the correct **radio URI** in the Python code is being used.
   2. Unplug and replug the **Crazyradio PA** dongle.
   3. Use **Zadig** to check and install the correct USB driver:  
-     🔗 [Zadig USB Driver Setup – Bitcraze Documentation](https://www.bitcraze.io/documentation/repository/crazyradio-firmware/master/building/usbwindows/)
-
+     More information： [Zadig USB Driver Setup – Bitcraze Documentation](https://www.bitcraze.io/documentation/repository/crazyradio-firmware/master/building/usbwindows/)
 
 ---
 
@@ -43,8 +42,6 @@ To assist with diagnosis, use the `cfclient` software:
 ### Case III. Drifts After Takeoff
 
 - This behavior is **considered normal**, often due to pre-existing roll / pitch angle.
-
-Great! Here's the fully **refined and professional English version** of sections 3 and 4 for your `README.md` or `TROUBLESHOOTING.md` file. It follows your existing documentation tone and structure:
 
 ---
 
