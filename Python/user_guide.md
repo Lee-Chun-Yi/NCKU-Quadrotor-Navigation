@@ -69,6 +69,8 @@ python bin/cfclient
 More information:
 🔗 [Bitcraze – cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python)
 
+---
+
 ##  Pre-flight Setup
 
 >   Click the title to jump to the corresponding code in `control_system.py`.
@@ -121,7 +123,7 @@ More information:
      send_attitude_commands(scf, duration=120)
      ```
 
-
+---
 
 ##  Flight Operation
 
