@@ -161,8 +161,8 @@ Step-by-step hardware inspection:
 
 To assist with diagnosis, use the `cfclient` software:
 
-* open cfclient
- ```cmd
+* Open cfclient via cmd
+ ```
  cfclient
  ```
 * Open the `Console` tab
