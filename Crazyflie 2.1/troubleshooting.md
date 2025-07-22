@@ -15,6 +15,7 @@ When attempting to connect, check if the **green LED** on the Crazyflie lights u
      🔗 [Zadig USB Driver Setup – Bitcraze Documentation](https://www.bitcraze.io/documentation/repository/crazyradio-firmware/master/building/usbwindows/)
 
 
+---
 
 ## 2. Crazyflie Unbalanced During Flight
 
