@@ -161,9 +161,10 @@ Step-by-step hardware inspection:
 
 To assist with diagnosis, use the `cfclient` software:
 
-* open cfclient```cmd
-cfclient
-```
+* open cfclient
+ ```cmd
+ cfclient
+ ```
 * Open the `Console` tab
 * Select **Propeller Test** to check individual motor response
 
