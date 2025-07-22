@@ -24,7 +24,7 @@ This folder contains the Python-side implementation for real-time communication 
     * Sample log output and data flow explanations
 
 * `4PID/`
-  Contains the control system for the **four-layer PID architecture**, which directly controls Crazyflie motors via PWM. Designed for low-level, high-frequency control applications.
+  Contains the control system for the **four-layer PID architecture**, which directly controls Crazyflie motors via PWM.
 
   * `controller.py` 
 
