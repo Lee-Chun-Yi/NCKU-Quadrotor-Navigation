@@ -39,7 +39,7 @@ This folder contains the Python-side implementation for real-time communication 
     * PWM output and safety routines
     * Logging and filtering strategies
 
-* [`reference.md`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_reference.md)
+* [`reference.md`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/reference.md)
   Reference document for **Crazyflie-related Python APIs** and tools. Covers:
 
   * Usage of `MotionCommander`, `PositionHlCommander`
