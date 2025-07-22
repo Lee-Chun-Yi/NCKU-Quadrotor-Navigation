@@ -4,6 +4,71 @@ This document provides a step-by-step guide on how to operate the control system
 > Please ensure that all required [dependencies](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/README.md#dependencies) are properly installed on your system before executing the control code. 
 ---
 
+##  Computer Setup
+
+This section guides you through the environment setup required to run the Python control system for this project.
+
+### 1. Check Python Version
+
+The control scripts are tested with **Python 3.10 \~ 3.11**. You can verify your version using:
+
+```bash
+python --version
+```
+
+If you are using `python3`, use:
+
+```bash
+python3 --version
+```
+
+We recommend using a virtual environment (e.g., `venv`) to manage your dependencies.
+
+### 2. Install `cflib`
+
+`cflib` is the official Python library from Bitcraze to interface with the Crazyflie platform.
+
+Install it using pip:
+
+```bash
+pip install cflib
+```
+
+If using Python 3:
+
+```bash
+pip3 install cflib
+```
+
+For source installation or updates, see:
+🔗 [Bitcraze – cflib GitHub](https://github.com/bitcraze/crazyflie-lib-python)
+
+### 3. (Optional) Install `cfclient`
+
+To monitor logs or perform radio scan and configuration, you may install the official GUI: **Crazyflie Client (cfclient)**.
+
+Install dependencies and launch:
+
+```bash
+# Clone the repository
+git clone https://github.com/bitcraze/crazyflie-clients-python.git
+cd crazyflie-clients-python
+
+# (Optional) create virtual environment
+python -m venv venv
+source venv/bin/activate  # Linux/macOS
+venv\Scripts\activate     # Windows
+
+# Install requirements
+pip install -r requirements.txt
+
+# Launch cfclient
+python bin/cfclient
+```
+
+More information:
+🔗 [Bitcraze – cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python)
+
 ##  Pre-flight Setup
 
 >   Click the title to jump to the corresponding code in `control_system.py`.
