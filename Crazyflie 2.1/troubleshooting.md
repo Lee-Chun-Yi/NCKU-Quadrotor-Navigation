@@ -50,15 +50,12 @@ Great! Here's the fully **refined and professional English version** of sections
 
 ## 3. Crazyflie LED Indicators
 
-The Crazyflie 2.X features multiple onboard LEDs (M1–M4), each conveying specific status information. Understanding these indicators is critical for diagnosing startup or connection issues.
-
-| **LED (M#)** | **Color** | **State**     | **Meaning**                          |
-| ------------ | --------- | ------------- | ------------------------------------ |
-| M2, M3       | Blue      | Solid ON      | Standby mode (ready, waiting to fly) |
-| M1           | Red       | Slow blinking | Idle mode (powered, not armed)       |
-| M1           | Red       | Solid ON      | Low battery warning                  |
-| M4           | Green     | Solid ON      | Crazyradio successfully connected    |
-| M2           | Blue      | Solid ON      | **Firmware error (not bootable)**    |
+| **Mode**                 | **LED(s)**              | **State**                                     | **Meaning**                                              |
+| ------------------------ | ----------------------- | --------------------------------------------- | -------------------------------------------------------- |
+| **Standby Mode**         | M2, M3: Blue<br>M1: Red | Blue LEDs solid ON<br>Red LED slowly blinking | Crazyflie is powered and idle, ready to receive commands |
+| **Low Battery**          | M1: Red                 | Red LED solid ON                              | Battery voltage is low — charging required               |
+| **Crazyradio Connected** | M4: Green               | Green LED solid ON                            | Crazyradio PA is successfully connected                  |
+| **Firmware Corruption**  | M2: Blue                | Blue LED solid ON                             | Firmware is missing or corrupted — recovery needed       |
 
 More information：[Bitcraze Documentation – CF2 Components](https://www.bitcraze.io/documentation/system/platform/cf2-components/)
 
