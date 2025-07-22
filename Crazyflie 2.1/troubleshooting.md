@@ -106,7 +106,7 @@ More information：[Bitcraze-Recovery firmware flashing](https://www.bitcraze.io
 
 If the Crazyflie does not respond when RPYT commands are being sent, ensure that a proper **arming signal** has been issued beforehand.
 
-### ✅ Required Actions Before Sending Commands:
+###  Required Actions Before Sending Commands:
 
 1. **For standard Crazyflie (brushed motors):**
    Ensure you send the following command **once before** sending any attitude/thrust control:
@@ -123,6 +123,4 @@ If the Crazyflie does not respond when RPYT commands are being sent, ensure that
    ```python
    scf.cf.platform.send_arming_request(True)
    ```
-
-⚠️ If omitted, the drone will ignore all RPYT commands, even if the radio connection is successful.
 
