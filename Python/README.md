@@ -31,7 +31,7 @@ Contains the control system for the **two-layer PID architecture**, which sends 
 ### `4PID/`
 
   
-### [`reference.md`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_reference.md)
+### `reference.md`
   Reference document for **Crazyflie-related Python APIs** and tools. Covers:
 
   * Usage of `MotionCommander`, `PositionHlCommander`
