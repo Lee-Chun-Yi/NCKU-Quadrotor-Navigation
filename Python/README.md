@@ -50,7 +50,7 @@ This folder contains the Python-side implementation for real-time communication 
 To ensure the Python control system runs properly, the following software components must be installed:
 
 * **Python ≥ 3.10**
-  Recommended version: 3.10–3.11
+  Recommended version: 3.11–3.12, 3.13 may be too new to ensure compatibility with `cflib`.
 
   > Ensure Python is properly added to your system PATH and that `pip` is available.
 
