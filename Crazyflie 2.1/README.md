@@ -11,10 +11,9 @@ This folder provides **hardware reference and usage notes** for the Crazyflie 2.
 
 ## Overview
 
-🔗 [Crazyflie 2.1 – Bitcraze](https://www.bitcraze.io/products/crazyflie-2-1-plus/)
 >  Note: The `python/` `reference` folder contains frequently used Python functions used in this project, including communication handlers, control pipelines, and safety utilities.
 
-Crazyflie 2.1 is a lightweight, modular, and open-source nano quadcopter platform designed for indoor research and educational use.
+[Crazyflie 2.1](https://www.bitcraze.io/products/crazyflie-2-1-plus/) is a lightweight, modular, and open-source nano quadcopter platform designed for indoor research and educational use.
 
 **Key Specs:**
 
