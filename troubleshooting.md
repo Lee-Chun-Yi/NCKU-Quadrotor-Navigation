@@ -1,16 +1,16 @@
 # Troubleshooting Guide
 ## Troubleshooting Structure
-1. [Wireless Communication Failure or Parameter Errors](#1-wireless-communication-failure-or-parameter-errors-reset-to-default)
+1. [Wireless Communication Failure](#1-wireless-communication-failure-or-parameter-errors-reset-to-default)
 2. [Crazyflie LED Indicators](#2-crazyflie-led-indicators)
-3. [Firmware Recovery (M2 Blue LED Solid ON)](#3-firmware-recovery-m2-blue-led-solid-on)
-4. [Crazyflie Not Responding to RPYT Commands](#4-crazyflie-not-responding-to-rpyt-commands)
+3. [Firmware Recovery](#3-firmware-recovery-m2-blue-led-solid-on)
+4. [Not Responding to RPYT Commands](#4-crazyflie-not-responding-to-rpyt-commands)
 5. [Control Frequency Considerations](#5-control-frequency-considerations)
-6. [Crazyflie Cannot Fly Again After One Flight](#6-crazyflie-cannot-fly-again-after-one-flight)
+6. [Cannot Fly Again After One Flight](#6-crazyflie-cannot-fly-again-after-one-flight)
 7. [Crazyflie Unbalanced During Flight](#7-crazyflie-unbalanced-during-flight)
 
 ---
 
-## 1. Wireless Communication Failure or Parameter Errors (Reset to Default)
+## 1. Wireless Communication Failure
 
 When attempting to connect, check if the **green LED** on the Crazyflie lights up:
 
