@@ -1,10 +1,10 @@
 # 1. Hardware Platform
 ## Crazyflie 2.1
-🔗 [Crazyflie 2.1 – Bitcraze](https://www.bitcraze.io/products/crazyflie-2-1-plus/)
+🔗 [Bitcraze - Crazyflie 2.1](https://www.bitcraze.io/products/crazyflie-2-1-plus/)
+🔗 [Bitcraze - Crazyflie platform overview](https://www.bitcraze.io/documentation/system/platform/)
 
 A lightweight, modular quadrotor platform designed for indoor research and development.
-![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-03-02%20030438.png)
-![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-23%20000637.png)
+![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-03-02%20030438.png) ![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-23%20000637.png)
 
 
 **Key Features:**
