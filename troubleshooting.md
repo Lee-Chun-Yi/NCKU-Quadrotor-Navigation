@@ -124,6 +124,7 @@ If the Crazyflie does not respond when RPYT commands are being sent, ensure that
    scf.cf.platform.send_arming_request(True)
    ```
   
+---
 
 ## 6. Control Frequency Considerations
 
