@@ -104,27 +104,26 @@ More information: [Bitcraze-Recovery firmware flashing](https://www.bitcraze.io/
 
 ## 5. Crazyflie Not Responding to RPYT Commands
 
-If the Crazyflie does not respond when RPYT commands are being sent, ensure that a proper **arming signal** has been issued beforehand.
+If the Crazyflie does not respond when RPYT commands are being sent, ensure that a proper arming signal has been issued beforehand.
 
 ###  Required Actions Before Sending Commands:
 
 1. **For standard Crazyflie (brushed motors):**
-   Ensure you send the following command **once before** sending any attitude/thrust control:
+   Ensure you send the following command once before sending any attitude/thrust control:
 
    ```python
    commander.send_setpoint(0, 0, 0, 0)
    ```
 
-   This acts as a signal to **activate the motor system**.
+   This acts as a signal to activate the motor system.
 
 2. **For Crazyflie Bolt (brushless motors):**
-   Send an **arming request** to enable motor output:
+   Send an arming request to enable motor output:
 
    ```python
    scf.cf.platform.send_arming_request(True)
    ```
-   
-
+  
 
 ## 6. Control Frequency Considerations
 
