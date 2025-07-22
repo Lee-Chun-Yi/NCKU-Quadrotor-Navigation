@@ -43,8 +43,27 @@ This folder contains the Python-side implementation for real-time communication 
 
 
 
+
+
 ## Dependencies
 
-* Python ≥ 3.12
-* `cflib` (Crazyflie Python library)
+To ensure the Python control system runs properly, the following software components must be installed:
+
+* **Python ≥ 3.10**
+  Recommended version: 3.10–3.11
+
+  > Ensure Python is properly added to your system PATH and that `pip` is available.
+
+* **Zadig (Windows only)**
+  Required to install USB drivers for the Crazyradio PA dongle.
+
+  > Used to assign the correct WinUSB driver if the dongle is not recognized.
+  > Download: [https://zadig.akeo.ie/](https://zadig.akeo.ie/)
+
+* **MATLAB**
+  Used as the upstream controller that sends RPYT commands and receives motion capture data.
+
+  > Requires proper UDP communication setup and signal timing coordination.
+
+ 
 
