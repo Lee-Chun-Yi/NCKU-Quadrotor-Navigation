@@ -45,7 +45,7 @@ This folder contains the Python-side implementation for real-time communication 
 
 ## Dependencies
 
-* Python ≥ 3.7
+* Python ≥ 3.12
 * `cflib` (Crazyflie Python library)
 * `socket`, `struct`, `threading`, `time`, `os`
 
