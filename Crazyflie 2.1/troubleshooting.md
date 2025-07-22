@@ -1,5 +1,7 @@
 # Troubleshooting Guide
 
+---
+
 ## 1. Wireless Communication Failure or Parameter Errors (Reset to Default)
 
 When attempting to connect, check if the **green LED** on the Crazyflie lights up:
