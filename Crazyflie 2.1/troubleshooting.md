@@ -16,7 +16,7 @@ When attempting to connect, check if the **green LED** on the Crazyflie lights u
   3. Use **Zadig** to check and install the correct USB driver.
      More information： [Zadig USB Driver Setup – Bitcraze Documentation](https://www.bitcraze.io/documentation/repository/crazyradio-firmware/master/building/usbwindows/)
 
-
+---
 
 ## 2. Crazyflie Unbalanced During Flight
 
@@ -46,6 +46,7 @@ To assist with diagnosis, use the `cfclient` software:
 - This behavior is **considered normal**, often due to pre-existing roll / pitch angle.
 
 
+---
 
 ## 3. Crazyflie LED Indicators
 
@@ -58,6 +59,7 @@ To assist with diagnosis, use the `cfclient` software:
 
 More information：[Bitcraze Documentation – CF2 Components](https://www.bitcraze.io/documentation/system/platform/cf2-components/)
 
+---
 
 ## 4. Firmware Recovery (M2 Blue LED Solid ON)
 
