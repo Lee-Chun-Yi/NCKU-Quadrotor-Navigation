@@ -48,4 +48,3 @@ This folder contains the Python-side implementation for real-time communication 
 * Python ≥ 3.12
 * `cflib` (Crazyflie Python library)
 
-
