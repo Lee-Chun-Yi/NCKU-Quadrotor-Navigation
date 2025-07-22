@@ -130,7 +130,7 @@ If the Crazyflie does not respond when RPYT commands are being sent, ensure that
 
 Different layers of the PID control architecture require **different recommended update rates** to ensure stable flight and responsive control.
 
-### ⚙️ Recommended Frequencies:
+### Recommended Frequencies:
 
 * **Two-layer PID architecture** (e.g. sending RPYT commands directly to Crazyflie):
 
