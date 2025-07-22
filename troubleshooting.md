@@ -14,7 +14,7 @@ When attempting to connect, check if the **green LED** on the Crazyflie lights u
   1. Verify that the correct **radio URI** in the Python code is being used.
   2. Unplug and replug the **Crazyradio PA** dongle.
   3. Use **Zadig** to check and install the correct USB driver.
-     More information： [Zadig USB Driver Setup – Bitcraze Documentation](https://www.bitcraze.io/documentation/repository/crazyradio-firmware/master/building/usbwindows/)
+     More information: [Zadig USB Driver Setup – Bitcraze Documentation](https://www.bitcraze.io/documentation/repository/crazyradio-firmware/master/building/usbwindows/)
 
 ---
 
@@ -98,7 +98,7 @@ To recover the firmware, follow the **cold boot procedure** using the official `
 
 9. Click **"Restart in firmware mode"** to reboot and exit recovery.
 
-More information：[Bitcraze-Recovery firmware flashing](https://www.bitcraze.io/documentation/repository/crazyflie-clients-python/master/userguides/recovery-mode/)
+More information: [Bitcraze-Recovery firmware flashing](https://www.bitcraze.io/documentation/repository/crazyflie-clients-python/master/userguides/recovery-mode/)
 
 ---
 
@@ -123,4 +123,23 @@ If the Crazyflie does not respond when RPYT commands are being sent, ensure that
    ```python
    scf.cf.platform.send_arming_request(True)
    ```
+   
 
+
+## 6. Control Frequency Considerations
+
+Different layers of the PID control architecture require **different recommended update rates** to ensure stable flight and responsive control.
+
+### ⚙️ Recommended Frequencies:
+
+* **Two-layer PID architecture** (e.g. sending RPYT commands directly to Crazyflie):
+
+  * Maintain a **global control loop frequency of at least 100 Hz**
+  * This ensures position and velocity control layers are sufficiently responsive
+
+* **Four-layer PID architecture** (e.g. outputting raw PWM to each motor):
+
+  * For **attitude and attitude rate controllers**, maintain at least **500 Hz update frequency**
+  * Lower frequencies may cause instability due to the fast dynamics of inner-loop control
+
+More information: [Commander Framework](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Crazyflie%202.1/platform_overview.md#2-commander-framework)
