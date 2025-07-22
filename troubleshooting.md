@@ -1,5 +1,5 @@
 # Troubleshooting Guide
-
+## Troubleshooting Structure
 1. [Wireless Communication Failure or Parameter Errors](#1-wireless-communication-failure-or-parameter-errors-reset-to-default)
 2. [Crazyflie LED Indicators](#2-crazyflie-led-indicators)
 3. [Firmware Recovery (M2 Blue LED Solid ON)](#3-firmware-recovery-m2-blue-led-solid-on)
