@@ -50,21 +50,11 @@ To monitor logs or perform radio scan and configuration, you may install the off
 Install dependencies and launch:
 
 ```bash
-
-git clone https://github.com/bitcraze/crazyflie-clients-python.git
-cd crazyflie-clients-python
-
-python -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
-
-pip install -r requirements.txt
-
-python bin/cfclient
+pip3 install cfclient
 ```
 
 More information:
-🔗 [Bitcraze – cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python)
+🔗 [Bitcraze – cfclient GitHub]([https://github.com/bitcraze/crazyflie-clients-python](https://github.com/bitcraze/crazyflie-clients-python/blob/master/docs/installation/install.md))
 
 ---
 
