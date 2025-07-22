@@ -65,9 +65,9 @@ More information:
 
 ##  Pre-flight Setup
 
->   Click the title to jump to the corresponding code in `control_system.py`.
+>   Click the title to jump to the corresponding code in `controller.py`.
 
-1. [**Set the URI**](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L19)
+1. [**Set the URI**](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/controller.py#L19)
 
    The Crazyflie uses a unique URI format for communication via the Crazyradio PA using the **CRTP (Crazyradio Real-Time Protocol)**. The URI defines:
 
@@ -82,7 +82,7 @@ More information:
    radio://0/80/2M/E7E7E7E7E7
    ```
 
-2. [**Confirm port configuration and limits** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L44)
+2. [**Confirm port configuration and limits** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/controller.py#L44)
 
    * Port `8888`: default for receiving RPYT commands from MATLAB
    * Port `8889`: default for receiving 6DoF Vicon data
@@ -94,11 +94,11 @@ More information:
      throttle ∈ [40000, 60000]
      ```
 
-3. [**Set the send rate** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L133)
+3. [**Set the send rate** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/controller.py#L133)
 
    * Default control loop operates at `100Hz` (every 0.01s)
 
-4. [**Set throttle safety condition** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L145)
+4. [**Set throttle safety condition** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/controller.py#L145)
 
    ```python
    with lock:
@@ -107,7 +107,7 @@ More information:
            roll, pitch, yaw = 0.0, 0.0, 0.0
    ```
 
-5. [**Set flight duration** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/control_system.py#L225)
+5. [**Set flight duration** ](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Python/controller.py#L225)
 
    * Configure duration in seconds:
 
@@ -145,7 +145,7 @@ More information:
 
 For full source code and all function references, see:
 
-* `control_system.py`
+* `controller.py`
 * `reference.md`
 
 All safety mechanisms, logging, and communication routines are integrated in a modular structure for easy customization.
