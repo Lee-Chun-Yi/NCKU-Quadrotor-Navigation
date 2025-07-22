@@ -35,9 +35,5 @@
 ### 7. Open Protocol Analyzer
 - [Wireshark Integration Guide](https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/development/wireshark/)
 
-### 8. Local Path to Crazyflie Library
-```
-C:\Users\PC\AppData\Local\Programs\Python\Python312\Lib\site-packages\cflib\crazyflie
-```
-### 9. Python to Excel
+### 8. Python to Excel
 - [Using openpyxl for automated spreadsheet processing](https://hackmd.io/@howkii-studio/python_autoporcessing_xl)
