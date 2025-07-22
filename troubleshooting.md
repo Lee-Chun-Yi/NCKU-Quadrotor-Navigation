@@ -132,7 +132,7 @@ After completing a flight, the Crazyflie may not respond to further commands unl
 
 ### Solution:
 
-Perform a manual power cycle by unplugging and reconnecting the battery, or use the following software-based method via the `PowerSwitch` API:
+Perform a manual power cycle by unplugging and reconnecting the battery, or use running the `PowerSwitch` at the end of the main flight code:
 
 ```python
 def power_cycle_crazyflie():
