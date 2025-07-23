@@ -125,7 +125,7 @@ To change:
 2. Set solver type to **Fixed-step**
 3. Set step size to `0.01`
 
-More details: [Control Frequency Considerations](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/troubleshooting.md#5-control-frequency-considerations)
+More information: 🔗 [Control Frequency Considerations](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/troubleshooting.md#5-control-frequency-considerations)
 
 ---
 
