@@ -5,45 +5,27 @@ This document provides a step-by-step guide on how to operate the control system
 
 ---
 
-## Computer Setup
 
-This section guides you through the environment setup required to run the Simulink control system for this project.
+## 1. Overview
 
-### 1. Check MATLAB and Simulink Version
+This system implements a full-stack control architecture for a Crazyflie UAV, integrating:
 
-This project has been tested with **MATLAB R2024a or later**. Verify your version using:
+* External Vicon motion capture data,
+* Position and velocity PID controllers,
+* Real-time RPYT command generation,
+* UDP-based command transmission.
 
-```matlab
-ver
-````
+The system is modeled in Simulink and consists of five main modules:
 
-You must have the following toolboxes installed:
+1. **Vicon Data Input** (Gray)
+2. **Position Controller**  (Violet)
+3. **Velocity Controller** (blue)
+4. **Yaw Rate Controller** 
+5. **RPYT Command Output** (Gray)
+   
+![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/Matlab_structure_page-0001.jpg)
 
-* Simulink
-* Instrument Control Toolbox
-* Control System Toolbox
-
-You can check installed toolboxes with:
-
-```matlab
-ver
-```
-
-If required, install missing toolboxes via MATLAB Add-On Explorer or contact your administrator.
-
-### 2. Launch Simulink Model
-
-Open the main control model:
-
-```matlab
-open('main_control_model.slx')
-```
-
-This will load the full control architecture with UDP input/output, PID controllers, yaw filter, and simulation scopes.
-
----
-
-## Model Structure
+## 2. Model Structure
 
 The Simulink model is organized into functional subsystems. Each block performs a dedicated task in the control pipeline.
 
