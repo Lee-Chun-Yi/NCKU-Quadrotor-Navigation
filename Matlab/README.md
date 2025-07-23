@@ -14,8 +14,8 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
   * RPYT (attitude) command generation
 
 * `data_analysis/`
+  
   MATLAB scripts for evaluating and visualizing Crazyflie flight performance.
-  Divided into two submodules based on data source:
 
   * `csv/`
     Used for **post-flight analysis** based on logged `.csv` data.
