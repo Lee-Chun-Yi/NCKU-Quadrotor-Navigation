@@ -49,12 +49,14 @@ To recover the firmware, follow the **cold boot procedure** using the official `
 
 ### Cold Boot (Recovery Mode)
 
+Needed if firmware is damaged (M2 Blue LED solid ON).
+
 1. **Disconnect and power off** the Crazyflie.
 
 2. Launch `cfclient` and go to:
 
    ```
-   Crazyflie → Bootloader
+   Connect → Bootloader → Cold Boot
    ```
 
 3. In the bootloader dialog, select the **"Cold boot (recovery)"** tab.
