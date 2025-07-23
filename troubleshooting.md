@@ -69,17 +69,18 @@ Needed if firmware is damaged (M2 Blue LED solid ON).
    
 
 6. Once the blue LED is blinking rapidly, the bootloader is active.
+   > once in the bootloader mode, make sure the driver of bootloader in zadig is WinUSB.
 
-7. In the dialog, click **"Initiate bootloader cold boot."**
+8. In the dialog, click **"Initiate bootloader cold boot."**
 
-8. Select the firmware:
+9. Select the firmware:
 
    * Either the **latest official release**, or
    * Manually browse to a `.bin` file from the [GitHub Releases](https://github.com/bitcraze/crazyflie-firmware/releases)
 
-9. Click **"Program"**, wait until flashing completes.
+10. Click **"Program"**, wait until flashing completes.
 
-10. Click **"Restart in firmware mode"** to reboot and exit recovery.
+11. Click **"Restart in firmware mode"** to reboot and exit recovery.
 
 More information: [Bitcraze-Recovery firmware flashing](https://www.bitcraze.io/documentation/repository/crazyflie-clients-python/master/userguides/recovery-mode/)
 
