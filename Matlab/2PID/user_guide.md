@@ -5,7 +5,8 @@
 This document provides a step-by-step guide on how to operate the control system for this project using MATLAB Simulink.
 
 > The file `controller.slx` requires **MATLAB R2025a or newer** to function properly.
-> See the file `theory.md` for a complete explanation of the MATLAB-based control system theory.
+
+> See the file `theory.md` for a **complete explanation** of the MATLAB-based control system theory.
 
 ---
 
