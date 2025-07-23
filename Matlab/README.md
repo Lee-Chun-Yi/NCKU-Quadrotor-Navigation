@@ -12,7 +12,6 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 
   * Position PID and velocity PID dual-loop architecture
   * RPYT (attitude) command generation
-  * Smooth takeoff, trim control, and saturation limits
 
 * `data_analysis/`
   MATLAB scripts for evaluating and visualizing Crazyflie flight performance.
@@ -24,14 +23,12 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 
     * 2D and 3D trajectory visualization across multiple flights
     * Step response evaluation with `stepinfo` (rise time, overshoot, steady-state error)
-    * Standard deviation shading and flight-to-flight comparison
 
   * `workspace/`
     Used for **real-time analysis** from Simulink's `out` structure during experiments.
     Includes:
 
     * Single and multi-axis plotting
-    * Step-input-based system identification using `tfest`
     * Response evaluation and CSV export for persistent logging
     
 ## Core Control Logic
