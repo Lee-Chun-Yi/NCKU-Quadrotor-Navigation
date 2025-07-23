@@ -1,6 +1,9 @@
-vars = {'rot_z', 'trans_x', 'trans_y', 'trans_z'};
-idx = 1;
+% Export Time Series Data to CSV
+% ==== User Input ====
+vars = {'rot_z', 'trans_x', 'trans_y', 'trans_z'};  % Variables to export
+idx = 1;  % File index suffix
 
+% ==== Data Processing & Export ====
 for i = 1:length(vars)
     varName = vars{i};
     ts = out.(varName);  % Retrieve timeseries object
