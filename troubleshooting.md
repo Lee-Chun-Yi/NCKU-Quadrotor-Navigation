@@ -56,29 +56,30 @@ Needed if firmware is damaged (M2 Blue LED solid ON).
 2. Launch `cfclient` and go to:
 
    ```
-   Connect → Bootloader → Cold Boot
+   Connect → Bootloader 
    ```
 
 3. In the bootloader dialog, select the **"Cold boot (recovery)"** tab.
 
 4. **Press and hold** the power button on the Crazyflie.
 
-   * After a few seconds, the blue LED (M2) will **blink slowly** → wireless bootloader stage.
-   * Then it will **blink rapidly** → USB bootloader stage.
    * **Release the button immediately once the fast blink begins.**
+   * After a few seconds of pressing, the blue LED (M2) will **blink slowly** → wireless bootloader stage.
+   * Then it will **blink rapidly** → USB bootloader stage.
+   
 
-5. Once the blue LED is blinking rapidly, the bootloader is active.
+6. Once the blue LED is blinking rapidly, the bootloader is active.
 
-6. In the dialog, click **"Initiate bootloader cold boot."**
+7. In the dialog, click **"Initiate bootloader cold boot."**
 
-7. Select the firmware:
+8. Select the firmware:
 
    * Either the **latest official release**, or
    * Manually browse to a `.bin` file from the [GitHub Releases](https://github.com/bitcraze/crazyflie-firmware/releases)
 
-8. Click **"Program"**, wait until flashing completes.
+9. Click **"Program"**, wait until flashing completes.
 
-9. Click **"Restart in firmware mode"** to reboot and exit recovery.
+10. Click **"Restart in firmware mode"** to reboot and exit recovery.
 
 More information: [Bitcraze-Recovery firmware flashing](https://www.bitcraze.io/documentation/repository/crazyflie-clients-python/master/userguides/recovery-mode/)
 
