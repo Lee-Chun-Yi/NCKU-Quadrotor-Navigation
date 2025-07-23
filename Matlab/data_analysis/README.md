@@ -7,11 +7,11 @@ This folder contains MATLAB scripts for visualizing and evaluating Crazyflie fli
 ## Folder Structure
 
 * `csv/`
-  Contains analysis scripts for **CSV-based post-flight data**, typically exported from logging sessions.
+  Contains analysis scripts for **CSV-based post-flight data**.
 
-  > ⚠️ To use this folder, please ensure the required **`.csv` files exist**.
+  > To use this folder, please ensure the required **`.csv` files exist**.
   
-  > If not, you may generate them using `log_csv.m` under the `to_workspace/` directory.
+  > If not, you may generate them using `log_csv.m` under the `to_workspace/` .
 
   * `2D_plot.m`
     Plots **multi-axis 2D trajectories** from CSV files (e.g., X/Y/Z/RotZ). Includes:
