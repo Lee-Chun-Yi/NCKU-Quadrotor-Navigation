@@ -1,4 +1,4 @@
-## Vicon Quick Start Guide 
+## Vicon User Guide
 
 This section provides a basic introduction to setting up object tracking and UDP streaming with the Vicon system.
 
