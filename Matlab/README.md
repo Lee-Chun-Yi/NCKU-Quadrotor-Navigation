@@ -7,12 +7,23 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 ## Folder Structure
 
 * `controller/`
+  Main Simulink control models for indoor flight with Crazyflie using a **two-layer PID architecture**.
 
-  Main Simulink control models for:
+  * `2PID/controller.slx`
+    
+    The core Simulink model implementing:
 
-  * Position PID and velocity PID dual-loop architecture
-  * RPYT (attitude) command generation
+    * Position PID (outer loop) and velocity PID (inner loop) control
+    * Real-time RPYT command generation based on 6-DoF Vicon input
 
+  * `2PID/user_guide.md`
+
+    * Simulink model structure and module descriptions
+
+    * UDP setup and input/output signal configuration
+
+    * PID tuning procedure
+---
 * `data_analysis/`
   
   MATLAB scripts for evaluating and visualizing Crazyflie flight performance.
