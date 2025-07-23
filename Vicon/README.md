@@ -35,7 +35,7 @@ Before launching your MATLAB/Simulink or Python script, ensure UDP settings are 
    * **Destination IP**: `127.0.0.1` (or your machine IP)
    * **Destination Port**: `51001`
    * **Enable the correct object(s)** to be tracked.
-   * **Set the streaming rate**, typically **100 Hz** for real-time control.
+   * **Set the streaming rate**, Max **100 Hz** for vicon tracker 3.10.
 
 
 ![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-23%20230123.png)
