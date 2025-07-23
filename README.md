@@ -41,12 +41,12 @@ The table below reports the average **Overshoot**, **Steady-State Error**, and *
 
 > Notably, the Z-axis (altitude) exhibited the most stable behavior, with an average overshoot of only **17.42 ± 6.06%**, corresponding to about **0.139 m**.
 
-| **Axis / DOF**                | **Overshoot (±σ)** | **Steady-State Error (±σ)** | **Rise Time (±σ)** |
-| ----------------------------- | ------------------ | --------------------------- | ------------------ |
-| **X-axis (Pitch control)**    | 82.75 ± 29.91 %    | 41.38 ± 30.46 mm            | —                  |
-| **Y-axis (Roll control)**     | 29.66 ± 0.42 %     | 44.78 ± 21.00 mm            | —                  |
-| **Z-axis (Throttle control)** | 17.42 ± 6.06 %     | 13.75 ± 13.38 mm            | 2.52 ± 0.19 s      |
-| **Rot Z (Yaw control)**       | 56.62 deg          | 2.78 ± 2.59 deg             | —                  |
+| **Axis / DOF**                    | **Overshoot (±σ)**     | **Steady-State Error (±σ)**     | **Rise Time (±σ)**     |
+| --------------------------------- | ---------------------- | ------------------------------- | ---------------------- |
+| **X-axis (Pitch control)**        | 82.75 ± 29.91 %        | 41.38 ± 30.46 mm                | —                      |
+| **Y-axis (Roll control)**         | 29.66 ± 0.42 %         | 44.78 ± 21.00 mm                | —                      |
+| **Z-axis (Throttle control)**     | 17.42 ± 6.06 %         | 13.75 ± 13.38 mm                | 2.52 ± 0.19 s          |
+| **Rot Z (Yaw control)**           | 56.62 deg              | 2.78 ± 2.59 deg                 | —                      |
 
 *Table 1. Flight response metrics under dual-loop PID control (mean ± standard deviation over 15 flights)*
 
