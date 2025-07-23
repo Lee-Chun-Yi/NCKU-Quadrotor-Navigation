@@ -1,35 +1,38 @@
-% Dynamic Response Evaluation (CSV)
+% Dynamic Response Evaluation (from CSV)
+% ==== User Input ====
+Tmax = 20;  % Time limit for response evaluation (seconds)
 
-% Filter data within the specified time range
-Tmax = 20;
-
-idx_x = t_x <= Tmax;
-idx_y = t_y <= Tmax;
-idx_z = t_z <= Tmax;
-idx_rot = t_rot <= Tmax;
-
-% Import CSV data
-data_x = readmatrix('trans_x.csv');
-data_y = readmatrix('trans_y.csv');
-data_z = readmatrix('trans_z.csv');
-data_rot = readmatrix('rot_z.csv');
-
-t_x = data_x(:,1);  x = data_x(:,2);
-t_y = data_y(:,1);  y = data_y(:,2);
-t_z = data_z(:,1);  z = data_z(:,2);
-t_rot = data_rot(:,1);  rot_z = data_rot(:,2);
-
-t_x = t_x(idx_x);  x = x(idx_x);
-t_y = t_y(idx_y);  y = y(idx_y);
-t_z = t_z(idx_z);  z = z(idx_z);
-t_rot = t_rot(idx_rot);  rot_z = rot_z(idx_rot);
-
-% Target values
-target_x = -800;
-target_y = -800;
-target_z =  800;
+% Target setpoints
+target_x   = -800;
+target_y   = -800;
+target_z   =  800;
 target_rot = 0;
 
+% ==== Data Import ====
+data_x   = readmatrix('trans_x.csv');
+data_y   = readmatrix('trans_y.csv');
+data_z   = readmatrix('trans_z.csv');
+data_rot = readmatrix('rot_z.csv');
+
+% Extract time and signal values
+t_x   = data_x(:,1);   x     = data_x(:,2);
+t_y   = data_y(:,1);   y     = data_y(:,2);
+t_z   = data_z(:,1);   z     = data_z(:,2);
+t_rot = data_rot(:,1); rot_z = data_rot(:,2);
+
+% ==== Data Processing ====
+% Time filtering
+idx_x   = t_x   <= Tmax;
+idx_y   = t_y   <= Tmax;
+idx_z   = t_z   <= Tmax;
+idx_rot = t_rot <= Tmax;
+
+t_x   = t_x(idx_x);   x     = x(idx_x);
+t_y   = t_y(idx_y);   y     = y(idx_y);
+t_z   = t_z(idx_z);   z     = z(idx_z);
+t_rot = t_rot(idx_rot); rot_z = rot_z(idx_rot);
+
+% ==== Response Metrics Evaluation ====
 % Common display function
 printStepInfo = @(label, info, unit) fprintf([...
     '\n%s response info:\n' ...
@@ -50,7 +53,7 @@ ys = interp1(t_x, x, ts, 'linear');
 normed = (ys - ys(1)) / (target_x - ys(1));
 info_x = stepinfo(normed, ts);
 info_x.SteadyStateError = abs(ys(end) - target_x);
-info_x.Peak = max(ys);  % Use actual peak value
+info_x.Peak = max(ys);
 printStepInfo('X-axis', info_x, 'mm');
 
 % ------- Y-axis -------
@@ -80,11 +83,10 @@ info_rot.SteadyStateError = abs(ys(end) - target_rot);
 info_rot.Peak = max(ys);
 printStepInfo('Rot Z', info_rot, 'deg');
 
-% Additional overshoot/undershoot analysis (based on raw data)
+% ==== Additional Analysis: Raw Overshoot / Undershoot ====
 max_val = max(rot_z);
 min_val = min(rot_z);
-
-overshoot = max(0, max_val - target_rot);
+overshoot  = max(0, max_val - target_rot);
 undershoot = max(0, target_rot - min_val);
 
 fprintf('\n[Raw Data Analysis]\n');
