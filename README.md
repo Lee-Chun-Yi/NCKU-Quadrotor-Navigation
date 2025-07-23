@@ -27,6 +27,8 @@ The resulting control commands are sent from MATLAB to a Python script, which th
  
 ![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-11%20204155.png)
 
+Figure 1. Overview of the experimental setup
+
 ---
 
 ## Experiment Result
@@ -59,4 +61,6 @@ To visualize the results, the figure below illustrates the **3D trajectory** of 
 > * `Rotation Z vs Time` shows the yaw angle correction behavior.
 
 ![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-23%20114535.png)
+
+Figure 2. Single-target trajectory
 
