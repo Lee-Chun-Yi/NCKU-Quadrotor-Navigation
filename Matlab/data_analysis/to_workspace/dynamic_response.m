@@ -1,22 +1,6 @@
 % Dynamic Response Evaluation
-
-% Filter data within limited time range
-Tmax = 20;
-idx_x   = t_x   <= Tmax;
-idx_y   = t_y   <= Tmax;
-idx_z   = t_z   <= Tmax;
-idx_rot = t_rot <= Tmax;
-
-% Extract internal times and signals
-t_x   = out.trans_x.Time;   x     = out.trans_x.Data;
-t_y   = out.trans_y.Time;   y     = out.trans_y.Data;
-t_z   = out.trans_z.Time;   z     = out.trans_z.Data;
-t_rot = out.rot_z.Time;     rot_z = out.rot_z.Data;
-
-t_x   = t_x(idx_x);   x     = x(idx_x);
-t_y   = t_y(idx_y);   y     = y(idx_y);
-t_z   = t_z(idx_z);   z     = z(idx_z);
-t_rot = t_rot(idx_rot); rot_z = rot_z(idx_rot);
+% ==== User Input ====
+Tmax = 20;  % Time window (s)
 
 % Target values
 target_x   = -800;
@@ -24,7 +8,27 @@ target_y   = -800;
 target_z   =  800;
 target_rot = 0;
 
-% General output display function
+% ==== Data Processing ====
+
+% Extract internal times and signals
+t_x   = out.trans_x.Time;   x     = out.trans_x.Data;
+t_y   = out.trans_y.Time;   y     = out.trans_y.Data;
+t_z   = out.trans_z.Time;   z     = out.trans_z.Data;
+t_rot = out.rot_z.Time;     rot_z = out.rot_z.Data;
+
+% Filter data within time limits
+idx_x   = t_x   <= Tmax;
+idx_y   = t_y   <= Tmax;
+idx_z   = t_z   <= Tmax;
+idx_rot = t_rot <= Tmax;
+
+t_x   = t_x(idx_x);   x     = x(idx_x);
+t_y   = t_y(idx_y);   y     = y(idx_y);
+t_z   = t_z(idx_z);   z     = z(idx_z);
+t_rot = t_rot(idx_rot); rot_z = rot_z(idx_rot);
+
+% ==== Response Evaluation Function ====
+
 printStepInfo = @(label, info, unit) fprintf([...
     '\n%s response info:\n' ...
     '  Rise Time          : %.2f s\n' ...
@@ -37,6 +41,8 @@ printStepInfo = @(label, info, unit) fprintf([...
     label, info.RiseTime, info.SettlingTime, ...
     info.Overshoot, info.Undershoot, info.PeakTime, ...
     info.Peak, unit, info.SteadyStateError, unit);
+
+% ==== Step Response Computation ====
 
 % ------- X Axis -------
 ts = linspace(t_x(1), t_x(end), length(t_x));
@@ -74,7 +80,7 @@ info_rot.SteadyStateError = abs(ys(end) - target_rot);
 info_rot.Peak = max(ys);
 printStepInfo('Rot Z', info_rot, 'deg');
 
-% Additional Overshoot/Undershoot analysis (raw data, non-normalized)
+% ==== Raw Overshoot/Undershoot (non-normalized) ====
 max_val = max(rot_z);
 min_val = min(rot_z);
 
