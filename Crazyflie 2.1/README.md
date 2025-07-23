@@ -26,10 +26,8 @@ This folder provides **hardware reference and usage notes** for the Crazyflie 2.
 
 ## Used in this project for:
 
-* Receiving low-level PWM commands from an external PC
-* Executing attitude and rate control onboard
 * Interfacing with the Vicon-based external navigation system
-
+* Receiving RPYT or low-level PWM commands from PC
 
 
 ## Add-on Decks
