@@ -139,4 +139,108 @@ More information: 🔗 [Control Frequency Considerations](https://github.com/Lee
 
 ---
 
-## 5. PID tuning
+## 5. PID Tuning
+
+This Simulink control system adopts a **two-layer PID architecture**, consisting of an inner velocity control loop and an outer position control loop.
+
+> Always tune the **inner loop first**, followed by the **outer loop**.
+
+---
+
+### 5.1 Velocity PID (Inner Loop)
+
+The velocity controller is responsible for making the actual velocity follow the desired velocity setpoint.
+Ideally, the output velocity waveform should closely track the reference.
+It is recommended to plot the following during tuning:
+
+* `desired_velocity`
+* `measured_velocity`
+* `position`
+
+> Set the outer (position) PID to **P=1, I=0, D=0** during tuning of the inner loop.
+
+#### Step 1: Tune P (Proportional only)
+
+```matlab
+Kp > 0, Ki = 0, Kd = 0
+```
+
+* If **Kp is too small** → sluggish response
+* If **Kp is too large** → may cause overshoot or oscillation
+
+Gradually increase `Kp` until the response is fast but not overly oscillatory.
+
+#### Step 2: Add D (Derivative)
+
+```matlab
+Kd > 0
+```
+
+* Derivative control adds damping to suppress oscillation.
+* Start with a small `Kd` and increase slowly.
+* Useful in dynamic systems like UAVs to reduce overshoot and stabilize approach.
+
+#### Step 3: Add I (Integral)
+
+```matlab
+Ki > 0
+```
+
+* Integral control helps eliminate steady-state error.
+* Be cautious: too much `Ki` may cause **integrator windup**.
+
+Mitigation strategies:
+
+* Enable **Anti-Windup** in Simulink PID block
+* Set upper and lower limits using **Saturation** blocks
+
+---
+
+### 5.2 Position PID (Outer Loop)
+
+The position controller outputs the **desired velocity** to help the drone reach its target point.
+
+> Objectives:
+>
+> * Fast convergence to the desired position
+> * Minimal overshoot and oscillation
+> * Zero steady-state error
+
+#### Step 1: Tune P (Proportional only)
+
+```matlab
+Kp > 0, Ki = 0, Kd = 0
+```
+
+* Increase `Kp` gradually.
+* If position error reduces quickly → working.
+* If excessive overshoot or oscillation → reduce `Kp`.
+
+> At this stage, the controller behaves like a spring: responsive but with residual error.
+
+#### Step 2: Add D (Derivative)
+
+```matlab
+Kd > 0
+```
+
+* Helps suppress overshoot and oscillation
+* Adds damping to stabilize the trajectory near the target
+* Smoother convergence and less aggressive corrections
+
+#### Step 3: Add I (Integral)
+
+```matlab
+Ki > 0
+```
+
+* Eliminates long-term position drift or offset
+* Be careful with high `Ki` as it may cause instability or oscillation
+
+Recommended safeguards:
+
+* Add **Saturation limits** to position output
+* Enable **Anti-Windup** in Simulink PID blocks
+
+
+
