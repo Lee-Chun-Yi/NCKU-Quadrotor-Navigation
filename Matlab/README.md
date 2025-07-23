@@ -7,7 +7,8 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 ## Folder Structure
 
 * `controller/`
-  Main Simulink control models for indoor flight with Crazyflie using a **two-layer PID architecture**.
+  
+  Main Simulink control models for indoor flight with Crazyflie using a **dual-loop PID architecture**.
 
   * `2PID/controller.slx`
     
@@ -23,7 +24,9 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
     * UDP setup and input/output signal configuration
 
     * PID tuning procedure
+      
 ---
+
 * `data_analysis/`
   
   MATLAB scripts for evaluating and visualizing Crazyflie flight performance.
