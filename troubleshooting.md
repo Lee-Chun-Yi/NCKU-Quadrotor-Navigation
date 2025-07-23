@@ -177,6 +177,11 @@ To assist with diagnosis, use the `cfclient` software:
 * This may be caused by **excessive RPYT output** from the controller.
 * If this occurs repeatedly, re-check all hardware components as listed above.
 
-### Case III. Drifts After Takeoff
+### Case III. Excessive Damping
+
+* This behavior may be caused by insufficient control update frequency on the Python side.
+  The minimum recommended frequency is **100 Hz**.
+
+### Case IV. Drifts After Takeoff
 
 * This behavior is considered normal, often due to pre-existing roll/pitch angle.
