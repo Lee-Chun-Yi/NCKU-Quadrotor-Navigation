@@ -7,12 +7,12 @@ This section provides a basic introduction to setting up object tracking and UDP
 
 To define an object for tracking:
 
-1. If you are streaming live data, first **pause streaming** by clicking **Pause** under the **Objects** tab in the **Resources** pane.
+1. If you are streaming live data, first pause streaming by clicking **Pause** under the Objects tab in the Resources pane.
 
 ![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-23%20141332.png)
 
-2. **Hold the `Alt` key** and use **left-click + drag** to select the markers that define the object.
-3. Enter a name in the **Create Object** box and click **Create**.
+2. Hold the **`Alt` key** and use left-click + drag to select the markers that define the object.
+3. Enter a name in the Create Object box and click **Create**.
 
 
 ![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-23%20141353.png)
@@ -29,7 +29,7 @@ More information: 🔗 [Creating an object – Vicon Help](https://help.vicon.co
 
 Before launching your MATLAB/Simulink or Python script, ensure UDP settings are correctly configured:
 
-1. Go to the **Properties pane** for the **Local Vicon System**.
+1. Go to the **Properties pane** for the Local Vicon System.
 2. Verify the following settings:
 
    * **Destination IP**: `127.0.0.1` (or your machine IP)
