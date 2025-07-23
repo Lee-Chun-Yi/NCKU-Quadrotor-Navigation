@@ -15,12 +15,24 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
   * Smooth takeoff, trim control, and saturation limits
 
 * `data_analysis/`
+  MATLAB scripts for evaluating and visualizing Crazyflie flight performance.
+  Divided into two submodules based on data source:
 
-  MATLAB scripts for:
+  * `csv/`
+    Used for **post-flight analysis** based on logged `.csv` data.
+    Includes:
 
-  * 2D and 3D trajectory visualization (single-point and multi-point)
-  * Step response evaluation: rise time, overshoot, steady-state error
-  * Statistical plots and filter performance comparison
+    * 2D and 3D trajectory visualization across multiple flights
+    * Step response evaluation with `stepinfo` (rise time, overshoot, steady-state error)
+    * Standard deviation shading and flight-to-flight comparison
+
+  * `workspace/`
+    Used for **real-time analysis** from Simulink's `out` structure during experiments.
+    Includes:
+
+    * Single and multi-axis plotting
+    * Step-input-based system identification using `tfest`
+    * Response evaluation and CSV export for persistent logging
     
 ## Core Control Logic
 
