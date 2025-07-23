@@ -2,7 +2,6 @@
 
 This section provides a basic introduction to setting up object tracking and UDP streaming with the Vicon system.
 
----
 
 ###  1. Creating an Object in Vicon Tracker 
 
