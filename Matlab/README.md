@@ -52,21 +52,6 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 * **Inner Loop**: Velocity PID outputs Roll, Pitch, and Throttle
 * **Yaw Control**: PID tracking of yaw angle (rot\_z) with S-curve smoothing and activation delay
 
-### Features
-
-* Smooth takeoff using cosine-based target height ramping
-* Velocity-based attitude limiter to avoid over-tilt
-* Low-pass filtering on noisy channels (rot\_z)
-* Unit conversions from mm → m and radians → degrees
-
-
-## Execution
-
-* Simulink runs at 100Hz (Fixed step = 0.01s)
-* Output control signals are sent via UDP to Python at each timestep
-* Uses user-defined functions to package \[Roll, Pitch, Yaw, Throttle] into float32 arrays
-
-
 
 ## Requirements
 
