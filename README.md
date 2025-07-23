@@ -55,7 +55,7 @@ Table 1. Flight response metrics under dual-loop PID control (mean ± standard d
 
 
 
-To visualize the results, the figure below illustrates the **3D trajectory** of each flight attempt (solid lines), along with the **mean trajectory** (dashed blue line). The shaded region denotes the ±1σ envelope across trials.
+To visualize the results, the figure below illustrates the **2D trajectory** of each flight attempt (solid lines), along with the **mean trajectory** (dashed blue line). The shaded region denotes the ±1σ envelope across trials.
 
 > * `X vs Time`, `Y vs Time`, and `Z vs Time` represent spatial trajectory tracking.
 > * `Rotation Z vs Time` shows the yaw angle correction behavior.
