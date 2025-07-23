@@ -62,7 +62,3 @@ To ensure the Python control system runs properly, the following software compon
   > Used to assign the correct WinUSB driver if the dongle is not recognized.
   > Download: [https://zadig.akeo.ie/](https://zadig.akeo.ie/)
 
-* **MATLAB**
-  Used as the upstream controller that sends commands and receives motion capture data.
-
-  > Requires proper UDP communication setup and signal timing coordination.
