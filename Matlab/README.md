@@ -36,7 +36,7 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
     Includes:
 
     * 2D and 3D trajectory visualization across multiple flights
-    * Step response evaluation with `stepinfo` (rise time, overshoot, steady-state error)
+    * Dynamic response evaluation with `stepinfo` (rise time, overshoot, steady-state error)
 
   * `workspace/`
     
@@ -45,7 +45,7 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 
     * logging data into csv files
     * Single and multi-axis plotting
-    * Response evaluation
+    * Identifying system **transfer function** via step response
     
 ## Core Control Logic
 
