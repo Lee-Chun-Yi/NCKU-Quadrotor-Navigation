@@ -1,7 +1,7 @@
 # Simulink User Guide
 
 This document provides a step-by-step guide on how to operate the control system for this project using MATLAB Simulink.
-> Please ensure that all required Simulink toolboxes and dependencies are installed before launching the model.
+> Please ensure that all required Simulink toolboxes are installed before launching the model. The file `controller.slx` requires **MATLAB R2025a or newer** to function properly.
 
 ---
 
