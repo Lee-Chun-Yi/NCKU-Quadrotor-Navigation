@@ -244,15 +244,15 @@ Recommended safeguards:
 
 ### Velocity PID Performance Example
 
-![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-23%20154737.png)
+![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-23%20152124.png)
 
-This scope output shows tuning results for the **Y-axis controller**:
+This scope output shows tuning results for the **X-axis controller**:
 
 | Subplot          | Signal Name          | Description                            |
 | ---------------- | -------------------- | -------------------------------------- |
-| **Top Left**     | `y_velocity_current` | Actual velocity measured by Vicon      |
-| **Bottom Left**  | `y_velocity_desired` | Desired velocity from position PID     |
-| **Top Right**    | `roll_out`           | Roll command output by velocity PID    |
-| **Bottom Right** | `trans_y`            | Actual position response in the Y axis |
+| **Top Left**     | `x_velocity_current` | Actual velocity measured by Vicon      |
+| **Bottom Left**  | `x_velocity_desired` | Desired velocity from position PID     |
+| **Top Right**    | `pitch_out`          | Roll command output by velocity PID    |
+| **Bottom Right** | `trans_x`            | Actual position response in the X axis |
 
 
