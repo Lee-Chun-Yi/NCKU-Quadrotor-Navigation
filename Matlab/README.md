@@ -25,7 +25,6 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 
     * PID tuning procedure
       
----
 
 * `data_analysis/`
   
