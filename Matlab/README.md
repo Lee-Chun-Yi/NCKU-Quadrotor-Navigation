@@ -32,7 +32,7 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 
   * `csv/`
     
-    Used for **post-flight analysis** based on logged csv data.
+    Used for **flight analysis** based on logged csv data.
     Includes:
 
     * 2D and 3D trajectory visualization across multiple flights
@@ -40,11 +40,12 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 
   * `workspace/`
     
-    Used for **real-time analysis** from Simulink's out structure during experiments.
+    Used for data analysis from Simulink's out structure.
     Includes:
 
+    * logging data into csv files
     * Single and multi-axis plotting
-    * Response evaluation and CSV export for persistent logging
+    * Response evaluation
     
 ## Core Control Logic
 
