@@ -8,7 +8,7 @@ This folder contains MATLAB scripts for visualizing and evaluating Crazyflie fli
 
 * `csv/`
 
-  Contains analysis scripts for **CSV-based post-flight data**. To use this folder, please ensure the required **csv files exist**, If not, you may generate them using `log_csv.m` under the `to_workspace/` .
+  Contains analysis scripts for **CSV-based post-flight data**. To use this folder, please ensure the required **csv files exist**, If not, you may generate them using `log_csv.m` under the `workspace/` .
 
   * `2D_plot.m`
 
@@ -34,7 +34,7 @@ This folder contains MATLAB scripts for visualizing and evaluating Crazyflie fli
     * Supports X, Y, Z, and Rot Z axes
     * Target tracking error estimation
 
-* `to_workspace/`
+* `workspace/`
 
   Contains analysis scripts for **live-flight evaluation using MATLAB workspace signals**.
 
