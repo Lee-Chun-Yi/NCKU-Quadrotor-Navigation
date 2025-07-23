@@ -242,4 +242,24 @@ Recommended safeguards:
 * Enable **Anti-Windup** in Simulink PID blocks
 
 
+#### 🔍 Velocity PID Performance Example
 
+![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-23%20154737.png)
+
+This scope output shows tuning results for the **Y-axis velocity controller**:
+
+| Subplot          | Signal Name          | Description                            |
+| ---------------- | -------------------- | -------------------------------------- |
+| **Top Left**     | `y_velocity_current` | Actual velocity measured by Vicon      |
+| **Bottom Left**  | `y_velocity_desired` | Desired velocity from position PID     |
+| **Top Right**    | `roll_out`           | Roll command output by velocity PID    |
+| **Bottom Right** | `trans_y`            | Actual position response in the Y axis |
+
+**Interpretation Guidelines:**
+
+* `y_velocity_current` should closely track `y_velocity_desired`
+* Excessive deviation → increase `Kp`
+* Overshoot or noise → increase `Kd` for damping
+* Persistent offset → try small `Ki`, with anti-windup enabled
+* `roll_out` should be smooth and proportional to the velocity error
+* `trans_y` should converge to a steady value without large oscillations
