@@ -48,7 +48,6 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
 
 ## Requirements
 
-* MATLAB R2023a or later
+* MATLAB R2025a or later
 * Simulink
-* Instrument Control Toolbox (for UDP communication)
 
