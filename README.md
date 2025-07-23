@@ -27,6 +27,7 @@ The resulting control commands are sent from MATLAB to a Python script, which th
  
 ![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-11%20204155.png)
 
+---
 
 ## Experiment Result
 
@@ -48,9 +49,9 @@ The table below reports the average **Overshoot**, **Steady-State Error**, and *
 | **Z-axis (Throttle control)**     | 17.42 ± 6.06 %         | 13.75 ± 13.38 mm                | 2.52 ± 0.19 s          |
 | **Rot Z (Yaw control)**           | 56.62 deg              | 2.78 ± 2.59 deg                 | —                      |
 
-Table 1. Flight response metrics under dual-loop PID control (mean ± standard deviation over 15 flights)*
+Table 1. Flight response metrics under dual-loop PID control (mean ± standard deviation over 15 flights)
 
----
+
 
 To visualize the results, the figure below illustrates the **3D trajectory** of each flight attempt (solid lines), along with the **mean trajectory** (dashed blue line). The shaded region denotes the ±1σ envelope across trials.
 
