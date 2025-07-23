@@ -24,7 +24,7 @@ When attempting to connect, check if the **green LED** on the Crazyflie lights u
   1. Verify that the correct **radio URI** in the Python code is being used.
   2. Unplug and replug the **Crazyradio PA** dongle.
   3. Use **Zadig** to check and install the correct USB driver.
-     More information: [Zadig USB Driver Setup – Bitcraze Documentation](https://www.bitcraze.io/documentation/repository/crazyradio-firmware/master/building/usbwindows/)
+     More information: 🔗 [Zadig USB Driver Setup – Bitcraze Documentation](https://www.bitcraze.io/documentation/repository/crazyradio-firmware/master/building/usbwindows/)
 
 ---
 
@@ -82,7 +82,7 @@ Needed if firmware is damaged (M2 Blue LED solid ON).
 
 11. Click **"Restart in firmware mode"** to reboot and exit recovery.
 
-More information: [Bitcraze-Recovery firmware flashing](https://www.bitcraze.io/documentation/repository/crazyflie-clients-python/master/userguides/recovery-mode/)
+More information: 🔗 [Bitcraze-Recovery firmware flashing](https://www.bitcraze.io/documentation/repository/crazyflie-clients-python/master/userguides/recovery-mode/)
 
 ---
 
@@ -126,7 +126,7 @@ Different layers of the PID control architecture require different recommended u
   * For attitude and attitude rate controllers, maintain at least **500 Hz** update frequency
   * Lower frequencies may cause instability due to the fast dynamics of inner-loop control
 
-More information: [Commander Framework](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Crazyflie%202.1/platform_overview.md#2-commander-framework)
+More information: 🔗 [Commander Framework](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/Crazyflie%202.1/platform_overview.md#2-commander-framework)
 
 ---
 
