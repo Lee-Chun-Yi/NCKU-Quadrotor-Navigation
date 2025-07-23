@@ -1,5 +1,3 @@
-
-
 # MATLAB Module – Data Analysis
 
 This folder contains MATLAB scripts for visualizing and evaluating Crazyflie flight data. It supports both real-time workspace logging and post-experiment CSV data analysis.
@@ -67,20 +65,5 @@ This folder contains MATLAB scripts for visualizing and evaluating Crazyflie fli
     * Column formatting (`Time`, `Value`)
     * Compatibility with the `csv/` module
       
-  
----
-
-## Usage Notes
-
-* All scripts are organized for **modular reuse** – you may mix workspace and CSV analyses depending on your logging configuration.
-* Script headers follow a consistent section structure:
-
-  * `User Input`
-  * `Data Processing`
-  * `Plotting`
-  * `Evaluation`
-* Time filtering, interpolation, and visualization are all tuned for **Crazyflie-scale indoor UAV testing**.
-
-> These scripts are designed to assist both control debugging and performance analysis in a repeatable, human-readable format.
 
 
