@@ -1,5 +1,3 @@
----
-
 # Simulink User Guide
 
 This document provides a step-by-step guide on how to operate the control system for this project using MATLAB Simulink.
