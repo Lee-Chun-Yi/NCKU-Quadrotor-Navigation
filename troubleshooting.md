@@ -6,7 +6,7 @@
 4. [Not Responding to RPYT Commands](#4-crazyflie-not-responding-to-rpyt-commands)
 5. [Control Frequency Considerations](#5-control-frequency-considerations)
 6. [Cannot Fly Again After One Flight](#6-crazyflie-cannot-fly-again-after-one-flight)
-7. [Crazyflie Unbalanced During Flight](#7-crazyflie-unbalanced-during-flight)
+7. [Crazyflie Crashed During Flight](#7-crazyflie-Crashed-During-Flight)
 
 ---
 
@@ -147,7 +147,7 @@ def power_cycle_crazyflie():
 
 ---
 
-## 7. Crazyflie Unbalanced During Flight
+## 7. Crazyflie Crashed During Flight
 
 ### Case I. Crashes Immediately After Takeoff
 
