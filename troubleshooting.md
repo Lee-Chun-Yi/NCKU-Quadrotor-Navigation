@@ -30,12 +30,12 @@ When attempting to connect, check if the **green LED** on the Crazyflie lights u
 
 ## 2. Crazyflie LED Indicators
 
-| **Mode**                 | **LED(s)**              | **State**                                     | **Meaning**                                              |
-| ------------------------ | ----------------------- | --------------------------------------------- | -------------------------------------------------------- |
-| **Standby Mode**         | M2, M3: Blue<br>M1: Red | Blue LEDs solid ON<br>Red LED slowly blinking | Crazyflie is powered and idle, ready to receive commands |
-| **Low Battery**          | M1: Red                 | Red LED solid ON                              | Battery voltage is low — charging required               |
-| **Crazyradio Connected** | M4: Green               | Green LED solid ON                            | Crazyradio PA is successfully connected                  |
-| **Firmware Corruption**  | M2: Blue                | Blue LED solid ON                             | Firmware is missing or corrupted — recovery needed       |
+| **Mode**                 | **LED(s)**              | **State**                                     | **Meaning**                                                                        |
+| ------------------------ | ----------------------- | --------------------------------------------- | ---------------------------------------------------------------------------------- |
+| **Standby Mode**         | M2, M3: Blue<br>M1: Red | Blue LEDs solid ON<br>Red LED slowly blinking | Crazyflie is powered and idle, ready to receive commands                           |
+| **Low Battery**          | M1: Red                 | Red LED solid ON                              | Battery voltage is low — charging required, cf may crashed in low-battery flight   |
+| **Crazyradio Connected** | M4: Green               | Green LED solid ON                            | Crazyradio PA is successfully connected                                            |
+| **Firmware Corruption**  | M2: Blue                | Blue LED solid ON                             | Firmware is missing or corrupted — recovery needed                                 |
 
 More information: [Bitcraze Documentation – CF2 Components](https://www.bitcraze.io/documentation/system/platform/cf2-components/)
 
