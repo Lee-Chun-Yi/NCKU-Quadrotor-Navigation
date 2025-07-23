@@ -14,6 +14,7 @@ This folder contains MATLAB scripts for visualizing and evaluating Crazyflie fli
   > If not, you may generate them using `log_csv.m` under the `to_workspace/` .
 
   * `2D_plot.m`
+
     Plots **multi-axis 2D trajectories** from CSV files (e.g., X/Y/Z/RotZ). Includes:
 
     * Mean ±1σ visualization
@@ -21,6 +22,7 @@ This folder contains MATLAB scripts for visualizing and evaluating Crazyflie fli
     * Unified legend and subplot formatting
 
   * `3D_plot.m`
+
     Generates **3D flight trajectory** visualization. Includes:
 
     * Velocity-based color gradient
@@ -28,6 +30,7 @@ This folder contains MATLAB scripts for visualizing and evaluating Crazyflie fli
     * True global coordinate preservation
 
   * `dynamic_response.m`
+
     Performs **step response analysis** using `stepinfo` metrics:
 
     * Rise time, settling time, overshoot
