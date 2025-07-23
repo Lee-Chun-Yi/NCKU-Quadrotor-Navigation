@@ -43,7 +43,16 @@ This folder contains MATLAB scripts for visualizing and evaluating Crazyflie fli
     Plots all axes (X/Y/Z/Rot Z) from `Simulink` or logging output in `out` structure.
 
   * `2D_plot_single_dir.m`
-    Focused 2D plot for a **single direction** , is designed for step-input analysis.
+    Focused 2D plot for a **single direction** (`roll`, `pitch`, or `throttle`).
+    Designed for **step input response analysis**, and intended to be used alongside `transfer_func.m`.
+
+  * `transfer_func.m`
+    Identifies a **second-order transfer function** model from step-response data using `tfest`.
+    Includes:
+
+    * Bias and time-displacement correction
+    * Step-input creation
+    * Output comparison and model display
 
   * `3D_plot.m`
     3D trajectory visualization using `out.trans_*` variables in real time.
@@ -57,7 +66,8 @@ This folder contains MATLAB scripts for visualizing and evaluating Crazyflie fli
     * Automatic filename generation
     * Column formatting (`Time`, `Value`)
     * Compatibility with the `csv/` module
-
+      
+  
 ---
 
 ## Usage Notes
