@@ -48,7 +48,7 @@ The table below reports the average **Overshoot**, **Steady-State Error**, and *
 | **Z-axis (Throttle control)**     | 17.42 ± 6.06 %         | 13.75 ± 13.38 mm                | 2.52 ± 0.19 s          |
 | **Rot Z (Yaw control)**           | 56.62 deg              | 2.78 ± 2.59 deg                 | —                      |
 
-*Table 1. Flight response metrics under dual-loop PID control (mean ± standard deviation over 15 flights)*
+Table 1. Flight response metrics under dual-loop PID control (mean ± standard deviation over 15 flights)*
 
 ---
 
