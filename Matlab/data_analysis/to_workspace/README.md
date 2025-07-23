@@ -43,7 +43,7 @@ This folder contains MATLAB scripts for visualizing and evaluating Crazyflie fli
     Plots all axes (X/Y/Z/Rot Z) from `Simulink` or logging output in `out` structure.
 
   * `2D_plot_single_dir.m`
-    Focused 2D plot for a **single direction** (`roll`, `pitch`, or `throttle`) with displacement correction.
+    Focused 2D plot for a **single direction** , is designed for step-input analysis.
 
   * `3D_plot.m`
     3D trajectory visualization using `out.trans_*` variables in real time.
