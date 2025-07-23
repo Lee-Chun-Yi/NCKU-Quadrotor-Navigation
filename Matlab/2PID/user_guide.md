@@ -145,7 +145,7 @@ This Simulink control system adopts a **two-layer PID architecture**, consisting
 
 > Always tune the **inner loop first**, followed by the **outer loop**.
 
----
+
 
 ### 5.1 Velocity PID (Inner Loop)
 
@@ -194,7 +194,6 @@ Mitigation strategies:
 * Enable **Anti-Windup** in Simulink PID block
 * Set upper and lower limits using **Saturation** blocks
 
----
 
 ### 5.2 Position PID (Outer Loop)
 
