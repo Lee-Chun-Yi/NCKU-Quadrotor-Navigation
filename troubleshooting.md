@@ -64,8 +64,8 @@ Needed if firmware is damaged (M2 Blue LED solid ON).
 4. **Press and hold** the power button on the Crazyflie.
 
    * **Release the button immediately once the fast blink begins.**
-    * After a few seconds of pressing, the blue LED (M2) will **blink slowly** → wireless bootloader stage.
-    * Then it will **blink rapidly** → USB bootloader stage.
+     * After a few seconds of pressing, the blue LED (M2) will **blink slowly** → wireless bootloader stage.
+     * Then it will **blink rapidly** → USB bootloader stage.
    
 
 6. Once the blue LED is blinking rapidly, the bootloader is active.
