@@ -40,7 +40,7 @@ This folder contains MATLAB scripts for visualizing and evaluating Crazyflie fli
   * `2D_plot.m`
     Plots all axes (X/Y/Z/Rot Z) from Simulink.
 
-  * `2D_plot_single_dir.m`
+  * `plot_single_axis.m`
     Focused 2D plot for a **single direction** (`roll`, `pitch`, or `throttle`).
     Designed for **step input response analysis**, and intended to be used alongside `transfer_func.m`.
 
