@@ -38,7 +38,7 @@ This folder contains MATLAB scripts for visualizing and evaluating Crazyflie fli
   Contains analysis scripts for **live-flight evaluation using MATLAB workspace signals**.
 
   * `2D_plot.m`
-    Plots all axes (X/Y/Z/Rot Z) from `Simulink` or logging output in `out` structure.
+    Plots all axes (X/Y/Z/Rot Z) from Simulink.
 
   * `2D_plot_single_dir.m`
     Focused 2D plot for a **single direction** (`roll`, `pitch`, or `throttle`).
