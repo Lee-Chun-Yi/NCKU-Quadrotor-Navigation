@@ -10,7 +10,7 @@ This section guides you through the environment setup required to run the Python
 
 ### 1. Check Python Version
 
-The control scripts are tested with **Python 3.10 \~ 3.11**. You can verify your version using:
+The control scripts are tested with **Python 3.11 ~ 3.12**. You can verify your version using:
 
 ```bash
 python --version
