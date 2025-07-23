@@ -1,7 +1,8 @@
-% 2D Plot - To workspace
-
+% 2D Plot - From Workspace Signals
+% ==== User Input ====
 Tmax = 80;  % Maximum time (in seconds)
 
+% ==== Data Processing ====
 % Retrieve Time and Data, and flatten to vectors
 t_x   = out.trans_x.Time;
 x     = squeeze(out.trans_x.Data);
@@ -24,7 +25,7 @@ idx_y   = t_y   <= Tmax;
 idx_z   = t_z   <= Tmax;
 idx_rot = t_rot <= Tmax;
 
-% Plotting
+% ==== Plotting ====
 figure;
 
 subplot(4,1,1);
