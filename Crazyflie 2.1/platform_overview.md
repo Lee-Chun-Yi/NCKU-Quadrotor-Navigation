@@ -43,6 +43,7 @@ A long-range 2.4GHz USB radio dongle used for communicating with Crazyflie over 
 The **Commander** is the firmware layer responsible for translating external setpoints (e.g., velocity, position, attitude) into flight control actions.  
 This project bypasses the Crazyflie onboard controller and sends **PWM signals directly**, forming a fully custom outer-loop system.
 ![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-11%20130726.png)
+
 # 3. Firmware and Software Resources
 The following open-source Bitcraze repositories were used and referenced in this project:
 
@@ -85,6 +86,7 @@ These controllers map user input directly to thrust and attitude setpoints. Suit
 🔗 [Bitcraze – cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python/blob/master/docs/installation/install.md)
 
 🔗 [Userguide– cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python/tree/master/docs/userguides)
+
 cfclient is Bitcraze's official GUI-based control platform.
 
 **Main Functions:**
