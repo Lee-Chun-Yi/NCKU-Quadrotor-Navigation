@@ -24,7 +24,7 @@ The resulting control commands are sent from MATLAB to a Python script, which th
   **Simulink-based control systems** (2PID & 4PID), with tools for tuning, trajectory plotting, and performance analysis.
 
 * `Python/`
-  **Main flight control scripts** with direct RPYT or PWM (2PID & 4PID respectively) output.
+  **Main flight control scripts** with direct RPYT or PWM output (2PID & 4PID respectively).
 
   
  ## 
