@@ -43,24 +43,6 @@ pip3 install cflib
 For source installation or updates, see:
 🔗 [Bitcraze – cflib GitHub](https://github.com/bitcraze/crazyflie-lib-python)
 
-### 3. (Optional) Install `cfclient`
-
-To monitor logs or perform radio scan and configuration, you may install the official GUI: **Crazyflie Client (cfclient)**.
-
-Open ```CMD```
-
-```bash
-pip3 install cfclient
-```
-Enter ```cfclient``` to launch.
-
-
-More information:
-🔗 [Install – cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python/blob/master/docs/installation/install.md)
-
-🔗 [Userguide– cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python/tree/master/docs/userguides)
-
-
 ---
 
 ##  Pre-flight Setup
