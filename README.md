@@ -6,6 +6,10 @@ The following repository encompasses completed research projects under the guida
 
 This study focuses on the development of an autonomous navigation and control system for quadrotors operating in indoor environments. The objective is to achieve **stable and controllable hovering and point-to-point flight** without human intervention. The control strategy is primarily implemented in MATLAB, employing a **dual-loop PID controller** that independently handles position and velocity errors to generate corresponding attitude control outputs (Roll, Pitch, Yaw, Throttle).
 
+The current system has successfully implemented a dual-loop PID controller for position and velocity control. Building upon this foundation, the architecture will be progressively extended into a **full four-layer control framework** by incorporating additional attitude and attitude rate PID loops. This enhancement aims to enable high-frequency, low-latency closed-loop control, thereby improving flight stability and supporting more complex navigation tasks.
+
+
+The current system has successfully implemented a dual-loop PID controller for position and velocity control. Building upon this foundation, the architecture will be progressively extended into a full four-layer control framework by incorporating additional attitude and attitude rate PID loops. This enhancement aims to enable high-frequency, low-latency closed-loop control, thereby improving flight stability and supporting more complex navigation tasks.
 The overall system consists of several key modules: a Vicon motion capture system using five cameras operating at 100 Hz provides real-time 3D position and attitude data of the quadrotor. This data is transmitted via UDP to **MATLAB/Simulink**, where it undergoes preprocessing such as unit conversion and low-pass filtering.
 
 Within the control logic, **position errors** are first processed by a position PID controller to compute the **desired velocity**, which is then passed to a velocity PID controller to produce the appropriate Roll, Pitch, and Throttle commands. Yaw is separately adjusted based on the yaw angle error.
