@@ -36,7 +36,7 @@ Figure 1. Overview of the experimental setup
 
 ## Experiment Result
 
-> Flight Experiment Records: [](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/tree/main/experiment_results/flight_data)
+> Flight Experiment Records: [flight_data](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/tree/main/experiment_results/flight_data)
 
 ### 2PID: Single-Point Flight Trajectory
 
