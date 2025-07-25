@@ -20,11 +20,12 @@ The resulting control commands are sent from MATLAB to a Python script, which th
 * `Crazyflie 2.1/`
   Setup guides for Crazyflie operation.
 
+* `Matlab/`
+  **Simulink-based control systems** (2PID & 4PID), with tools for tuning, trajectory plotting, and performance analysis.
+
 * `Python/`
   **Main flight control scripts** with direct PWM output, plus tools for motor testing and Vicon data handling.
 
-* `Matlab/`
-  **Simulink-based control systems** (2PID & 4PID), with tools for tuning, trajectory plotting, and performance analysis.
   
  ## 
  
