@@ -120,8 +120,8 @@ For source installation or updates, see:
 
    * Press `Ctrl+C`:
 
-     *  **At high altitude, pressed once**: cut off motors for 0.1s, and begins a smooth landing.
-     *  **At low altitude, pressed twice**: immediately cuts off motors.
+     *  At high altitude, pressed **once**: cut off motors for 0.1s, and begins a smooth landing.
+     *  At low altitude, pressed **twice**: immediately cuts off motors.
      * This behavior is intentional to avoid mid-air drop during low-altitude startup.
 
 
