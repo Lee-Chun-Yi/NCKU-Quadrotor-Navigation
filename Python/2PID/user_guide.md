@@ -61,6 +61,9 @@ pip3 install cfclient
 More information:
 🔗 [Bitcraze – cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python/blob/master/docs/installation/install.md)
 
+🔗 [Userguide– cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python/tree/master/docs/userguides)
+
+
 ---
 
 ##  Pre-flight Setup
