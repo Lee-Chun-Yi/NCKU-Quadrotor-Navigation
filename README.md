@@ -40,6 +40,8 @@ Figure 1. Overview of the experimental setup
 
 ### 2PID: Single-Point Flight Trajectory
 
+#### Date of Execution: June 17, 2024
+
 The control system was tested by performing 15 repeated flights toward a fixed target position. The quadrotor initialized from
 **(x, y, z) = (35, 350, 40) mm**, with an initial heading angle **ψ = 45°**, and was commanded to fly to the destination **(500, 500, 800) mm**, with a yaw angle aligned to **0°**.
 
