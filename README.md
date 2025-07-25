@@ -14,14 +14,14 @@ The resulting control commands are sent from MATLAB to a Python script, which th
 
 ##  Folder Structure
 
-- `Crazyflie 2.1/`  
-  Contains basic usage documentation for Crazyflie and a troubleshooting guide for hardware and connectivity issues.
+* `Crazyflie 2.1/`
+  Setup guides and hardware troubleshooting for Crazyflie operation.
 
-- `Python/`  
-  Includes the main flight control script and various utility scripts such as motor testing and communication handlers.
+* `Python/`
+  Real-time flight control scripts with direct PWM output, plus tools for motor testing and Vicon data handling.
 
-- `Matlab/`  
-  Contains the core flight control system built in Simulink, as well as plotting and response analysis scripts (e.g., trajectory visualization, PID tuning).
+* `Matlab/`
+  Simulink-based control systems (2PID & 4PID), with tools for tuning, trajectory plotting, and performance analysis.
   
  ## 
  
