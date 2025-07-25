@@ -82,8 +82,9 @@ These controllers map user input directly to thrust and attitude setpoints. Suit
 
 ## 2. Using Crazyflie Client (cfclient)
 
-🔗 [cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python)
+🔗 [Bitcraze – cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python/blob/master/docs/installation/install.md)
 
+🔗 [Userguide– cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python/tree/master/docs/userguides)
 cfclient is Bitcraze's official GUI-based control platform.
 
 **Main Functions:**
