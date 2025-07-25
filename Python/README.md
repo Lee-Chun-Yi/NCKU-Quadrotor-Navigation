@@ -61,7 +61,7 @@ To ensure the Python control system runs properly, the following software compon
 
   > Used to assign the correct WinUSB driver if the dongle is not recognized.
   > 
-  > Download: [https://zadig.akeo.ie/](https://zadig.akeo.ie/)
+  > Download Zadig: [https://zadig.akeo.ie/](https://zadig.akeo.ie/)
   > 
   > Crazyradio Setup: [Zadig USB Driver Setup – Bitcraze Documentation](https://www.bitcraze.io/documentation/repository/crazyradio-firmware/master/building/usbwindows/)
 
