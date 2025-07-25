@@ -87,7 +87,7 @@ These controllers map user input directly to thrust and attitude setpoints. Suit
 
 🔗 [Userguide– cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python/tree/master/docs/userguides)
 
-cfclient is Bitcraze's official GUI-based control platform.
+To monitor logs or perform radio scan and configuration, you may install the official GUI: **Crazyflie Client (cfclient)**.
 
 **Main Functions:**
 
@@ -98,11 +98,12 @@ cfclient is Bitcraze's official GUI-based control platform.
 
 **Installation:**
 
+Open ```CMD```
+
+```bash
+pip3 install cfclient
 ```
-git clone https://github.com/bitcraze/crazyflie-clients-python
-cd crazyflie-clients-python
-python3 bin/cfclient
-```
+Enter ```cfclient``` to launch.
 
 
 
