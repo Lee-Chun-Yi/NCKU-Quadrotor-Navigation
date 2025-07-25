@@ -30,19 +30,10 @@ This folder contains the full MATLAB/Simulink implementation of the control syst
   
   MATLAB scripts for evaluating and visualizing Crazyflie flight performance.
 
-  * `csv/`
-    
-    Used for **flight analysis** based on logged csv data.
     Includes:
 
     * 2D and 3D trajectory visualization across multiple flights
     * Dynamic response evaluation with `stepinfo` (rise time, overshoot, steady-state error)
-
-  * `workspace/`
-    
-    Used for data analysis from Simulink's out structure.
-    Includes:
-
     * logging data into csv files
     * Single and multi-axis plotting
     * Identifying system **transfer function** via step response
