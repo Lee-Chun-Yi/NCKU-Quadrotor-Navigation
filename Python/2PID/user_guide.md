@@ -129,5 +129,3 @@ For full source code and all function references, see:
 
 * `controller.py`
 * `reference.md`
-
-All safety mechanisms, logging, and communication routines are integrated in a modular structure for easy customization.
