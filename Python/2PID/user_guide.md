@@ -47,19 +47,16 @@ For source installation or updates, see:
 
 To monitor logs or perform radio scan and configuration, you may install the official GUI: **Crazyflie Client (cfclient)**.
 
-Install dependencies and launch:
+Open ```CMD```
 
 ```bash
 pip3 install cfclient
 ```
-Enter ```cfclient``` to launch:
+Enter ```cfclient``` to launch.
 
-```bash
-pip3 install cfclient
-```
 
 More information:
-🔗 [Bitcraze – cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python/blob/master/docs/installation/install.md)
+🔗 [Install – cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python/blob/master/docs/installation/install.md)
 
 🔗 [Userguide– cfclient GitHub](https://github.com/bitcraze/crazyflie-clients-python/tree/master/docs/userguides)
 
