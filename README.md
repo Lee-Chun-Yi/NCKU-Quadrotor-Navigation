@@ -72,9 +72,4 @@ To visualize the results, the figure below illustrates the **2D trajectory** of 
 
 Figure 2. Single-target trajectory
 
----
-
-### 2PID: Multi-Point Flight 
-
-#### 📌 June 17, 2024
 
