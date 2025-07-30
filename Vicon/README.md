@@ -1,6 +1,6 @@
 # Vicon User Guide
 
-This folder contains setup instructions and reference materials for streaming **motion capture data from Vicon Tracker (Windows)** to a **Linux-based Simulink system** via UDP.
+This folder contains setup instructions and reference materials for streaming motion capture data from Vicon Tracker (Windows) to a Linux-based Simulink system via UDP.
 Because the **Vicon Tracker GUI is not supported on Linux**, all communication is established over a custom Ethernet setup using static IP and the built-in UDP Object Stream.
 
 ---
