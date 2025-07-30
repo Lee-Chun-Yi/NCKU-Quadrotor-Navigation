@@ -2,9 +2,9 @@ This guide describes the step-by-step configuration required to stream UDP motio
 
 ---
 
-##  Windows Side (Vicon Host)
+##  1. Windows Side (Vicon Host)
 
-### 1. Set Static Ethernet IP
+### 1.1 Set Static Ethernet IP
 
 1. Go to: Control Panel → Network and Sharing Center → Change adapter settings
 2. Find the **wired Ethernet interface connected to Linux**, right-click → Properties
@@ -16,7 +16,7 @@ This guide describes the step-by-step configuration required to stream UDP motio
 
 ---
 
-### 2. Verify IP Configuration
+### 1.2 Verify IP Configuration
 
 Open `cmd` and run:
 
@@ -31,7 +31,7 @@ Check for the interface used for Vicon streaming. You should see:
 
 ---
 
-### 3. (Optional) Add Static Route
+### 1.3 (Optional) Add Static Route
 
 If needed, force Windows to route traffic to the Linux target:
 
@@ -53,7 +53,7 @@ route print | find "192.168.10"
 
 ---
 
-### 4. Verify Connectivity
+### 1.4 Verify Connectivity
 
 ```cmd
 ping 192.168.10.3
@@ -63,7 +63,7 @@ You should receive successful replies from the Linux machine.
 
 ---
 
-##  Vicon Tracker Configuration
+##  2. Vicon Tracker Configuration
 
 In **Vicon Tracker**, navigate to **UDP Object Stream** settings:
 
@@ -76,9 +76,9 @@ In **Vicon Tracker**, navigate to **UDP Object Stream** settings:
 
 ---
 
-## Linux Side (MATLAB Simulink + UDP Receiver)
+## 3. Linux Side (MATLAB Simulink + UDP Receiver)
 
-### 1. Set Static IP for Ethernet
+### 3.1 Set Static IP for Ethernet
 
 Check your network interface name:
 
@@ -99,7 +99,7 @@ ip a  # Confirm the settings
 
 ---
 
-### 2. Allow Incoming UDP Port (Optional)
+### 3.2 Allow Incoming UDP Port (Optional)
 
 If `ufw` (firewall) is enabled:
 
@@ -109,7 +109,7 @@ sudo ufw allow 51001/udp
 
 ---
 
-### 3. Check UDP Traffic with tcpdump
+### 3.3 Check UDP Traffic with tcpdump
 
 Use `tcpdump` to monitor incoming Vicon data:
 
@@ -127,7 +127,7 @@ If no packets appear, double-check Windows firewall and routing settings.
 
 ---
 
-### 4. Simulink: UDP Receive Block Settings
+## 4. Simulink: UDP Receive Block Settings
 
 Configure the **UDP Receive** block in Simulink:
 
