@@ -1,49 +1,25 @@
-## Vicon User Guide
+# Vicon User Guide
 
-This section provides a basic introduction to setting up object tracking and UDP streaming with the Vicon system.
-
-
-###  1. Creating an Object in Vicon Tracker 
-
-To define an object for tracking:
-
-1. If you are streaming live data, first pause streaming by clicking **Pause** under the Objects tab in the Resources pane.
-
-![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-23%20141332.png)
-
-2. Hold the **`Alt` key** and use left-click + drag to select the markers that define the object.
-3. Enter a name in the Create Object box and click **Create**.
-
-
-![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-23%20141353.png)
-
-
-![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-23%20141418.png)
-
-
-More information: 🔗 [Creating an object – Vicon Help](https://help.vicon.com/space/Tracker310/13926929/Creating+an+object) 
+This folder contains setup instructions and reference materials for streaming **motion capture data from Vicon Tracker (Windows)** to a **Linux-based Simulink system** via UDP.
+Because the **Vicon Tracker GUI is not supported on Linux**, all communication is established over a custom Ethernet setup using static IP and the built-in UDP Object Stream.
 
 ---
 
-###  2. Configure UDP Streaming 
+## Folder Structure
 
-Before launching your MATLAB/Simulink or Python script, ensure UDP settings are correctly configured:
+* `Create_Object.md`
+  Step-by-step instructions for creating and naming rigid bodies (Trackable Objects) in Vicon Tracker. Covers:
 
-1. Go to the **Properties pane** for the Local Vicon System.
-2. Verify the following settings:
+  * Creating labeled markers
+  * Defining coordinate frames
+  * Exporting VSK files for reuse
 
-   * **Destination IP**: `127.0.0.1` (or your machine IP)
-   * **Destination Port**: `51001`
-   * **Enable the correct object(s)** to be tracked.
-   * **Set the streaming rate**, Max **100 Hz** for vicon tracker 3.10.
+* `recv_vicon_linux.md`
+  Full bidirectional configuration guide for enabling **UDP streaming from Windows to Linux**. Includes:
 
-
-![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-23%20230123.png)
-
-
-![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/SystemSection.png)
-
-
-More information: 🔗 [Properties pane for Local Vicon System – Vicon Help](https://help.vicon.com/space/Tracker310/13926747/Properties+pane+for+Local+Vicon+System) 
+  * Static IP configuration on both systems
+  * Vicon UDP port settings
+  * Linux-side network setup and UDP debugging
+  * Simulink UDP Receive block configuration
 
 
