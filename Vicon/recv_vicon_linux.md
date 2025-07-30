@@ -14,7 +14,7 @@ This guide describes the step-by-step configuration required to stream UDP motio
    * **IP Address**: `192.168.10.2`
    * **Subnet Mask**: `255.255.255.0`
 
----
+
 
 ### 1.2 Verify IP Configuration
 
@@ -29,7 +29,7 @@ Check for the interface used for Vicon streaming. You should see:
 * IPv4 Address: `192.168.10.2`
 * Subnet Mask: `255.255.255.0`
 
----
+
 
 ### 1.3 (Optional) Add Static Route
 
@@ -51,7 +51,7 @@ Or filter results:
 route print | find "192.168.10"
 ```
 
----
+
 
 ### 1.4 Verify Connectivity
 
@@ -97,8 +97,6 @@ sudo ip addr add 192.168.10.3/24 dev enp5s0
 ip a  # Confirm the settings
 ```
 
----
-
 ### 3.2 Allow Incoming UDP Port (Optional)
 
 If `ufw` (firewall) is enabled:
@@ -107,7 +105,7 @@ If `ufw` (firewall) is enabled:
 sudo ufw allow 51001/udp
 ```
 
----
+
 
 ### 3.3 Check UDP Traffic with tcpdump
 
