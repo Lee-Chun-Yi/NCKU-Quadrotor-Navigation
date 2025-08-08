@@ -36,7 +36,7 @@ Figure 1. Overview of the experimental setup
 
 ## Project Timeline – Crazyflie UAV Control Research
 
-#### 📌 June 17, 2025.
+### 📌 June 17, 2025.
 > Flight Test Records: [Flight_Data](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/tree/main/experiment_results/flight_data)
 
 ### 2PID: Single-Point Flight
@@ -75,7 +75,7 @@ Figure 2. Single-target trajectory
 
 ----
 
-#### 📌 July 15, 2025
+### 📌 July 15, 2025
 
 **Linux System Deployment**
 
