@@ -82,4 +82,4 @@ Figure 2. Single-target trajectory
 Migrated the full MATLAB–Python control system from Windows to **Linux**.
 Vicon motion capture data reception remains on the Windows host, with **6DoF data streamed via UDP over a private LAN** to the Linux machine.
 
-For detailed configuration and setup steps, refer to the [`Vicon`/`linux`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/tree/main/Vicon) directory.
+For detailed configuration and setup steps, refer to the `Vicon` / `linux` directory.
