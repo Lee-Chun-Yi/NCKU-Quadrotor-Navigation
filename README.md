@@ -34,13 +34,14 @@ Figure 1. Overview of the experimental setup
 
 ---
 
-## Experiment Result
+## Project Timeline – Crazyflie UAV Control Research
 
+#### 📌 June 17, 2025.
 > Flight Test Records: [Flight_Data](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/tree/main/experiment_results/flight_data)
 
 ### 2PID: Single-Point Flight
 
-#### 📌 June 17, 2024.
+
 >  17 consecutive flights (Battery replacement was performed) were conducted toward a fixed target position. Among these, 15 flights were successfully completed, while 2 flights resulted in crashes. 
 
 The control system was tested by performing 15 repeated flights toward a fixed target position. The quadrotor initialized from
@@ -72,4 +73,13 @@ To visualize the results, the figure below illustrates the **2D trajectory** of 
 
 Figure 2. Single-target trajectory
 
+----
 
+#### 📌 July 15, 2025
+
+**Linux System Deployment**
+
+Migrated the full MATLAB–Python control system from Windows to **Linux**.
+Vicon motion capture data reception remains on the Windows host, with **6DoF data streamed via UDP over a private LAN** to the Linux machine.
+
+For detailed configuration and setup steps, refer to the [`Vicon/linux`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/tree/main/Vicon) directory.
