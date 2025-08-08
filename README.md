@@ -39,26 +39,21 @@ The resulting control commands are sent from MATLAB to a Python script, which th
 
 ## Project Timeline – Crazyflie UAV Control Research
 
-#### 📌 April 15, 2025
+### **2025-04-15 — Python Control Code Implementation**
 
-**Python Control Code Implementation**
-
-Completed the development of the Python-side control module with the following core functionalities:
-
-* Receiving **RPYT** commands over UDP
-* Executing **smooth landing** procedures
-* Logging **battery voltage**
-* Performing **emergency landing** routines
-* Recording both **6DoF Vicon data** and **RPYT command logs**
-
-For detailed implementation, refer to the [`Python/`](./Python) directory.
+* Added UDP reception for **RPYT** commands
+* Implemented **smooth landing** procedures
+* Added **battery voltage logging**
+* Added **emergency landing** routines
+* Enabled logging of both **6DoF Vicon data** and **RPYT command history**
+  [Details in `Python/`](./Python)
 
 ---
 
 ### 📌 June 17, 2025.
 > Flight Test Records: [Flight_Data](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/tree/main/experiment_results/flight_data)
 
-### 2PID: Single-Point Flight
+#### 2PID: Single-Point Flight
 
 
 >  17 consecutive flights (Battery replacement was performed) were conducted toward a fixed target position. Among these, 15 flights were successfully completed, while 2 flights resulted in crashes. 
