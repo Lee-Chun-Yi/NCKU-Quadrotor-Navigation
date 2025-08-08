@@ -61,11 +61,6 @@ The resulting control commands are sent from MATLAB to a Python script, which th
 The control system was tested by performing 15 repeated flights toward a fixed target position. The quadrotor initialized from
 **(x, y, z) = (35, 350, 40) mm**, with an initial heading angle **ψ = 45°**, and was commanded to fly to the destination **(500, 500, 800) mm**, with a yaw angle aligned to **0°**.
 
-During each test, the Crazyflie’s flight position was logged in real time for 0–30 seconds. A sample trajectory and corresponding performance indicators were summarized and analyzed to quantify control effectiveness.
-
-The table below reports the average **Overshoot**, **Steady-State Error**, and **Rise Time** for each axis, based on 15 flight trials.
-
-> Notably, the Z-axis (altitude) exhibited the most stable behavior, with an average overshoot of only **17.42 ± 6.06%**, corresponding to about **0.139 m**.
 
 | **Axis / DOF**                    | **Overshoot (±σ)**     | **Steady-State Error (±σ)**     | **Rise Time (±σ)**     |
 | --------------------------------- | ---------------------- | ------------------------------- | ---------------------- |
@@ -77,15 +72,12 @@ The table below reports the average **Overshoot**, **Steady-State Error**, and *
 Table 1. Flight response metrics under dual-loop PID control (mean ± standard deviation over 15 flights)
 
 
-
 To visualize the results, the figure below illustrates the **2D trajectory** of each flight attempt (solid lines), along with the **mean trajectory** (dashed blue line). The shaded region denotes the ±1σ envelope across trials.
 
 > * `X vs Time`, `Y vs Time`, and `Z vs Time` represent spatial trajectory tracking.
 > * `Rotation Z vs Time` shows the yaw angle correction behavior.
 
 ![Figure 2. Single-target trajectory](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-07-23%20114535.png)
-
-Figure 2. Single-target trajectory
 
 ---
 
