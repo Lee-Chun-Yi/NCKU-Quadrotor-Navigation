@@ -46,7 +46,7 @@ The resulting control commands are sent from MATLAB to a Python script, which th
 * Added battery voltage logging
 * Added emergency landing routines
 * Enabled logging of both 6DoF Vicon data and RPYT command history
-  [Details in `Python/`](./Python)
+  Details in [`Python/`](./Python)
 
 ---
 
