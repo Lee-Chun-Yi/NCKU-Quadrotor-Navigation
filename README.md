@@ -39,21 +39,21 @@ The resulting control commands are sent from MATLAB to a Python script, which th
 
 ## Project Timeline – Crazyflie UAV Control Research
 
-### **2025-04-15 — Python Control Code Implementation**
+### 2025-04-15 — Python Control Code Implementation
 
-* Added UDP reception for **RPYT** commands
-* Implemented **smooth landing** procedures
-* Added **battery voltage logging**
-* Added **emergency landing** routines
-* Enabled logging of both **6DoF Vicon data** and **RPYT command history**
+* Added UDP reception for RPYT commands
+* Implemented smooth landing procedures
+* Added battery voltage logging
+* Added emergency landing routines
+* Enabled logging of both 6DoF Vicon data and RPYT command history
   [Details in `Python/`](./Python)
 
 ---
 
-### 📌 June 17, 2025.
+### 2025-06-17 — 2PID Single-Point Flight Test
 > Flight Test Records: [Flight_Data](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/tree/main/experiment_results/flight_data)
 
-#### 2PID: Single-Point Flight
+#### Experiment Result
 
 
 >  17 consecutive flights (Battery replacement was performed) were conducted toward a fixed target position. Among these, 15 flights were successfully completed, while 2 flights resulted in crashes. 
@@ -89,9 +89,8 @@ Figure 2. Single-target trajectory
 
 ---
 
-### 📌 July 15, 2025
+### 2025-07-15 — Linux System Deployment
 
-**Linux System Deployment**
 
 Migrated the full MATLAB–Python control system from Windows to **Linux**.
 Vicon motion capture data reception remains on the Windows host, with **6DoF data streamed via UDP over a private LAN** to the Linux machine.
