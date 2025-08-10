@@ -54,7 +54,7 @@ The resulting control commands are sent from MATLAB to a Python script, which th
 
 ### **2025-05-20 — Our First GUI**
 
-> Details in [crazyflie-GUI-python](https://github.com/Lee-Chun-Yi/crazyflie-GUI-python/tree/main)
+> Details in [crazyflie-GUI-python](https://github.com/Lee-Chun-Yi/crazyflie-GUI-python/tree/main). Future work and updates will be documented here.
 
 * Start to work on GUI project
 * Completed integration between Python control code, MATLAB, and Crazyflie
@@ -95,6 +95,27 @@ To visualize the results, the figure below illustrates the **2D trajectory** of 
 
 ---
 
+
+### **2025-07-20 — 4PID & Crazyflie Bolt Project Start**
+
+* Began development of the entire four PID loops (Unfinished: **Attitude** and **Attitude Rate**)
+* Transitioned from Crazyflie 2.1 to **Crazyflie Bolt** due to PWM command limitations on CF 2.1
+* Set up Bolt hardware for upcoming low-level control experiments
+
+ Hardware Used:
+> Crazyflie Bolt 1.1
+> 
+> HQProp T3X2 HQ3020 3-inch bi-blade propellers (racing toothpick style)
+> 
+> Happymodel EX1103 KV11000 brushless motors (3-hole mount, for Mobula8)
+> 
+> Tarot 6A BLHeli ESC (multirotor) TL300G5
+
+![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-08-08%20041930.png)
+
+---
+
+
 ### 2025-07-15 — Linux System Deployment
 
 > Details in [`Vicon/linux`](./Vicon/linux.md)
@@ -102,4 +123,7 @@ To visualize the results, the figure below illustrates the **2D trajectory** of 
 
 Migrated the full MATLAB–Python control system from Windows to **Linux**.
 Vicon motion capture data reception remains on the Windows host, with **6DoF data streamed via UDP over a private LAN** to the Linux machine.
+
+
+
 
