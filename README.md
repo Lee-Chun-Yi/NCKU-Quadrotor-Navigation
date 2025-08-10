@@ -36,11 +36,11 @@ The resulting control commands are sent from MATLAB to a Python script, which th
 
 ## Project Timeline – Crazyflie UAV Control Research
 
-### 2025-04-15 — Python Control Code Implementation
+### 2025-04-15 — Python Control Code Complete
 
-   > Details in [`Python/`](./Python)
+   > Details in [`Python/2PID`](./Python)
 
-* Added UDP reception for RPYT commands
+* Added UDP reception for **RPYT** commands
 * Implemented smooth landing procedures
 * Added battery voltage logging
 * Added emergency landing routines
