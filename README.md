@@ -2,6 +2,7 @@
 
 This repository contains a collection of research projects completed under the guidance of [**Professor Woei Leong Chan**](https://iaa.ncku.edu.tw/p/412-1104-29048.php?Lang=en).
 
+
 ## Indoor Navigation of Quadrotors Using a Motion Capture System
 
 This study focuses on the development of an autonomous navigation and control system for quadrotors operating in indoor environments. The objective is to achieve **stable and controllable hovering and point-to-point flight** without human intervention. The control strategy is primarily implemented in MATLAB, employing a **dual-loop PID controller** that independently handles position and velocity errors to generate corresponding attitude control outputs (Roll, Pitch, Yaw, Throttle).
@@ -38,6 +39,14 @@ The resulting control commands are sent from MATLAB to a Python script, which th
 
 
 ## Project Timeline – Crazyflie UAV Control Research
+
+### **2025-05-20 — Our First GUI**
+
+* Completed integration between Python control code, MATLAB, and Crazyflie
+* Designed first GUI version for operator-friendly control
+  ![](https://github.com/Lee-Chun-Yi/crazyflie-GUI-python/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-08-11%20005757.png)
+
+Complete GUI information: [crazyflie-GUI-python](https://github.com/Lee-Chun-Yi/crazyflie-GUI-python/tree/main)
 
 ### 2025-04-15 — Python Control Code Implementation
 
