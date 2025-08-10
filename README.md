@@ -95,6 +95,16 @@ To visualize the results, the figure below illustrates the **2D trajectory** of 
 
 ---
 
+
+### **2025-07-20 — 4PID & Crazyflie Bolt Project Start**
+
+* Began development of the entire four PID loops (Unfinished: **Attitude** and **Attitude Rate**)
+* Transitioned from Crazyflie 2.1 to **Crazyflie Bolt** due to PWM command limitations on CF 2.1
+* Set up Bolt hardware for upcoming low-level control experiments
+
+![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-08-08%20041930.png)
+
+
 ### 2025-07-15 — Linux System Deployment
 
 > Details in [`Vicon/linux`](./Vicon/linux.md)
@@ -102,4 +112,7 @@ To visualize the results, the figure below illustrates the **2D trajectory** of 
 
 Migrated the full MATLAB–Python control system from Windows to **Linux**.
 Vicon motion capture data reception remains on the Windows host, with **6DoF data streamed via UDP over a private LAN** to the Linux machine.
+
+
+
 
