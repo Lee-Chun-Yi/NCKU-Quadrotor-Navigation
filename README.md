@@ -53,6 +53,7 @@ This python version is based on 2PID Matlab structure, and it's job is to transf
 ### **2025-05-20 — Our First GUI**
 
 > Details in [crazyflie-GUI-python](https://github.com/Lee-Chun-Yi/crazyflie-GUI-python/tree/main). Future work and updates will be documented here.
+> 
 > Since the GUI wasn't stable enough, the experiment was still rely on the python code we had completed
 
 * Start to work on GUI project
