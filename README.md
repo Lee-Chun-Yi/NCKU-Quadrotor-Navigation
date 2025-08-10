@@ -98,7 +98,7 @@ To visualize the results, the figure below illustrates the **2D trajectory** of 
 
 ### 2025-07-15 — Linux System Deployment
 
-> Details in [`Vicon/linux`](./Vicon/linux)
+> Details in [`Vicon/linux`](./Vicon/linux.md)
 
 
 Migrated the full MATLAB–Python control system from Windows to **Linux**.
