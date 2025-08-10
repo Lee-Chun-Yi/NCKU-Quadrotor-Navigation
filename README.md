@@ -38,13 +38,13 @@ The resulting control commands are sent from MATLAB to a Python script, which th
 
 ### 2025-04-15 — Python Control Code Implementation
 
+   > Details in [`Python/`](./Python)
+
 * Added UDP reception for RPYT commands
 * Implemented smooth landing procedures
 * Added battery voltage logging
 * Added emergency landing routines
 * Enabled logging of both 6DoF Vicon data and RPYT command history
-  Details in [`Python/`](./Python)
-
   
 ---
 
