@@ -37,11 +37,7 @@ The resulting control commands are sent from MATLAB to a Python script, which th
 
    > Details in [`Python/2PID`](./Python/2PID)
 
-* Added UDP reception for **RPYT** commands
-* Implemented smooth landing procedures
-* Added battery voltage logging
-* Added emergency landing routines
-* Enabled logging of both 6DoF Vicon data and RPYT command history
+This python version is based on 2PID Matlab structure, and it's job is to transfer RPYT commands from Matlab to Crazyflie.
   
 ![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-08-11%2002153.png)  
 
