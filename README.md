@@ -102,12 +102,12 @@ To visualize the results, the figure below illustrates the **2D trajectory** of 
 * Transitioned from Crazyflie 2.1 to **Crazyflie Bolt** due to PWM command limitations on CF 2.1
 * Set up Bolt hardware for upcoming low-level control experiments
   
-Hardware Used:
+> Hardware Used:
 
- * Crazyflie Bolt 1.1
- * HQProp T3X2 HQ3020 3-inch bi-blade propellers (racing toothpick style)
- * Happymodel EX1103 KV11000 brushless motors (3-hole mount, for Mobula8)
- * Tarot 6A BLHeli ESC (multirotor) TL300G5
+>  * Crazyflie Bolt 1.1
+>  * HQProp T3X2 HQ3020 3-inch bi-blade propellers (racing toothpick style)
+>  * Happymodel EX1103 KV11000 brushless motors (3-hole mount, for Mobula8)
+>  * Tarot 6A BLHeli ESC (multirotor) TL300G5
 
 ![](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-08-08%20041930.png)
 
