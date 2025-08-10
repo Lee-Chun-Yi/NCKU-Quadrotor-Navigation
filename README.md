@@ -45,7 +45,7 @@ This python version is based on 2PID Matlab structure, and it's job is to transf
 
 ### **2025-05-13 — GUI Project Start**
 
-* Began development of the GUI project
+ Began development of the GUI project
 
 ---
 
