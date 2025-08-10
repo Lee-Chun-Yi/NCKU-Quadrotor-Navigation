@@ -54,13 +54,12 @@ The resulting control commands are sent from MATLAB to a Python script, which th
 
 ### **2025-05-20 — Our First GUI**
 
+> Details in [crazyflie-GUI-python](https://github.com/Lee-Chun-Yi/crazyflie-GUI-python/tree/main)
+
 * Start to work on GUI project
 * Completed integration between Python control code, MATLAB, and Crazyflie
 * Designed first GUI version for operator-friendly control
   ![](https://github.com/Lee-Chun-Yi/crazyflie-GUI-python/blob/main/image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-08-11%20005757.png)
-
-Complete GUI information: [crazyflie-GUI-python](https://github.com/Lee-Chun-Yi/crazyflie-GUI-python/tree/main)
-
 
 ---
 
