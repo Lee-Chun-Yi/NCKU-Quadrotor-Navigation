@@ -125,6 +125,16 @@ To visualize the results, the figure below illustrates the **2D trajectory** of 
 Migrated the full MATLAB–Python control system from Windows to **Linux**.
 Vicon motion capture data reception remains on the Windows host, with **6DoF data streamed via UDP over a private LAN** to the Linux machine.
 
+---
 
+### **2025-08-16 — 4PID & Crazyflie Bolt Project Roadmap**
+
+#### Short-Term Goals
+1. Implement **single-packet 4PWM transmission** (requires firmware modification).  
+2. Configure SD card logging for PWM data.  
+3. Perform **linear calibration of each motor** while flying with RPYT inputs.  
+
+#### Long-Term Goals
+- Develop **automated RPYT flight with per-motor linear calibration**, where compensation coefficients are obtained automatically during flight.  
 
 
