@@ -2,7 +2,9 @@
 
 This repository contains a collection of research projects completed under the guidance of [**Professor Woei Leong Chan**](https://iaa.ncku.edu.tw/p/412-1104-29048.php?Lang=en).
 
-Contact us: F44111106@gs.ncku.edu.tw
+Contact us: 
+Lee-Chunyi: F44111106@gs.ncku.edu.tw
+Ken-Huang: e84116201@gs.ncku.edu.tw
 
 ## Indoor Navigation of Quadrotors Using a Motion Capture System
 
