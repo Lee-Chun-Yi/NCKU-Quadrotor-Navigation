@@ -4,9 +4,9 @@ This repository contains a collection of research projects completed under the g
 
 Contact us: 
 
-Lee-Chunyi: F44111106@gs.ncku.edu.tw
+* Lee-Chunyi: F44111106@gs.ncku.edu.tw
 
-Ken-Huang: e84116201@gs.ncku.edu.tw
+* Ken-Huang: e84116201@gs.ncku.edu.tw
 
 ## Indoor Navigation of Quadrotors Using a Motion Capture System
 
