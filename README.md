@@ -139,6 +139,27 @@ Vicon motion capture data reception remains on the Windows host, with **6DoF dat
 
 ---
 
+# 2025-08-15 — Kalman Filter Implemented in MATLAB Controller
+
+We initially used **low-pass filters** on 6DOF data from the **Vicon motion capture system**, then applied differentiation to obtain velocity/angular velocity.
+However, this caused significant **delay and phase lag**.
+
+To address this, we implemented a **Kalman Filter (KF)**:
+
+* Reduces latency compared to low-pass filtering
+* Provides **direct velocity estimates**
+* Robust against noise and outliers
+
+
+## Methodology
+
+1. Collect multiple raw flight datasets (unfiltered)
+2. Automatically determine suitable **Q, R, P0** parameters
+3. Optimize parameters via **Normalized Innovation Squared (NIS)** and coverage tests
+4. Apply robust outlier rejection and static-window detection
+
+---
+
 ### 2025-08-28 — Build and Flash Firmware
 
 > 📄 Details in [`custom_cf_firmware.md`](./custom_cf_firmware.md)
