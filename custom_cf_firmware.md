@@ -104,7 +104,7 @@ build/cf2.bin
 2. Hold the **power button** for \~3 seconds until the blue LED blinks.
 3. Connect via USB.
 
----
+
 
 ### 4.2 Install `dfu-util` (if not included)
 
@@ -114,7 +114,7 @@ Inside Ubuntu:
 sudo apt install dfu-util
 ```
 
----
+
 
 ### 4.3 Flash Firmware
 
