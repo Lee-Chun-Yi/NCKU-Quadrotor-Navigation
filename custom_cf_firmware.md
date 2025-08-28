@@ -24,7 +24,7 @@ exit
 
 > ⚠️ Restart may be required after WSL installation.
 
----
+
 
 ### 1.2 Install Docker Desktop
 
@@ -34,7 +34,7 @@ Download and install:
 
 Enable **WSL Integration** for **Ubuntu** in Docker Desktop settings.
 
----
+
 
 ### 1.3 Verify Docker from WSL
 
