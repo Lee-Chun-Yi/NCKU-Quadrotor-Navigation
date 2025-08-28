@@ -87,10 +87,10 @@ cd crazyflie-firmware-pwm   # replace with your repo name
 
 Run the following commands inside the container:
 
-⚠️ Substitute **`cf2`** to your firmware type:
-* Crazyflie 2.0, Crazyflie 2.1(+): cf2
-* Crazyflie 2.1 Brushless: cf21bl
-* Crazyflie Bolt: bolt
+⚠️ Substitute **`cf2`** with your firmware type:
+* Crazyflie 2.0, Crazyflie 2.1(+): **`cf2`**
+* Crazyflie 2.1 Brushless: **`cf21bl`**
+* Crazyflie Bolt: **`bolt`**
 
 ```bash
 tb make cf2_defconfig
