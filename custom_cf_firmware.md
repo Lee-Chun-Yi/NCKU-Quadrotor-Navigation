@@ -1,4 +1,4 @@
-# Crazyflie Custom Firmware Build & Flash Guide
+# Crazyflie Custom Firmware Build & Flash Guide - Windows
 
 This guide describes how to **build and flash a custom Crazyflie firmware** using **WSL (Ubuntu)** and **Docker Toolbelt** on Windows.
 
