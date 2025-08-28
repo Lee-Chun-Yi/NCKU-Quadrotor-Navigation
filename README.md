@@ -102,7 +102,7 @@ To visualize the results, the figure below illustrates the **2D trajectory** of 
 ---
 
 
-### **2025-07-20 — 4PID & Crazyflie Bolt Project Start**
+### 2025-07-20 — 4PID & Crazyflie Bolt Project Start
 
 * Began development of the entire four PID loops (Unfinished: **Attitude** and **Attitude Rate**)
 * Transitioned from Crazyflie 2.1 to **Crazyflie Bolt** due to PWM command limitations on CF 2.1
@@ -162,7 +162,7 @@ To address this, we implemented a **Kalman Filter (KF)**:
 
 ### 2025-08-28 — Build and Flash Firmware
 
-> 📄 Details in [`custom_cf_firmware.md`](./custom_cf_firmware.md)
+> Details in [`custom_cf_firmware.md`](./custom_cf_firmware.md)
 
 Since the official Crazyflie firmware does not support sending all **m1–m4 PWM values in a single packet**,  
 we designed and built a **custom firmware** (based on the official Crazyflie firmware) to achieve this functionality.
