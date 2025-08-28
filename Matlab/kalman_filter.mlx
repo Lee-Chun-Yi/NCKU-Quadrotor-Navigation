@@ -1,0 +1,142 @@
+% This script is designed for cases where raw 6DOF position data from Vicon 
+% (or other motion capture systems) are noisy and direct differentiation introduces delay and phase lag.
+% Load multiple raw flight datasets (trans_x_#.csv, trans_y_#.csv, trans_z_#.csv) before use this script.
+
+%% ================== User Parameters (Adjust here) ==================
+Fs          = 100;                       % Data / filtering frequency (Hz)
+baseM_sec   = 0.3;                       % Initial quasi-static window lower bound (sec)
+idx_list    = [1 2 3 4];                 % Indices of datasets to be optimized
+
+use_fixed_R = false;                     % true = use fixed R below; false = estimate R per run then take median
+R_fixed     = diag([0.6818, 0.1554, 5.0450]);  % Position-only R
+
+% If original CSV units are mm, enable conversion (default assumes meters)
+convert_mm_to_m = true;   % true means divide by 1000
+
+% kQ search grid (per axis)
+kQx_grid = [1 2 3 4 6 8 12];
+kQy_grid = [1 2 3 4 6 8 12];
+kQz_grid = [2 4 6 8 12 16 24 32 40 44 46 48 50 52];
+
+% Coverage penalty (NIS ratio within chi-square bounds)
+lambda_cover = 1.5;     % Penalty weight
+alpha_cover  = 0.05;    % Significance level (→ 95% interval)
+
+% —— Data quality / outlier thresholds (avoid "All runs filtered out…") ——
+min_samples   = 300;    % Minimum number of samples per run (e.g. ≥3s @100Hz)
+outlier_z     = 6;      % ThresholdFactor for median/MAD (larger = looser)
+nis_clip_max  = 100;    % Clip extreme NIS values to avoid skewing statistics
+
+% Validation plotting (choose one dataset index; =0 means no plot)
+plot_run  = idx_list(1);   % Set 0 to skip plotting
+
+%% ================== Constants and Models ==================
+Ts = 1/Fs;
+A  = [1 Ts 0  0  0  0;
+      0  1  0  0  0  0;
+      0  0  1 Ts  0  0;
+      0  0  0  1  0  0;
+      0  0  0  0  1 Ts;
+      0  0  0  0  0  1];
+H  = [1 0 0 0 0 0;
+      0 0 1 0 0 0;
+      0 0 0 0 1 0];
+
+%% ================== Per-run Preprocessing and Basic Estimation ==================
+runs = struct('idx',{},'t',{},'Z',{},'x0',{},'R',{},'Qbase',{},'P0',{});
+for ii = 1:numel(idx_list)
+    idx = idx_list(ii);
+
+    % ---- Load CSV files (skip if missing) ----
+    fx = sprintf('trans_x_%d.csv', idx);
+    fy = sprintf('trans_y_%d.csv', idx);
+    fz = sprintf('trans_z_%d.csv', idx);
+    if ~(isfile(fx) && isfile(fy) && isfile(fz))
+        warning('Run #%d skipped: missing file(s).', idx);
+        continue
+    end
+    tx = readmatrix(fx);
+    ty = readmatrix(fy);
+    tz = readmatrix(fz);
+
+    % ---- Align timeline (take intersection only; trim NaNs) ----
+    t0 = max([tx(1,1), ty(1,1), tz(1,1)]);
+    t1 = min([tx(end,1), ty(end,1), tz(end,1)]);
+    t  = (t0:Ts:t1).';
+    x  = interp1(tx(:,1), tx(:,2), t, 'linear', NaN);
+    y  = interp1(ty(:,1), ty(:,2), t, 'linear', NaN);
+    z  = interp1(tz(:,1), tz(:,2), t, 'linear', NaN);
+    keep = all(isfinite([x y z]),2);
+    t = t(keep); x = x(keep); y = y(keep); z = z(keep);
+
+    % Length check
+    if numel(t) < min_samples
+        fprintf('Run #%d skipped: only %d samples (<%d)\n', idx, numel(t), min_samples);
+        continue
+    end
+
+    if convert_mm_to_m
+        x = x/1000; y = y/1000; z = z/1000;
+    end
+    Z  = [x y z]';   % 3×N
+
+    % ---- Estimate R (if not using fixed R) ----
+    if ~use_fixed_R
+        xs = sgf_kf(x, Ts, 0); rx = x - xs;
+        ys = sgf_kf(y, Ts, 0); ry = y - ys;
+        zs = sgf_kf(z, Ts, 0); rz = z - zs;
+        R_est = diag([var(rx,1), var(ry,1), var(rz,1)]);
+    else
+        R_est = R_fixed;
+    end
+
+    % ---- Base Q (using variance of smoothed gradient accelerations) ----
+    ax_sg = sgf_kf(x, Ts, 2);
+    ay_sg = sgf_kf(y, Ts, 2);
+    az_sg = sgf_kf(z, Ts, 2);
+    sig2_ax = (1.4826*mad(ax_sg,1))^2;
+    sig2_ay = (1.4826*mad(ay_sg,1))^2;
+    sig2_az = (1.4826*mad(az_sg,1))^2;
+
+    Q1 = @(s2) s2 * [Ts^4/4, Ts^3/2; Ts^3/2, Ts^2];
+    Q_base = blkdiag(Q1(sig2_ax), Q1(sig2_ay), Q1(sig2_az));
+
+    % ---- P0: automatically detect quasi-static segment ----
+    M  = find_quasi_static_window_kf(x, Ts, baseM_sec);
+    M  = min([M, numel(x), numel(y), numel(z)]);
+
+    Pp = diag([var(x(1:M),1), var(y(1:M),1), var(z(1:M),1)]);
+    if ~all(isfinite(diag(Pp))) || any(diag(Pp)==0)
+        Pp = diag([(5e-3)^2 (5e-3)^2 (5e-3)^2]);
+    end
+    vx0 = sgf_kf(x(1:M), Ts, 1);
+    vy0 = sgf_kf(y(1:M), Ts, 1);
+    vz0 = sgf_kf(z(1:M), Ts, 1);
+    Pv  = diag([var(vx0,1), var(vy0,1), var(vz0,1)]);
+    if ~all(isfinite(diag(Pv))) || any(diag(Pv)==0)
+        Pv = diag([ (0.05)^2 (0.05)^2 (0.05)^2 ]);
+    end
+    P0 = blkdiag(Pp(1,1), Pv(1,1), Pp(2,2), Pv(2,2), Pp(3,3), Pv(3,3));
+
+    fprintf('Run #%d: N=%d, Rdiag=[%.3g %.3g %.3g], M=%d (%.2fs)\n', ...
+        idx, size(Z,2), diag(R_est), M, M*Ts);
+
+    % ---- Store ----
+    runs(end+1) = struct('idx',idx,'t',t,'Z',Z,'x0',[x(1);0; y(1);0; z(1);0], ...
+                         'R',R_est,'Qbase',Q_base,'P0',P0); %#ok<SAGROW>
+end
+
+if isempty(runs)
+    error('No valid runs loaded. Check file names / lengths / NaNs.');
+end
+
+% If R is estimated, aggregate by median before search
+if ~use_fixed_R
+    R_stack = cat(3, runs.R);
+    R_med   = median(R_stack, 3);
+else
+    R_med   = R_fixed;
+end
+
+%% ================== Loose NIS filtering before kQ search ==================
+
