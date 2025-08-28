@@ -88,6 +88,7 @@ cd crazyflie-firmware-pwm   # replace with your repo name
 Run the following commands inside the container:
 
 ⚠️ Substitute **`cf2`** with your firmware type:
+
 * Crazyflie 2.0, Crazyflie 2.1(+): **`cf2`**
 * Crazyflie 2.1 Brushless: **`cf21bl`**
 * Crazyflie Bolt: **`bolt`**
@@ -105,6 +106,57 @@ The compiled firmware will be located at:
 ```
 build/cf2.bin
 ```
+
+Copy bin file to Windows desktop:
+
+```
+cp build/cf2.bin /mnt/c/Users/USER/Desktop/
+```
+
+---
+
+## Troubleshooting: `permission denied: tools/build/make`
+
+If you encounter this error, follow these steps inside your project:
+
+### 1. Navigate to your firmware repo
+
+```bash
+cd ~/crazyflie-firmware-pwm
+```
+
+### 2. Configure Git to avoid CRLF conversion
+
+```bash
+git config --global core.autocrlf input
+```
+
+### 3. Convert build scripts to LF and add execution permission
+
+```bash
+sudo apt-get update -y
+sudo apt-get install -y dos2unix
+
+# Convert scripts under tools/build
+dos2unix tools/build/*
+
+# Add execution permission
+chmod +x tools/build/*
+```
+
+### 4. (Optional) Convert the whole repo if you suspect more CRLF issues
+
+```bash
+find . -type f -not -path "./.git/*" -print0 | xargs -0 dos2unix 2>/dev/null
+```
+
+### 5. Rebuild firmware with Toolbelt
+
+```bash
+tb make cf2_defconfig
+tb make -j"$(nproc)"
+```
+
 
 ---
 
