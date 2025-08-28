@@ -1,94 +1,98 @@
+# Crazyflie Custom Firmware Build & Flash Guide
 
-
-# Crazyflie Custom Firmware Flashing Guide
-
-This guide describes the step-by-step procedure to **build and flash custom firmware** onto a Crazyflie 2.1 / Bolt platform.
-The setup uses **WSL + Docker Toolbelt** as the build environment to ensure a consistent toolchain.
+This guide describes how to **build and flash a custom Crazyflie firmware** using **WSL (Ubuntu)** and **Docker Toolbelt** on Windows.
 
 ---
 
-## 1. Windows Side (Environment Preparation)
+## 1. Install Required Tools
 
-### 1.1 Install WSL (Ubuntu)
-
-Open **PowerShell** as Administrator and run:
-
-```powershell
-wsl --install -d Ubuntu
-wsl -d Ubuntu
-cd ~
-sudo apt update
-sudo apt install -y git
-exit
-```
-
-> ⚠️ Restart may be required after WSL installation.
-
-
-
-### 1.2 Install Docker Desktop
-
-Download and install:
+### 1.1 Download Docker Desktop
 
 🔗 [Docker Desktop](https://www.docker.com/products/docker-desktop/?utm_source=chatgpt.com)
 
-Enable **WSL Integration** for **Ubuntu** in Docker Desktop settings.
+During installation, enable **WSL 2 Backend**.
 
 
 
-### 1.3 Verify Docker from WSL
+### 1.2 Install WSL (Ubuntu)
 
-Re-open Ubuntu (WSL):
+Open **PowerShell** and run:
 
-```bash
-wsl -d Ubuntu
-docker --version
+```powershell
+wsl --install -d Ubuntu
 ```
 
-Expected output shows Docker version number.
+```powershell
+wsl -d Ubuntu
+```
 
----
+```powershell
+cd ~
+sudo apt update
+```
 
-## 2. Docker Toolbelt Setup
+```powershell
+sudo apt install -y git
+```
 
-The Bitcraze team provides a **Docker Toolbelt image** containing all required build tools.
 
-Run:
 
-```bash
+### 1.3 Enable WSL Integration in Docker
+
+1. Open **Docker Desktop** → **Settings**
+2. Go to **Resources → WSL Integration**
+3. Enable checkbox for **Ubuntu**
+
+
+### 1.4 Verify Docker in WSL
+
+Re-open **PowerShell** and run:
+
+```powershell
+exit
+```
+
+```powershell
+wsl -d Ubuntu
+```
+
+```powershell
+docker --version   # confirm Docker is running
+```
+
+```powershell
 docker run --rm -it bitcraze/toolbelt
 ```
 
-Inside this container you will have access to the Crazyflie firmware toolchain.
+If successful, you will enter the **Bitcraze Toolbelt** container.
 
 ---
 
-## 3. Build Crazyflie Firmware
+## 2. Clone Custom Firmware Repository
 
-### 3.1 Clone Repository
-
-Inside the Docker container:
+Inside the Toolbelt container:
 
 ```bash
-git clone https://github.com/bitcraze/crazyflie-firmware.git
-cd crazyflie-firmware
+cd ~
+git clone --recursive https://github.com/Lee-Chun-Yi/crazyflie-firmware-pwm.git   # replace with your GitHub link
 ```
-
-### 3.2 Modify Firmware (Optional)
-
-Edit source code to implement your custom features:
 
 ```bash
-nano src/<your_file>.c
+cd crazyflie-firmware-pwm   # replace with your repo name
 ```
 
-### 3.3 Compile
+---
+
+## 3. Build Firmware
+
+Run the following commands inside the container:
 
 ```bash
-make
+tb make cf2_defconfig
+tb make -j$(nproc)
 ```
 
-The generated binary will be located in:
+The compiled firmware will be located at:
 
 ```
 build/cf2.bin
@@ -96,55 +100,36 @@ build/cf2.bin
 
 ---
 
-## 4. Flash Firmware
+## 4. Flash Firmware to Crazyflie
 
-### 4.1 Put Crazyflie in DFU Mode
+### 4.1 Enter DFU Mode
 
-1. Power off Crazyflie.
-2. Hold the **power button** for \~3 seconds until the blue LED blinks.
-3. Connect via USB.
+1. Disconnect USB and power off Crazyflie
+2. Hold **power button** for \~3 seconds until the blue LED blinks
+3. Connect Crazyflie via USB
 
 
 
-### 4.2 Install `dfu-util` (if not included)
+### 4.2 Flash Using `dfu-util`
 
-Inside Ubuntu:
+Inside Ubuntu (not Docker container):
 
 ```bash
 sudo apt install dfu-util
-```
-
-
-
-### 4.3 Flash Firmware
-
-```bash
 dfu-util -a 0 -d 0483:df11 -D build/cf2.bin
 ```
 
 Expected output:
 
 ```
-Download    [=========================] 100% ...
+Download    [=========================] 100%
 File downloaded successfully
 ```
 
 ---
 
-## 5. Verify
+## 5. Verify Firmware
 
-1. Disconnect and power cycle Crazyflie.
-2. Use **cfclient** to connect via Crazyradio.
-3. Check that the custom firmware is running.
-
----
-
-## 6. Troubleshooting
-
-| Issue                             | Possible Fix                                       |
-| --------------------------------- | -------------------------------------------------- |
-| `dfu-util: No DFU capable USB`    | Re-enter DFU mode, check USB cable.                |
-| Build errors (`make`)             | Run inside Toolbelt container, check dependencies. |
-| Crazyflie not booting after flash | Flash with official prebuilt firmware, then retry. |
-
-
+1. Disconnect and reboot Crazyflie
+2. Connect with **cfclient**
+3. Confirm that the custom firmware is running
