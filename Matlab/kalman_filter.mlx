@@ -1,6 +1,7 @@
 % This script is designed for cases where raw 6DOF position data from Vicon 
 % (or other motion capture systems) are noisy and direct differentiation introduces delay and phase lag.
 % Load multiple raw flight datasets (trans_x_#.csv, trans_y_#.csv, trans_z_#.csv) before use this script.
+% Substitute trans to rotation if you want to analyse rotatioin data.
 
 %% ================== User Parameters (Adjust here) ==================
 Fs          = 100;                       % Data / filtering frequency (Hz)
@@ -138,5 +139,208 @@ else
     R_med   = R_fixed;
 end
 
-%% ================== Loose NIS filtering before kQ search ==================
 
+%% ===== Before searching kQ: compute mean NIS of each run with Qbase, apply “loose” filtering =====
+nis_means = zeros(numel(runs),1);
+for ii = 1:numel(runs)
+    nis_m = nis_for_run_kf(A,H,R_med, runs(ii).Qbase, runs(ii).P0, runs(ii).x0, runs(ii).Z);
+    nis_means(ii) = min(nis_m, nis_clip_max);  % clip overly large values
+end
+mask_good = ~isoutlier(nis_means,'median','ThresholdFactor', outlier_z);
+if ~any(mask_good)
+    warning('All runs were filtered as outliers. Disabling outlier filter for this pass.');
+    mask_good = true(size(mask_good));
+end
+runs = runs(mask_good);
+
+%% ================== Search kQx, kQy, kQz using per-axis NIS + coverage ==================
+lo = chi2inv(alpha_cover/2, 1);
+hi = chi2inv(1-alpha_cover/2, 1);
+
+best = struct('kx',kQx_grid(1),'ky',kQy_grid(1),'kz',kQz_grid(1),'J',inf);
+for kx = kQx_grid
+  for ky = kQy_grid
+    for kz = kQz_grid
+      Jsum = 0;
+      for ii = 1:numel(runs)
+        Qtry  = scale_Q_xyz_kf(runs(ii).Qbase, [kx ky kz]);
+        stats = nis_stats_per_axis_kf(A, H, R_med, Qtry, runs(ii).P0, runs(ii).x0, runs(ii).Z, alpha_cover);
+        % Objective: each axis mean NIS → 1 (dimensionally consistent), and coverage should be high
+        Jsum  = Jsum ...
+              + (stats.mean(1)-1)^2 + lambda_cover*(1 - stats.cover(1)) ...
+              + (stats.mean(2)-1)^2 + lambda_cover*(1 - stats.cover(2)) ...
+              + (stats.mean(3)-1)^2 + lambda_cover*(1 - stats.cover(3));
+      end
+      if Jsum < best.J
+        best = struct('kx',kx,'ky',ky,'kz',kz,'J',Jsum);
+      end
+    end
+  end
+end
+
+%% ================== Generate final parameters (take median across runs) ==================
+for ii = 1:numel(runs)
+    runs(ii).Q = scale_Q_xyz_kf(runs(ii).Qbase, [best.kx best.ky best.kz]);
+end
+
+Q_stack  = cat(3, runs.Q);
+P0_stack = cat(3, runs.P0);
+
+Q_best  = median(Q_stack,  3);
+P0_best = median(P0_stack, 3);
+R_best  = R_med;
+
+%% ================== Reporting and text for pasting into Block ==================
+fprintf('\n=== kQ selected: kx=%.3g, ky=%.3g, kz=%.3g (J=%.3g) ===\n', best.kx, best.ky, best.kz, best.J);
+for ii = 1:numel(runs)
+    stats = nis_stats_per_axis_kf(A,H,R_best,runs(ii).Q,runs(ii).P0,runs(ii).x0,runs(ii).Z, alpha_cover);
+    fprintf('Run #%d  NIS_mean [x y z] = [%.2f %.2f %.2f];  cover= [%.2f %.2f %.2f]\n', ...
+            runs(ii).idx, stats.mean, stats.cover);
+end
+
+disp('--- Final (median across runs) ---');
+disp('R*:');  disp(R_best);
+disp('Q*:');  disp(Q_best);
+disp('P0*:'); disp(P0_best);
+
+fprintf('\n--- Paste into Simulink Block ---\n');
+fprintf('%% R (measurement noise)\nR = %s;\n',  mat2str(R_best, 6));
+fprintf('%% Q (process noise)\nQ = diag(%s);\n', mat2str(diag(Q_best).', 6));   % For full matrix, replace with mat2str(Q_best, 6)
+fprintf('%% P0 (initial covariance)\nP0 = diag([%s]);\n', num2str(diag(P0_best).', '%.6g '));
+
+%% ================== (Optional) Plot verification for one run ==================
+if plot_run ~= 0
+    ii = find([runs.idx]==plot_run, 1);
+    if ~isempty(ii)
+        [x_est,y_est,z_est, vx_est,vy_est,vz_est, vx_raw,vy_raw,vz_raw] = ...
+            run_kf_kf(A,H,R_best,runs(ii).Q,runs(ii).P0,runs(ii).x0,runs(ii).Z,Ts);
+        t = runs(ii).t;
+
+        figure('Name',sprintf('KF Position (Run %d)',plot_run),'Color','w');
+        tiledlayout(3,1);
+        nexttile; plot(t,runs(ii).Z(1,:),'k',t,x_est,'r'); grid on; ylabel('x [m]'); legend('raw','KF');
+        nexttile; plot(t,runs(ii).Z(2,:),'k',t,y_est,'r'); grid on; ylabel('y [m]'); legend('raw','KF');
+        nexttile; plot(t,runs(ii).Z(3,:),'k',t,z_est,'r'); grid on; ylabel('z [m]'); xlabel('t [s]'); legend('raw','KF');
+
+        figure('Name',sprintf('KF Velocity (Run %d)',plot_run),'Color','w');
+        tiledlayout(3,1);
+        nexttile; plot(t,vx_raw,'k',t,vx_est,'r'); grid on; ylabel('vx [m/s]'); legend('raw diff','KF');
+        nexttile; plot(t,vy_raw,'k',t,vy_est,'r'); grid on; ylabel('vy [m/s]'); legend('raw diff','KF');
+        nexttile; plot(t,vz_raw,'k',t,vz_est,'r'); grid on; ylabel('vz [m/s]'); xlabel('t [s]'); legend('raw diff','KF');
+    end
+end
+
+%% ================== Local functions ==================
+function y = sgf_kf(x, Ts, deriv)
+% Safe Savitzky–Golay:
+% - sgolayfilt for smoothing; derivatives via gradient (for version compatibility)
+% - Automatically chooses odd window, not exceeding sequence length; if too short, fall back to movmean/gradient
+    n = numel(x);
+    if n == 0, y = x; return; end
+    polyOrder = 3;
+    base = 2*round(0.3/Ts) + 1;             % ≈0.3 s odd window
+    w = min(base, 2*floor((n-1)/2) + 1);    % largest odd ≤ length
+    if w <= polyOrder
+        if deriv == 0
+            ww = max(3, 2*floor((n-1)/2) + 1);
+            y = movmean(x, ww);
+        elseif deriv == 1
+            y = gradient(x, Ts);
+        else
+            y = gradient(gradient(x, Ts), Ts);
+        end
+        return
+    end
+    xs = sgolayfilt(x, polyOrder, w);
+    if deriv == 0
+        y = xs;
+    elseif deriv == 1
+        y = gradient(xs, Ts);
+    else
+        v = gradient(xs, Ts);
+        y = gradient(v, Ts);
+    end
+end
+
+function M = find_quasi_static_window_kf(x, Ts, base_sec)
+% Automatically find “quasi-static” window length M from the front portion of data
+% Criterion: robust velocity MAD < 0.01 m/s; otherwise extend 0.2 s each time
+    n = numel(x); if n == 0, M = 0; return; end
+    M = max(10, round(base_sec / Ts)); M = min(M, n);
+    v_th = 0.01;   % 1 cm/s
+    v = sgf_kf(x(1:M), Ts, 1);
+    if 1.4826*mad(v,1) < v_th, return; end
+    step = max(1, round(0.2 / Ts));
+    while M < n
+        M_try = min(n, M + step);
+        v = sgf_kf(x(1:M_try), Ts, 1);
+        if 1.4826*mad(v,1) < v_th, M = M_try; return; end
+        M = M_try;
+    end
+end
+
+function Qscaled = scale_Q_xyz_kf(Qbase, k)
+% Scale base Q (6x6, [x vx][y vy][z vz]) by [kx ky kz]
+    Qscaled = Qbase;
+    Qscaled(1:2,1:2) = k(1) * Qbase(1:2,1:2);  % x
+    Qscaled(3:4,3:4) = k(2) * Qbase(3:4,3:4);  % y
+    Qscaled(5:6,5:6) = k(3) * Qbase(5:6,5:6);  % z
+end
+
+function stats = nis_stats_per_axis_kf(A,H,R,Q,P0,x0,Z, alpha)
+% Return per-axis mean NIS and coverage; update using Joseph form
+    if nargin < 8, alpha = 0.05; end
+    lo = chi2inv(alpha/2,1); hi = chi2inv(1-alpha/2,1);
+    nx = size(A,1); N = size(Z,2); I = eye(nx);
+    xk = x0; P = P0;
+    nis_x = zeros(1,N); nis_y = zeros(1,N); nis_z = zeros(1,N);
+    for k = 1:N
+        xpred = A*xk; Ppred = A*P*A' + Q;
+        ek = Z(:,k) - H*xpred;   % 3x1
+        S  = H*Ppred*H' + R;     % 3x3
+        nis_x(k) = ek(1)^2 / max(S(1,1), eps);
+        nis_y(k) = ek(2)^2 / max(S(2,2), eps);
+        nis_z(k) = ek(3)^2 / max(S(3,3), eps);
+        K  = Ppred*H'/S;
+        xk = xpred + K*ek;
+        P  = (I - K*H)*Ppred*(I - K*H)' + K*R*K';
+    end
+    stats.mean  = [mean(nis_x) mean(nis_y) mean(nis_z)];
+    stats.cover = [mean(nis_x>=lo & nis_x<=hi), ...
+                   mean(nis_y>=lo & nis_y<=hi), ...
+                   mean(nis_z>=lo & nis_z<=hi)];
+end
+
+function nis_mean = nis_for_run_kf(A,H,R,Q,P0,x0,Z)
+% Mean NIS (overall three axes) for a single run
+    nx = size(A,1); N = size(Z,2); I = eye(nx);
+    xk = x0; P = P0; nis_sum = 0;
+    for k = 1:N
+        xpred = A*xk; Ppred = A*P*A' + Q;
+        ek = Z(:,k) - H*xpred;
+        S  = H*Ppred*H' + R;
+        nis_sum = nis_sum + (ek'*(S\ek))/3;  % average over 3 axes
+        K  = Ppred*H'/S;
+        xk = xpred + K*ek;
+        P  = (I - K*H)*Ppred*(I - K*H)' + K*R*K';
+    end
+    nis_mean = nis_sum / N;
+end
+
+function [x_est,y_est,z_est, vx_est,vy_est,vz_est, vx_raw,vy_raw,vz_raw] = ...
+         run_kf_kf(A,H,R,Q,P0,x0,Z,Ts)
+% KF main loop (Joseph form), with differential velocity as reference
+    nx = size(A,1); N = size(Z,2); I = eye(nx);
+    xh = zeros(nx,N); xk = x0; P = P0;
+    for k = 1:N
+        xpred = A*xk; Ppred = A*P*A' + Q;
+        ek = Z(:,k) - H*xpred;  S = H*Ppred*H' + R;
+        K  = Ppred*H'/S;
+        xk = xpred + K*ek;
+        P  = (I - K*H)*Ppred*(I - K*H)' + K*R*K';
+        xh(:,k) = xk;
+    end
+    x_est = xh(1,:).'; y_est = xh(3,:).'; z_est = xh(5,:).';
+    vx_est = xh(2,:).'; vy_est = xh(4,:).'; vz_est = xh(6,:).';
+    vx_raw = gradient(Z(1,:), Ts).'; vy_raw = gradient(Z(2,:), Ts).'; vz_raw = gradient(Z(3,:), Ts).';
+end
