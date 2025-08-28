@@ -72,13 +72,17 @@ If successful, you will enter the **Bitcraze Toolbelt** container.
 
 Inside the Toolbelt container:
 
-```bash
-cd ~
-git clone --recursive https://github.com/Lee-Chun-Yi/crazyflie-firmware-pwm.git   # replace with your GitHub link
-```
+⚠️ replace with your GitHub link
 
 ```bash
-cd crazyflie-firmware-pwm   # replace with your repo name
+cd ~
+git clone --recursive https://github.com/Lee-Chun-Yi/crazyflie-firmware-pwm.git   
+```
+
+⚠️  replace with your repo name
+
+```bash
+cd crazyflie-firmware-pwm  
 ```
 
 ---
