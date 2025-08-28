@@ -137,20 +137,13 @@ git config --global core.autocrlf input
 sudo apt-get update -y
 sudo apt-get install -y dos2unix
 
-# Convert scripts under tools/build
 dos2unix tools/build/*
 
-# Add execution permission
 chmod +x tools/build/*
 ```
 
-### 4. (Optional) Convert the whole repo if you suspect more CRLF issues
 
-```bash
-find . -type f -not -path "./.git/*" -print0 | xargs -0 dos2unix 2>/dev/null
-```
-
-### 5. Rebuild firmware with Toolbelt
+### 4. Rebuild firmware with Toolbelt
 
 ```bash
 tb make cf2_defconfig
