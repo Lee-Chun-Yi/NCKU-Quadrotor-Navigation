@@ -1,6 +1,9 @@
 % This script is designed for cases where raw 6DOF position data from Vicon 
 % (or other motion capture systems) are noisy and direct differentiation introduces delay and phase lag.
+
 % Load multiple raw flight datasets (trans_x_#.csv, trans_y_#.csv, trans_z_#.csv) before use this script.
+% Use data_analysis in Matlab folder to collect the csv you need.
+
 % Substitute trans to rotation if you want to analyse rotatioin data.
 
 %% ================== User Parameters (Adjust here) ==================
