@@ -164,7 +164,7 @@ To address this, we implemented a **Kalman Filter (KF)**:
 
 ### 2025-08-28 — Build and Flash Firmware
 
-> Custom Firmware: [4PWM packet firmwawre](https://github.com/Lee-Chun-Yi/crazyflie-firmware-pwm)
+> Custom Firmware: [`4PWM packet firmwawre`](https://github.com/Lee-Chun-Yi/crazyflie-firmware-pwm)
 >
 > Details in [`custom_cf_firmware.md`](./custom_cf_firmware.md)
 > 
