@@ -166,9 +166,9 @@ To address this, we implemented a **Kalman Filter (KF)**:
 
 > Custom Firmware: [`4PWM packet firmwawre`](https://github.com/Lee-Chun-Yi/crazyflie-firmware-pwm)
 >
-> Details in [`custom_cf_firmware.md`](./custom_cf_firmware.md)
+> 4PWM packet test: [`test_4PWM.py`](./Python/4PID/test_4PWM)
 > 
-> 4PWM packet test in [`test_4PWM.py`](./Python/4PID/test_4PWM)
+> Build bin file and Flaash: [`custom_cf_firmware.md`](./custom_cf_firmware.md)
 
 Since the official Crazyflie firmware does not support sending all **m1–m4 PWM values in a single packet**,  
 we designed and built a **custom firmware** (based on the official Crazyflie firmware) to achieve this functionality.
