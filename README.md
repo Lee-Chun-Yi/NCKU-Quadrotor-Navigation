@@ -162,7 +162,7 @@ To address this, we implemented a **Kalman Filter (KF)**:
 
 ---
 
-### 2025-08-28 — Build and Flash Firmware
+### 2025-08-28 — Implement 4 motors PWM packet - Custom Crazyflie Firmware
 
 > Custom Firmware: [`4PWM packet firmwawre`](https://github.com/Lee-Chun-Yi/crazyflie-firmware-pwm)
 >
