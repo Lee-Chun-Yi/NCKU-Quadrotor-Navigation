@@ -129,7 +129,7 @@ To visualize the results, the figure below illustrates the **2D trajectory** of 
 ---
 
 
-### 2025-07-15 — Linux System Deployment
+### 2025-07-25 — Linux System Deployment
 
 > Details in [`Vicon/linux`](./Vicon/linux.md)
 
