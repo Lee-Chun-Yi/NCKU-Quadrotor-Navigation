@@ -159,28 +159,12 @@ tb make -j"$(nproc)"
 
 ## 4. Flash Firmware to Crazyflie
 
-### 4.1 Enter DFU Mode
+### 4.1 Put on Crazyradio PA
 
-1. Disconnect USB and power off Crazyflie
-2. Hold **power button** for \~3 seconds until the blue LED blinks
-3. Connect Crazyflie via USB
-
-
-
-### 4.2 Flash Using `dfu-util`
-
-Inside Ubuntu (not Docker container):
+⚠️ Substitute **`C:\Users\USER\Desktop\cf2.bin`** with your bin.file location, and make sure to verify the radio channel.
 
 ```bash
-sudo apt install dfu-util
-dfu-util -a 0 -d 0483:df11 -D build/cf2.bin
-```
-
-Expected output:
-
-```
-Download    [=========================] 100%
-File downloaded successfully
+python -m cfloader flash "C:\Users\USER\Desktop\cf2.bin" stm32-fw -w radio://0/80/2M/E7E7E7E7E7
 ```
 
 ---
