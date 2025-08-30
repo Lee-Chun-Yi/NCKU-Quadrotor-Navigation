@@ -35,11 +35,27 @@ ENABLE_PARAM_CANDIDATES = [
 
 # ========= 共享狀態 =========
 vicon_data = None
-pwm_cmd = {'m1': 0, 'm2': 0, 'm3': 0, 'm4': 0}  # 4PWM 最新指令（uint16）
 battery_voltage = None
 stop_event = Event()
 stop_flight = Event()
 lock = Lock()
+
+# ===== PWM desired value (thread-safe) =====
+_desired = (0, 0, 0, 0)
+_desired_lock = Lock()
+
+def set_desired_pwm_tuple(m1, m2, m3, m4):
+    m1 = clamp_u16(m1)
+    m2 = clamp_u16(m2)
+    m3 = clamp_u16(m3)
+    m4 = clamp_u16(m4)
+    global _desired
+    with _desired_lock:
+        _desired = (m1, m2, m3, m4)
+
+def get_desired_pwm_tuple():
+    with _desired_lock:
+        return _desired
 
 # ========= XYZ 目標輸出（只傳「點」，UDP，<3f> 12 bytes） =========
 _xyz_lock = Lock()
@@ -116,6 +132,19 @@ def send_4pwm_packet(cf, m1, m2, m3, m4):
     pk.data = struct.pack("<HHHH", m1, m2, m3, m4)
     send_packet_compat(cf, pk)
 
+
+def try_lower_radio_retries(cf):
+    try:
+        link = getattr(cf, 'link', getattr(cf, '_link', None))
+        radio = getattr(link, 'radio', None)
+        if radio is not None:
+            if hasattr(radio, 'set_arc'):
+                radio.set_arc(0)
+            if hasattr(radio, 'set_ard_time'):
+                radio.set_ard_time(0)
+    except Exception:
+        pass
+
 def try_set_enable(cf, state: int) -> str:
     for pname in ENABLE_PARAM_CANDIDATES:
         try:
@@ -137,6 +166,52 @@ def _s_curve01(t: float, T: float) -> float:
         return 1.0
     from math import cos, pi
     return (1.0 - cos(pi * t / T)) * 0.5
+
+# ========= High-rate PWM loop =========
+SPIN_TAIL = False  # set True to busy-wait for final microseconds
+
+def pwm_forward_loop(cf, duration_sec: float, rate_hz: float, spin_tail: bool = SPIN_TAIL):
+    period = 1.0 / max(1.0, float(rate_hz))
+    now = time.perf_counter
+    sleep = time.sleep
+    send = send_4pwm_packet
+    getp = get_desired_pwm_tuple
+    is_stop = stop_flight.is_set
+
+    next_t = now()
+    end_t = next_t + max(0.0, float(duration_sec))
+    tick_count = 0
+    late_count = 0
+    max_late = 0.0
+
+    while now() < end_t and not is_stop():
+        m1, m2, m3, m4 = getp()
+        send(cf, m1, m2, m3, m4)
+        tick_count += 1
+
+        next_t += period
+        t = now()
+        slack = next_t - t
+        if slack > 0.0006:
+            sleep(slack - 0.0003)
+            t = now()
+            slack = next_t - t
+        if slack > 0:
+            if spin_tail:
+                while (t := now()) < next_t:
+                    pass
+            else:
+                sleep(slack)
+                t = now()
+        else:
+            t = now()
+        if t > next_t:
+            late_count += 1
+            diff = t - next_t
+            if diff > max_late:
+                max_late = diff
+
+    return tick_count, late_count, max_late
 
 # ========= UDP 接收 =========
 def listen_port_8889():
@@ -162,14 +237,9 @@ def listen_port_8888():
       - 16 bytes: <4f>    -> 4×float 轉為 uint16
     （若收到 12 bytes 的 <3f>，將被忽略—那是 XYZ 目標輸出格式）
     """
-    global pwm_cmd
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.bind(("127.0.0.1", 8888))
     sock.setblocking(False)
-
-    loop_rate = 200.0  # Hz
-    dt = 1.0 / loop_rate
-    next_time = time.time()
 
     while not stop_event.is_set():
         try:
@@ -179,23 +249,13 @@ def listen_port_8888():
                     m1, m2, m3, m4 = struct.unpack("<HHHH", data)
                 elif len(data) == 16:
                     f1, f2, f3, f4 = struct.unpack("<4f", data)
-                    m1, m2, m3, m4 = map(clamp_u16, (f1, f2, f3, f4))
+                    m1 = clamp_u16(f1); m2 = clamp_u16(f2)
+                    m3 = clamp_u16(f3); m4 = clamp_u16(f4)
                 else:
                     continue
-                with lock:
-                    pwm_cmd['m1'] = m1
-                    pwm_cmd['m2'] = m2
-                    pwm_cmd['m3'] = m3
-                    pwm_cmd['m4'] = m4
+                set_desired_pwm_tuple(m1, m2, m3, m4)
         except BlockingIOError:
-            pass
-
-        next_time += dt
-        slp = next_time - time.time()
-        if slp > 0:
-            time.sleep(slp)
-        else:
-            next_time = time.time()
+            time.sleep(0.001)
 
 # ========= 電池紀錄 =========
 class BatteryLogger:
@@ -230,7 +290,6 @@ def land_via_target_lock_xy_and_ramp_z(cf, used_param_name: str,
 
     t0 = time.time()
     dt = 1.0 / max(1.0, pwm_forward_rate_hz)
-    last_print = 0.0
     while True:
         el = time.time() - t0
         if el >= duration_sec:
@@ -240,19 +299,15 @@ def land_via_target_lock_xy_and_ramp_z(cf, used_param_name: str,
         z_t = z0 * (1.0 - s)                # 平滑下降
         set_xyz_target(x_now, y_now, z_t)
 
-        with lock:
-            m1 = pwm_cmd['m1']; m2 = pwm_cmd['m2']; m3 = pwm_cmd['m3']; m4 = pwm_cmd['m4']
+        m1, m2, m3, m4 = get_desired_pwm_tuple()
         send_4pwm_packet(cf, m1, m2, m3, m4)
-
-        now = time.time()
-        if now - last_print >= 0.2:
-            print(f"  ... z_target={z_t:.3f}, forwarding PWM [{m1:5d} {m2:5d} {m3:5d} {m4:5d}]")
-            last_print = now
 
         time.sleep(dt)
 
     # 時間到：PWM=0，並嘗試 disable
-    send_4pwm_packet(cf, 0, 0, 0, 0)
+    for _ in range(3):
+        send_4pwm_packet(cf, 0, 0, 0, 0)
+        time.sleep(0.002)
     if used_param_name:
         try_set_enable(cf, 0)
         print(f"[DISABLE] Set {used_param_name}=0")
@@ -300,8 +355,7 @@ def run_4pwm_flight(scf,
         set_xyz_target(x_final, y_final, z_t)
 
         if takeoff_forward_pwm:
-            with lock:
-                m1 = pwm_cmd['m1']; m2 = pwm_cmd['m2']; m3 = pwm_cmd['m3']; m4 = pwm_cmd['m4']
+            m1, m2, m3, m4 = get_desired_pwm_tuple()
             send_4pwm_packet(cf, m1, m2, m3, m4)
 
         time.sleep(dt_pwm)
@@ -309,40 +363,10 @@ def run_4pwm_flight(scf,
     # 到達最終高度（再寫一次保險）
     set_xyz_target(x_final, y_final, z_final)
 
-    # ===== 巡航（原本主迴圈）=====
+    # ===== 巡航：高頻率 4PWM 轉發 =====
     print(f"✈️ 進入巡航（{rate_hz:.1f} Hz, {duration_sec:.1f} s）")
-    dt = 1.0 / max(1.0, float(rate_hz))
-    next_time = time.time()
-    t_end = time.time() + max(0.0, float(duration_sec))
-
-    last_print = 0.0
-    while time.time() < t_end:
-        if stop_flight.is_set():
-            break
-
-        with lock:
-            m1 = pwm_cmd['m1']; m2 = pwm_cmd['m2']; m3 = pwm_cmd['m3']; m4 = pwm_cmd['m4']
-            v = vicon_data if vicon_data else (0, 0, 0, 0, 0, 0)
-            vb = battery_voltage if battery_voltage else 4.0
-
-        send_4pwm_packet(cf, m1, m2, m3, m4)
-
-        now = time.time()
-        if now - last_print >= 0.1:
-            x, y, z = get_xyz_target()
-            print(
-                f"Vicon X:{v[0]:.3f} Y:{v[1]:.3f} Z:{v[2]:.3f} | "
-                f"PWM [{m1:5d} {m2:5d} {m3:5d} {m4:5d}] | "
-                f"XYZ_target [{x:+.3f} {y:+.3f} {z:+.3f}] | B:{vb:.2f}V"
-            )
-            last_print = now
-
-        next_time += dt
-        slp = next_time - time.time()
-        if slp > 0:
-            time.sleep(slp)
-        else:
-            next_time = time.time()
+    ticks, late, max_late = pwm_forward_loop(cf, duration_sec, rate_hz)
+    print(f"⏱️ Loop ticks:{ticks} late:{late} max_late:{max_late*1000:.3f} ms")
 
     # ===== 降落（S-curve，使用 land_T；持續以 rate_hz 轉發 PWM）=====
     print("Normal landing sequence (S-curve while forwarding PWM).")
@@ -375,6 +399,7 @@ if __name__ == "__main__":
 
     with SyncCrazyflie(URI, cf=Crazyflie(rw_cache='./cache')) as scf:
         BatteryLogger(scf.cf)
+        try_lower_radio_retries(scf.cf)
         try:
             run_4pwm_flight(
                 scf,
@@ -396,7 +421,9 @@ if __name__ == "__main__":
                     pwm_forward_rate_hz=STREAM_HZ
                 )
             except KeyboardInterrupt:
-                send_4pwm_packet(scf.cf, 0, 0, 0, 0)
+                for _ in range(3):
+                    send_4pwm_packet(scf.cf, 0, 0, 0, 0)
+                    time.sleep(0.002)
 
         print("Flight mission completed.")
 
