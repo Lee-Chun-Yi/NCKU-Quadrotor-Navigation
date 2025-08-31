@@ -1,37 +1,43 @@
 #pragma once
-#include <array>
 #include <cstdint>
 #include <memory>
 #include <string>
 #include <vector>
 #include <stdexcept>
 
-// Resolve Crazyflie header regardless of how upstream sets include dirs
-#if __has_include(<crazyflie_cpp/Crazyflie.h>)
-  #include <crazyflie_cpp/Crazyflie.h>
-#elif __has_include(<Crazyflie.h>)
-  #include <Crazyflie.h>
-#else
-  #error "Cannot find Crazyflie.h; check include paths."
-#endif
-
-#include "cf4pwm/msvc_pack_compat.hpp"   // our own packed helpers (optional for our structs)
+// Pull in the full Crazyflie class definition
+#include <crazyflie_cpp/Crazyflie.h>
 
 namespace cf4pwm {
 
+#pragma pack(push, 1)
+struct Pwm4Packet {
+  uint8_t header;
+  uint16_t m1;
+  uint16_t m2;
+  uint16_t m3;
+  uint16_t m4;
+};
+
 class RadioClient {
 public:
-  RadioClient() = default;
+  explicit RadioClient(std::string uri, uint8_t port = 0x0A, uint8_t channel = 0);
   ~RadioClient();
 
-  bool init(const std::string& uri);
-  bool send4(uint16_t m1, uint16_t m2, uint16_t m3, uint16_t m4) noexcept;
-  void close() noexcept;
+  void connect();
+  void disconnect();
+  void send4pwm(uint16_t m1, uint16_t m2, uint16_t m3, uint16_t m4);
+  void sendRaw(const uint8_t* data, size_t len);
+  bool isConnected() const;
 
 private:
-  std::unique_ptr<crazyflie_cpp::Crazyflie> cf_;
-  std::array<uint8_t, 9> packet_{}; // header + 8 payload bytes
+  std::string uri_;
+  uint8_t port_;
+  uint8_t chan_;
+  std::unique_ptr<Crazyflie> cf_;  // note: no crazyflie_cpp namespace
 };
 
 } // namespace cf4pwm
 
+// Balance any upstream pack(push,1) if used in our code
+#include <cf4pwm/msvc_pack_pop.hpp>

@@ -84,9 +84,11 @@ int main(int argc, char** argv) {
   UdpInput udp;
   udp.start(&pwm);
 
-  RadioClient radio;
-  if (!radio.init(uri)) {
-    std::cerr << "radio init failed\n";
+  RadioClient radio(uri);
+  try {
+    radio.connect();
+  } catch (const std::exception &e) {
+    std::cerr << "radio init failed: " << e.what() << "\n";
     return 1;
   }
 
@@ -99,7 +101,7 @@ int main(int argc, char** argv) {
   while (g_running) {
     uint16_t m1, m2, m3, m4;
     unpack4u16(pwm.packed.load(std::memory_order_acquire), m1, m2, m3, m4);
-    radio.send4(m1, m2, m3, m4);
+    radio.send4pwm(m1, m2, m3, m4);
 
     next += period_ticks;
     int64_t now = qpc_now();
@@ -117,11 +119,11 @@ int main(int argc, char** argv) {
   }
 
   for (int i = 0; i < 10; ++i) {
-    radio.send4(0, 0, 0, 0);
+    radio.send4pwm(0, 0, 0, 0);
     Sleep(10);
   }
 
-  radio.close();
+  radio.disconnect();
   udp.stop();
   int64_t endTicks = qpc_now();
   metrics.finish(endTicks);

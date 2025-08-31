@@ -1,35 +1,40 @@
+// Include Crazyflie class definition before use
+#include <crazyflie_cpp/Crazyflie.h>
 #include "cf4pwm/radio_cfclient.hpp"
 
 namespace cf4pwm {
 
-RadioClient::~RadioClient() = default;
+RadioClient::RadioClient(std::string uri, uint8_t port, uint8_t channel)
+    : uri_(std::move(uri)), port_(port), chan_(channel) {}
 
-bool RadioClient::init(const std::string& uri) {
-  cf_ = std::make_unique<crazyflie_cpp::Crazyflie>(uri.c_str());
-  packet_[0] = 0xA0; // port 0x0A channel 0
-  return true;
-}
+RadioClient::~RadioClient() { disconnect(); }
 
-bool RadioClient::send4(uint16_t m1, uint16_t m2, uint16_t m3, uint16_t m4) noexcept {
-  if (!cf_)
-    return false;
-  packet_[1] = static_cast<uint8_t>(m1 & 0xFF);
-  packet_[2] = static_cast<uint8_t>(m1 >> 8);
-  packet_[3] = static_cast<uint8_t>(m2 & 0xFF);
-  packet_[4] = static_cast<uint8_t>(m2 >> 8);
-  packet_[5] = static_cast<uint8_t>(m3 & 0xFF);
-  packet_[6] = static_cast<uint8_t>(m3 >> 8);
-  packet_[7] = static_cast<uint8_t>(m4 & 0xFF);
-  packet_[8] = static_cast<uint8_t>(m4 >> 8);
-  try {
-    cf_->sendPacket(packet_.data(), static_cast<uint8_t>(packet_.size()));
-    return true;
-  } catch (...) {
-    return false;
+void RadioClient::connect() {
+  if (!cf_) {
+    cf_ = std::make_unique<Crazyflie>(uri_.c_str());
   }
 }
 
-void RadioClient::close() noexcept { cf_.reset(); }
+void RadioClient::disconnect() { cf_.reset(); }
+
+bool RadioClient::isConnected() const { return static_cast<bool>(cf_); }
+
+void RadioClient::sendRaw(const uint8_t* data, size_t len) {
+  if (!cf_) {
+    throw std::runtime_error("Crazyflie not connected");
+  }
+  cf_->sendPacket(data, static_cast<uint8_t>(len));
+}
+
+void RadioClient::send4pwm(uint16_t m1, uint16_t m2, uint16_t m3, uint16_t m4) {
+  Pwm4Packet pkt;
+  pkt.header = static_cast<uint8_t>((port_ << 4) | (chan_ & 0x0F));
+  pkt.m1 = m1;
+  pkt.m2 = m2;
+  pkt.m3 = m3;
+  pkt.m4 = m4;
+  sendRaw(reinterpret_cast<const uint8_t*>(&pkt), sizeof(pkt));
+}
 
 } // namespace cf4pwm
 
