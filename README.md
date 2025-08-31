@@ -14,28 +14,6 @@ This study presents an indoor quadrotor control system achieving stable hover an
 
 ## Project Overview
 
-### 1. Two-layer PID Project
-
-* **Completed**: Python control (RPYT), MATLAB control system
-* **Ongoing**: Replacing low-pass filter with Kalman filter, PID tuning, yaw alignment with target direction
-
-### 2. GUI
-
-* **Completed**: Support for 2PID, 4PID, path flight, 3D plot
-* **Ongoing**: Improve stability at high-frequency control, gradually migrate control core to C
-  
-### 3. Four-layer PID Project
-#### 3.1 Custom Firmware
-
-* **Completed**: 4PWM packet implementation, firmware build, flashing, Python-side integration
-
-#### 3.2 C++ Module
-
-* **Completed**: 4PWM packet implementation, full migration of 4PID control from Python, improved stability
-* **Ongoing**: Real flight testing
-
-123
-## Option A: Table Format
 
 | Module              | Completed                                                                      | Ongoing                                                               |
 | ------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------- |
@@ -44,25 +22,7 @@ This study presents an indoor quadrotor control system achieving stable hover an
 | **Custom Firmware** | 4PWM packet implementation, firmware build, flashing, Python integration       | —                                                                     |
 | **C++ Module**      | 4PWM packet implementation, full migration of 4PID control, improved stability | Real flight testing                                                   |
 
----
 
-## Option B: Timeline / Milestone Style
-
-* **Two-layer PID Project**
-  ✅ Completed: Python (RPYT), MATLAB control
-  🔄 In progress: Kalman filter, PID tuning, yaw alignment
-
-* **GUI**
-  ✅ Completed: 2PID, 4PID, path flight, 3D plot
-  🔄 In progress: High-frequency stability, migrate core to C
-
-* **Four-layer PID Project**
-
-  * **Custom Firmware**
-    ✅ Completed: 4PWM packet, build & flash, Python integration
-  * **C++ Module**
-    ✅ Completed: 4PWM packet, 4PID migration, stability improvements
-    🔄 In progress: Real flight testing
   
  ## 
  
