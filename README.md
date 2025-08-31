@@ -173,8 +173,10 @@ To address this, we implemented a **Kalman Filter (KF)**:
 Since the official Crazyflie firmware does not support sending all **m1–m4 PWM values in a single packet**,  
 we designed and built a **custom firmware** (based on the official Crazyflie firmware) to achieve this functionality.
 
+---
+
 ### 2025-08-31 — Designed a Cpp-based PWM flight control system
 
-> cpp file: [`cpp`](./cpp)
+> completed cpp file: [`cpp`](./cpp)
 
 Based on the succes of implemented 4 PWM packet control on python, we intented to push the frequency to 500 Hz, cpp is a better system for us to reach the goal.
