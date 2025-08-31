@@ -5,14 +5,21 @@
 #include <memory>
 #include <string>
 
-namespace crazyflie_cpp {
-class Crazyflie;
-}
+#include "cf4pwm/msvc_pack_compat.hpp"
+#include <crazyflie_cpp/Crazyflie.h>
+#include <crazyflie_cpp/Crazyradio.h>
+
+#ifdef _MSC_VER
+  #pragma pack(pop)
+#endif
 
 namespace cf4pwm {
 
 class RadioClient {
 public:
+  RadioClient() = default;
+  ~RadioClient();
+
   bool init(const std::string& uri);
   bool send4(uint16_t m1, uint16_t m2, uint16_t m3, uint16_t m4) noexcept;
   void close() noexcept;
