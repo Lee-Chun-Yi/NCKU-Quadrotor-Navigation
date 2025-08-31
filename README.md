@@ -14,22 +14,22 @@ This study presents an indoor quadrotor control system achieving stable hover an
 
 ## Project Overview
 
-### 2PID Project
+### 1. 2 PID Project
 
 * **Completed**: Python control (RPYT), MATLAB control system
 * **Ongoing**: Replacing low-pass filter with Kalman filter, PID tuning, yaw alignment with target direction
 
-### GUI
+### 2. GUI
 
 * **Completed**: Support for 2PID, 4PID, path flight, 3D plot
 * **Ongoing**: Improve stability at high-frequency control, gradually migrate control core to C
   
-### 2PID Project
-#### Custom Firmware
+### 3. 4 PID Project
+#### 3.1 Custom Firmware
 
 * **Completed**: 4PWM packet implementation, firmware build, flashing, Python-side integration
 
-#### C++ Module
+#### 3.2 C++ Module
 
 * **Completed**: 4PWM packet implementation, full migration of 4PID control from Python, improved stability
 * **Ongoing**: Real flight testing
