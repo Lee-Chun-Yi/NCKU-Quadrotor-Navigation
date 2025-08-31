@@ -22,7 +22,6 @@ This study presents an indoor quadrotor control system achieving stable hover an
 | **Custom Firmware** | 4PWM packet implementation, firmware build, flashing, Python integration       | —                                                                     |
 | **C++ Module**      | 4PWM packet implementation, full migration of 4PID control, improved stability | Real flight testing                                                   |
 
-
   
  ## 
  
