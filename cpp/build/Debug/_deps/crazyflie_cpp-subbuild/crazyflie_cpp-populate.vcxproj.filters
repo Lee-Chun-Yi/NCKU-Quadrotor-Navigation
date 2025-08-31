@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-subbuild\CMakeFiles\a27b37d5de23b8e07d4e0e356422737b\crazyflie_cpp-populate-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-subbuild\CMakeFiles\a27b37d5de23b8e07d4e0e356422737b\crazyflie_cpp-populate-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-subbuild\CMakeFiles\a27b37d5de23b8e07d4e0e356422737b\crazyflie_cpp-populate-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-subbuild\CMakeFiles\a27b37d5de23b8e07d4e0e356422737b\crazyflie_cpp-populate-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-subbuild\CMakeFiles\a27b37d5de23b8e07d4e0e356422737b\crazyflie_cpp-populate-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-subbuild\CMakeFiles\a27b37d5de23b8e07d4e0e356422737b\crazyflie_cpp-populate-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-subbuild\CMakeFiles\a27b37d5de23b8e07d4e0e356422737b\crazyflie_cpp-populate-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-subbuild\CMakeFiles\a27b37d5de23b8e07d4e0e356422737b\crazyflie_cpp-populate-test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-subbuild\CMakeFiles\318e37f71caf2c889efb61001e2d3a24\crazyflie_cpp-populate-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-subbuild\CMakeFiles\99a2b6ed974ceaa1bb90283712953c01\crazyflie_cpp-populate.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-subbuild\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-subbuild\CMakeFiles\crazyflie_cpp-populate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{85613BA6-F5F5-399E-9EA4-3396B2E69703}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

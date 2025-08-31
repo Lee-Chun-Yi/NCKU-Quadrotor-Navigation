@@ -1,0 +1,117 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"build/Debug/_deps/crazyflie_cpp-src/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 40,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 45,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 54,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 60,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 68,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "include",
+			"paths" : 
+			[
+				"build/Debug/_deps/crazyflie_cpp-src/include/crazyflie_cpp"
+			],
+			"type" : "directory"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"_deps/crazyflie_cpp-build/Release/crazyflie_cpp.lib"
+			],
+			"targetId" : "crazyflie_cpp::@432260ff66066cb546be",
+			"targetIndex" : 4,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/crazyflie_cpp",
+			"exportName" : "crazyflie_cpp-targets",
+			"exportTargets" : 
+			[
+				{
+					"id" : "crazyflie_cpp::@432260ff66066cb546be",
+					"index" : 4
+				}
+			],
+			"paths" : 
+			[
+				"_deps/crazyflie_cpp-build/CMakeFiles/Export/8e763524226a661eacf157131ebf7734/crazyflie_cpp-targets.cmake"
+			],
+			"type" : "export"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/crazyflie_cpp",
+			"paths" : 
+			[
+				"build/Debug/_deps/crazyflie_cpp-src/cmake/crazyflie_cpp-config.cmake"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 5,
+			"component" : "Unspecified",
+			"destination" : "share/crazyflie_cpp",
+			"paths" : 
+			[
+				"build/Debug/_deps/crazyflie_cpp-src/package.xml"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "_deps/crazyflie_cpp-build",
+		"source" : "build/Debug/_deps/crazyflie_cpp-src"
+	}
+}

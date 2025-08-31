@@ -1,0 +1,150 @@
+^C:\USERS\USER\DESKTOP\CPP\BUILD\DEBUG\_DEPS\CRAZYFLIE_CPP-SUBBUILD\CMAKEFILES\A27B37D5DE23B8E07D4E0E356422737B\CRAZYFLIE_CPP-POPULATE-MKDIR.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -Dcfgdir=/Debug -P C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/crazyflie_cpp-populate-prefix/tmp/crazyflie_cpp-populate-mkdirs.cmake
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/crazyflie_cpp-populate-prefix/src/crazyflie_cpp-populate-stamp/Debug/crazyflie_cpp-populate-mkdir
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\USER\DESKTOP\CPP\BUILD\DEBUG\_DEPS\CRAZYFLIE_CPP-SUBBUILD\CMAKEFILES\A27B37D5DE23B8E07D4E0E356422737B\CRAZYFLIE_CPP-POPULATE-DOWNLOAD.RULE
+setlocal
+cd C:\Users\USER\Desktop\cpp\build\Debug\_deps
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/crazyflie_cpp-populate-prefix/tmp/crazyflie_cpp-populate-gitclone.cmake
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/crazyflie_cpp-populate-prefix/src/crazyflie_cpp-populate-stamp/Debug/crazyflie_cpp-populate-download
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\USER\DESKTOP\CPP\BUILD\DEBUG\_DEPS\CRAZYFLIE_CPP-SUBBUILD\CMAKEFILES\A27B37D5DE23B8E07D4E0E356422737B\CRAZYFLIE_CPP-POPULATE-UPDATE.RULE
+setlocal
+cd C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-src
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -Dcan_fetch=YES -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/crazyflie_cpp-populate-prefix/tmp/crazyflie_cpp-populate-gitupdate.cmake
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\USER\DESKTOP\CPP\BUILD\DEBUG\_DEPS\CRAZYFLIE_CPP-SUBBUILD\CMAKEFILES\A27B37D5DE23B8E07D4E0E356422737B\CRAZYFLIE_CPP-POPULATE-PATCH.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/crazyflie_cpp-populate-prefix/src/crazyflie_cpp-populate-stamp/Debug/crazyflie_cpp-populate-patch
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\USER\DESKTOP\CPP\BUILD\DEBUG\_DEPS\CRAZYFLIE_CPP-SUBBUILD\CMAKEFILES\A27B37D5DE23B8E07D4E0E356422737B\CRAZYFLIE_CPP-POPULATE-CONFIGURE.RULE
+setlocal
+cd C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/crazyflie_cpp-populate-prefix/src/crazyflie_cpp-populate-stamp/Debug/crazyflie_cpp-populate-configure
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\USER\DESKTOP\CPP\BUILD\DEBUG\_DEPS\CRAZYFLIE_CPP-SUBBUILD\CMAKEFILES\A27B37D5DE23B8E07D4E0E356422737B\CRAZYFLIE_CPP-POPULATE-BUILD.RULE
+setlocal
+cd C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/crazyflie_cpp-populate-prefix/src/crazyflie_cpp-populate-stamp/Debug/crazyflie_cpp-populate-build
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\USER\DESKTOP\CPP\BUILD\DEBUG\_DEPS\CRAZYFLIE_CPP-SUBBUILD\CMAKEFILES\A27B37D5DE23B8E07D4E0E356422737B\CRAZYFLIE_CPP-POPULATE-INSTALL.RULE
+setlocal
+cd C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/crazyflie_cpp-populate-prefix/src/crazyflie_cpp-populate-stamp/Debug/crazyflie_cpp-populate-install
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\USER\DESKTOP\CPP\BUILD\DEBUG\_DEPS\CRAZYFLIE_CPP-SUBBUILD\CMAKEFILES\A27B37D5DE23B8E07D4E0E356422737B\CRAZYFLIE_CPP-POPULATE-TEST.RULE
+setlocal
+cd C:\Users\USER\Desktop\cpp\build\Debug\_deps\crazyflie_cpp-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/crazyflie_cpp-populate-prefix/src/crazyflie_cpp-populate-stamp/Debug/crazyflie_cpp-populate-test
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\USER\DESKTOP\CPP\BUILD\DEBUG\_DEPS\CRAZYFLIE_CPP-SUBBUILD\CMAKEFILES\318E37F71CAF2C889EFB61001E2D3A24\CRAZYFLIE_CPP-POPULATE-COMPLETE.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/Debug
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/Debug/crazyflie_cpp-populate-complete
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/crazyflie_cpp-populate-prefix/src/crazyflie_cpp-populate-stamp/Debug/crazyflie_cpp-populate-done
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\USER\DESKTOP\CPP\BUILD\DEBUG\_DEPS\CRAZYFLIE_CPP-SUBBUILD\CMAKEFILES\99A2B6ED974CEAA1BB90283712953C01\CRAZYFLIE_CPP-POPULATE.RULE
+setlocal
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\USER\DESKTOP\CPP\BUILD\DEBUG\_DEPS\CRAZYFLIE_CPP-SUBBUILD\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild -BC:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild --check-stamp-file C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

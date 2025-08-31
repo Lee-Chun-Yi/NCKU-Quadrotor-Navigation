@@ -1,0 +1,10 @@
+^C:\USERS\USER\DESKTOP\CPP\BUILD\DEBUG\CMAKEFILES\B7364247B54CB322C504315EBD628974\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/USER/Desktop/cpp -BC:/Users/USER/Desktop/cpp/build/Debug --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/USER/Desktop/cpp/build/Debug/cf4pwm_runner_win.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

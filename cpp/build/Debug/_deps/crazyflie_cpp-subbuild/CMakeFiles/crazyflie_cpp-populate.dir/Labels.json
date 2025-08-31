@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/crazyflie_cpp-populate"
+		},
+		{
+			"file" : "C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/99a2b6ed974ceaa1bb90283712953c01/crazyflie_cpp-populate.rule"
+		},
+		{
+			"file" : "C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/318e37f71caf2c889efb61001e2d3a24/crazyflie_cpp-populate-complete.rule"
+		},
+		{
+			"file" : "C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/a27b37d5de23b8e07d4e0e356422737b/crazyflie_cpp-populate-build.rule"
+		},
+		{
+			"file" : "C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/a27b37d5de23b8e07d4e0e356422737b/crazyflie_cpp-populate-configure.rule"
+		},
+		{
+			"file" : "C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/a27b37d5de23b8e07d4e0e356422737b/crazyflie_cpp-populate-download.rule"
+		},
+		{
+			"file" : "C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/a27b37d5de23b8e07d4e0e356422737b/crazyflie_cpp-populate-install.rule"
+		},
+		{
+			"file" : "C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/a27b37d5de23b8e07d4e0e356422737b/crazyflie_cpp-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/a27b37d5de23b8e07d4e0e356422737b/crazyflie_cpp-populate-patch.rule"
+		},
+		{
+			"file" : "C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/a27b37d5de23b8e07d4e0e356422737b/crazyflie_cpp-populate-test.rule"
+		},
+		{
+			"file" : "C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/a27b37d5de23b8e07d4e0e356422737b/crazyflie_cpp-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"crazyflie_cpp-populate"
+		],
+		"name" : "crazyflie_cpp-populate"
+	}
+}

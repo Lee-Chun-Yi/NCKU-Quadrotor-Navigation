@@ -1,0 +1,7 @@
+C:/Users/USER/Desktop/cpp/build/Debug/CMakeFiles/cf4pwm_runner_win.dir
+C:/Users/USER/Desktop/cpp/build/Debug/CMakeFiles/INSTALL.dir
+C:/Users/USER/Desktop/cpp/build/Debug/CMakeFiles/ALL_BUILD.dir
+C:/Users/USER/Desktop/cpp/build/Debug/CMakeFiles/ZERO_CHECK.dir
+C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-build/CMakeFiles/crazyflie_cpp.dir
+C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-build/CMakeFiles/INSTALL.dir
+C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-build/CMakeFiles/ALL_BUILD.dir
