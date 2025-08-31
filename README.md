@@ -9,7 +9,7 @@ Contact us:
 * Ken-Huang: e84116201@gs.ncku.edu.tw
 
 ## Indoor Navigation of Quadrotors Using a Motion Capture System
-This study presents an indoor quadrotor control system achieving stable hover and point-to-point flight via a dual-loop PID (position + velocity). Real-time 6DOF data from a Vicon system (100 Hz) is sent to MATLAB/Simulink, where position errors generate velocity targets, then attitude commands (Roll, Pitch, Throttle). Commands are relayed through Python to the Crazyflie 2.1. The framework will be expanded into a four-layer PID by adding attitude and attitude-rate loops.
+This study presents an indoor quadrotor control system achieving stable hover and point-to-point flight via a **dual-loop PID (position + velocity)**. Real-time 6DOF data from a Vicon system (100 Hz) is sent to MATLAB/Simulink, where position errors generate velocity targets, then attitude commands (Roll, Pitch, Throttle). Commands are relayed through Python to the Crazyflie 2.1. The framework will be expanded into a **four-layer PID** by adding **attitude and attitude-rate loops**.
 
 
 ## Project Overview
