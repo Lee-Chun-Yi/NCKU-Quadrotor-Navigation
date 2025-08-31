@@ -9,25 +9,31 @@ Contact us:
 * Ken-Huang: e84116201@gs.ncku.edu.tw
 
 ## Indoor Navigation of Quadrotors Using a Motion Capture System
+This study presents an indoor quadrotor control system achieving stable hover and point-to-point flight via a dual-loop PID (position + velocity). Real-time 6DOF data from a Vicon system (100 Hz) is sent to MATLAB/Simulink, where position errors generate velocity targets, then attitude commands (Roll, Pitch, Throttle). Commands are relayed through Python to the Crazyflie 2.1. The framework will be expanded into a four-layer PID by adding attitude and attitude-rate loops.
 
-This study focuses on the development of an autonomous navigation and control system for quadrotors operating in indoor environments. The objective is to achieve **stable and controllable hovering and point-to-point flight** without human intervention. The control strategy is primarily implemented in MATLAB, employing a **dual-loop PID controller** that independently handles position and velocity errors to generate corresponding attitude control outputs (Roll, Pitch, Yaw, Throttle).
 
-The current system has successfully implemented a dual-loop PID controller for position and velocity control. Building upon this foundation, the architecture will be progressively extended into a **full four-layer control framework** by incorporating additional attitude and attitude rate PID loops.
+## Project Overview
 
-The overall system consists of several key modules: a Vicon motion capture system using five cameras operating at 100 Hz provides real-time 6DOF data of the quadrotor. This data is transmitted via UDP to **MATLAB/Simulink**.
+### 2PID Project
 
-Within the control logic, position errors are first processed by a **position PID controller** to compute the desired velocity, which is then passed to a **velocity PID controller** to produce the appropriate Roll, Pitch, and Throttle commands.
+* **Completed**: Python control (RPYT), MATLAB control system
+* **Ongoing**: Replacing low-pass filter with Kalman filter, PID tuning, yaw alignment with target direction
 
-The resulting control commands are sent from MATLAB to a Python script, which then transmits them to the Crazyflie 2.1 quadrotor.
+### GUI
 
-##  Folder Structure
+* **Completed**: Support for 2PID, 4PID, path flight, 3D plot
+* **Ongoing**: Improve stability at high-frequency control, gradually migrate control core to C
+  
+### 2PID Project
+#### Custom Firmware
 
-* `Matlab/`
-  **Simulink-based control systems** (2PID & 4PID), with tools for tuning, trajectory plotting, and performance analysis.
+* **Completed**: 4PWM packet implementation, firmware build, flashing, Python-side integration
 
-* `Python/`
-  **Main flight control scripts** with direct RPYT or PWM output (2PID & 4PID respectively).
+#### C++ Module
 
+* **Completed**: 4PWM packet implementation, full migration of 4PID control from Python, improved stability
+* **Ongoing**: Real flight testing
+  
   
  ## 
  
