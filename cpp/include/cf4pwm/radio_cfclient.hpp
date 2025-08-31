@@ -1,17 +1,21 @@
 #pragma once
-
 #include <array>
 #include <cstdint>
 #include <memory>
 #include <string>
+#include <vector>
+#include <stdexcept>
 
-#include "cf4pwm/msvc_pack_compat.hpp"
-#include <crazyflie_cpp/Crazyflie.h>
-#include <crazyflie_cpp/Crazyradio.h>
-
-#ifdef _MSC_VER
-  #pragma pack(pop)
+// Resolve Crazyflie header regardless of how upstream sets include dirs
+#if __has_include(<crazyflie_cpp/Crazyflie.h>)
+  #include <crazyflie_cpp/Crazyflie.h>
+#elif __has_include(<Crazyflie.h>)
+  #include <Crazyflie.h>
+#else
+  #error "Cannot find Crazyflie.h; check include paths."
 #endif
+
+#include "cf4pwm/msvc_pack_compat.hpp"   // our own packed helpers (optional for our structs)
 
 namespace cf4pwm {
 

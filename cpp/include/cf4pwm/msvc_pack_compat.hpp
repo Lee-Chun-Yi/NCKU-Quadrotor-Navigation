@@ -1,9 +1,11 @@
 #pragma once
-#ifdef _MSC_VER
-  // Swallow GCC-style attributes on MSVC
-  #ifndef __attribute__
-  #define __attribute__(x)
-  #endif
-  // Match GCC packed layout during inclusion of upstream headers
-  #pragma pack(push, 1)
+// Only for our own packed structs if needed; does NOT try to redefine upstream behavior.
+#if defined(_MSC_VER)
+  #define CF_PACK_PUSH_1  __pragma(pack(push, 1))
+  #define CF_PACK_POP     __pragma(pack(pop))
+  #define CF_PACKED       /* MSVC uses pragma pack for layout */
+#else
+  #define CF_PACK_PUSH_1  _Pragma("pack(push, 1)")
+  #define CF_PACK_POP     _Pragma("pack(pop)")
+  #define CF_PACKED       __attribute__((packed))
 #endif
