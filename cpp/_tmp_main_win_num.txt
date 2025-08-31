@@ -1,0 +1,370 @@
+    1: // main_win.cpp (UTF-8, no BOM)
+    2: 
+    3: #pragma pack(push, 1)
+    4: #include <crazyflie_cpp/Crazyflie.h>
+    5: #include <crazyflie_cpp/crtp.h>
+    6: #pragma pack(pop)
+    7: 
+    8: #include "cf4pwm/pack.hpp"
+    9: #include "cf4pwm/metrics.hpp"
+   10: #include "cf4pwm/udp_input.hpp"
+   11: #include "cf4pwm/radio_cfclient.hpp"
+   12: #include "cf4pwm/timing_win.hpp"
+   13: #include "cf4pwm/xyz_stream.hpp"
+   14: 
+   15: #include <atomic>
+   16: #include <cstdint>
+   17: #include <algorithm>
+   18: #include <chrono>
+   19: #include <cmath>
+   20: #include <iostream>
+   21: #include <sstream>
+   22: #include <string>
+   23: #include <thread>
+   24: 
+   25: #ifdef _WIN32
+   26:   #include <Windows.h>
+   27: #else
+   28:   #include <unistd.h>
+   29:   static inline void Sleep(unsigned long ms) { usleep(ms * 1000); }
+   30: #endif
+   31: 
+   32: using namespace std::chrono_literals;
+   33: 
+   34: int main(int argc, char** argv) {
+   35:   using cf4pwm::Metrics;
+   36:   using cf4pwm::RtConfig;
+   37:   using cf4pwm::UdpInput;
+   38:   using cf4pwm::PwmState;
+   39:   using cf4pwm::RadioClient;
+   40: 
+   41:   // ---- Ctrl+C handling ---------------------------------------------------
+   42:   static std::atomic<bool> g_running{true};
+   43: #ifdef _WIN32
+   44:   auto consoleHandler = +[](DWORD) -> BOOL { g_running = false; return TRUE; };
+   45:   SetConsoleCtrlHandler((PHANDLER_ROUTINE)consoleHandler, TRUE);
+   46: #endif
+   47: 
+   48:   // --- CLI options --------------------------------------------------------
+   49:   std::string uri = "radio://0/80/2M";
+   50:   double rate_hz = 500.0;
+   51:   std::string affinityStr;   // e.g. "3" or "3,5"
+   52:   bool realtime = false;     // --prio realtime
+   53:   bool spinTail = false;     // --spin-tail
+   54:   const char* csvPath = nullptr; // --csv <file>
+   55:   // UDP options
+   56:   int udpPort = 8888;
+   57:   bool udpDebug = false;
+   58:   cf4pwm::UdpInput::Expect udpExpect = cf4pwm::UdpInput::Expect::Auto;
+   59:   // 4PWM enable/disable options
+   60:   std::string enableParamOverride; // --enable-param <name>
+   61:   bool autoDisable = true;         // --no-auto-disable -> false
+   62:   // XYZ target streaming
+   63:   cf4pwm::XyzTarget xyzTarget; // stores millimeters
+   64:   double xyzRateHz = 200.0;    // default stream rate
+   65:   std::string xyzHost = "127.0.0.1";
+   66:   int xyzPort = 51002;
+   67:   // Keep user-facing XYZ in meters; convert to mm when publishing
+   68:   double x0_m = 0.0, y0_m = 0.0, z0_m = 0.0;
+   69:   // S-curve flight sequence
+   70:   double takeoffZ = 0.7;
+   71:   double takeoffT = 4.0;
+   72:   double cruiseT  = 120.0;
+   73:   double landT    = 4.0;
+   74: 
+   75:   for (int i = 1; i < argc; ++i) {
+   76:     std::string arg = argv[i];
+   77:     if (arg == "--uri" && i + 1 < argc) {
+   78:       uri = argv[++i];
+   79:     } else if (arg == "--rate" && i + 1 < argc) {
+   80:       rate_hz = std::stod(argv[++i]);
+   81:     } else if (arg == "--affinity" && i + 1 < argc) {
+   82:       affinityStr = argv[++i];                  // comma separated
+   83:     } else if (arg == "--prio" && i + 1 < argc) {
+   84:       std::string p = argv[++i];
+   85:       if (p == "realtime") realtime = true;
+   86:     } else if (arg == "--spin-tail") {
+   87:       spinTail = true;
+   88:     } else if (arg == "--csv" && i + 1 < argc) {
+   89:       csvPath = argv[++i];
+   90:     } else if (arg == "--udp-port" && i + 1 < argc) {
+   91:       udpPort = std::stoi(argv[++i]);
+   92:       if (udpPort < 1 || udpPort > 65535) udpPort = 8888;
+   93:     } else if (arg == "--udp-debug") {
+   94:       udpDebug = true;
+   95:     } else if (arg == "--udp-expect" && i + 1 < argc) {
+   96:       std::string v = argv[++i];
+   97:       if (v == "auto") udpExpect = cf4pwm::UdpInput::Expect::Auto;
+   98:       else if (v == "float") udpExpect = cf4pwm::UdpInput::Expect::Float;
+   99:       else if (v == "u16") udpExpect = cf4pwm::UdpInput::Expect::U16;
+  100:     } else if (arg == "--enable-param" && i + 1 < argc) {
+  101:       enableParamOverride = argv[++i];
+  102:     } else if (arg == "--no-auto-disable") {
+  103:       autoDisable = false;
+  104:     } else if (arg == "--target" && i + 1 < argc) {
+  105:       std::string s = argv[++i];
+  106:       // parse x,y,z
+  107:       double vals[3] = {0,0,0};
+  108:       int idx = 0;
+  109:       std::string cur;
+  110:       for (size_t k=0; k<=s.size(); ++k) {
+  111:         if (k==s.size() || s[k]==',') {
+  112:           if (!cur.empty() && idx < 3) {
+  113:             try { vals[idx] = std::stod(cur); } catch (...) {}
+  114:           }
+  115:           cur.clear();
+  116:           ++idx; if (idx>=3) break;
+  117:         } else {
+  118:           cur.push_back(s[k]);
+  119:         }
+  120:       }
+  121:       x0_m = vals[0]; y0_m = vals[1]; z0_m = vals[2];
+  122:     } else if (arg == "--xyz-rate" && i + 1 < argc) {
+  123:       xyzRateHz = std::stod(argv[++i]);
+  124:     } else if (arg == "--xyz" && i + 1 < argc) {
+  125:       std::string s = argv[++i];
+  126:       double vals[3] = {0,0,0};
+  127:       int idx = 0; std::string cur;
+  128:       for (size_t k=0; k<=s.size(); ++k) {
+  129:         if (k==s.size() || s[k]==',') {
+  130:           if (!cur.empty() && idx < 3) { try { vals[idx] = std::stod(cur); } catch (...) {} }
+  131:           cur.clear();
+  132:           ++idx; if (idx>=3) break;
+  133:         } else { cur.push_back(s[k]); }
+  134:       }
+  135:       x0_m = vals[0]; y0_m = vals[1]; z0_m = vals[2];
+  136:     } else if (arg == "--xyz-host" && i + 1 < argc) {
+  137:       xyzHost = argv[++i];
+  138:     } else if (arg == "--xyz-port" && i + 1 < argc) {
+  139:       xyzPort = std::stoi(argv[++i]);
+  140:       if (xyzPort < 1 || xyzPort > 65535) xyzPort = 51002;
+  141:     } else if (arg == "--takeoff-z" && i + 1 < argc) {
+  142:       takeoffZ = std::stod(argv[++i]);
+  143:     } else if (arg == "--takeoff-T" && i + 1 < argc) {
+  144:       takeoffT = std::stod(argv[++i]);
+  145:       if (takeoffT < 0.0) takeoffT = 0.0;
+  146:     } else if (arg == "--land-T" && i + 1 < argc) {
+  147:       landT = std::stod(argv[++i]);
+  148:       if (landT < 0.0) landT = 0.0;
+  149:     } else if (arg == "--cruise" && i + 1 < argc) {
+  150:       cruiseT = std::stod(argv[++i]);
+  151:       if (cruiseT < 0.0) cruiseT = 0.0;
+  152:     }
+  153:   }
+  154: 
+  155:   // --- RT setup -----------------------------------------------------------
+  156:   unsigned long long mask = 0ull;
+  157:   if (!affinityStr.empty()) {
+  158:     std::stringstream ss(affinityStr);
+  159:     std::string token;
+  160:     while (std::getline(ss, token, ',')) {
+  161:       if (!token.empty()) {
+  162:         int core = std::stoi(token);
+  163:         if (core >= 0 && core < 64) mask |= (1ull << core);
+  164:       }
+  165:     }
+  166:   }
+  167: 
+  168:   RtConfig cfg;
+  169:   cfg.realtime     = realtime;
+  170:   cfg.affinityMask = mask;
+  171:   cfg.spinTail     = spinTail;
+  172:   cf4pwm::init_timing(cfg);
+  173: 
+  174:   // --- IO setup -----------------------------------------------------------
+  175:   PwmState pwm;
+  176:   UdpInput udp;
+  177:   udp.configure(static_cast<uint16_t>(udpPort), udpDebug, udpExpect);
+  178:   udp.start(&pwm);   // 非阻塞收 8888 -> pwm.packed (atomic<uint64_t>)
+  179: 
+  180:   RadioClient radio(uri);
+  181:   try {
+  182:     radio.connect();
+  183:   } catch (const std::exception& e) {
+  184:     std::cerr << "[radio] init failed: " << e.what() << "\n";
+  185:     cf4pwm::restore_timing();
+  186:     return 1;
+  187:   }
+  188: 
+  189:   // Open Crazyflie link for param enable (fast path still uses Crazyradio directly)
+  190:   std::string enabledParamName; // if non-empty, indicates which param was set
+  191:   try {
+  192:     Crazyflie cf(uri);
+  193:     auto tryEnable = [&](const std::string& fullName) -> bool {
+  194:       auto dot = fullName.find('.');
+  195:       if (dot == std::string::npos || dot == 0 || dot + 1 >= fullName.size()) return false;
+  196:       std::string group = fullName.substr(0, dot);
+  197:       std::string name  = fullName.substr(dot + 1);
+  198:       try {
+  199:         uint8_t one = 1;
+  200:         cf.setParamByName(group.c_str(), name.c_str(), one);
+  201:         return true;
+  202:       } catch (const std::exception&) {
+  203:         return false;
+  204:       }
+  205:     };
+  206: 
+  207:     bool enabled = false;
+  208:     if (!enableParamOverride.empty()) {
+  209:       enabled = tryEnable(enableParamOverride);
+  210:       if (enabled) enabledParamName = enableParamOverride;
+  211:     } else {
+  212:       const char* candidates[] = { "crtp_pwm.enable", "pwm.enable", "motorPowerSet.enable" };
+  213:       for (const char* cand : candidates) {
+  214:         if (tryEnable(cand)) { enabledParamName = cand; enabled = true; break; }
+  215:       }
+  216:     }
+  217:     if (!enabled) {
+  218:       std::cerr << "[warn] Could not enable 4PWM via parameter; motors may not spin\n";
+  219:     }
+  220:   } catch (const std::exception& e) {
+  221:     std::cerr << "[warn] Crazyflie link/param setup failed: " << e.what() << "\n";
+  222:   }
+  223: 
+  224:   // Consolidated connection message with enable parameter info
+  225:   std::cerr << "[radio] connected (ch=" << radio.channel() << ", rate=" << radio.rate()
+  226:             << ") | enable=" << (enabledParamName.empty() ? "-" : enabledParamName) << "\n";
+  227: 
+  228:   // Initialize atomics with starting target in millimeters
+  229:   xyzTarget.x.store(static_cast<float>(x0_m * 1000.0), std::memory_order_relaxed);
+  230:   xyzTarget.y.store(static_cast<float>(y0_m * 1000.0), std::memory_order_relaxed);
+  231:   xyzTarget.z.store(static_cast<float>(z0_m * 1000.0), std::memory_order_relaxed);
+  232: 
+  233:   // Start XYZ UDP stream to MATLAB/Simulink
+  234:   double xyzRate = (xyzRateHz > 0.0) ? xyzRateHz : 200.0;
+  235:   cf4pwm::start_xyz_stream(&xyzTarget, xyzHost.c_str(), static_cast<uint16_t>(xyzPort), xyzRate);
+  236: 
+  237:   // --- timing/metrics -----------------------------------------------------
+  238:   const std::int64_t fq = cf4pwm::qpc_freq();
+  239:   Metrics metrics(fq, csvPath);
+  240: 
+  241:   const double period_s = 1.0 / std::max(1.0, rate_hz);
+  242:   const std::int64_t period_ticks = cf4pwm::secondsToTicks(period_s, fq);
+  243:   std::int64_t next = cf4pwm::qpc_now();
+  244: 
+  245:   // --- flight sequence state ---------------------------------------------
+  246:   auto sCurve01 = [](double t, double T) -> double {
+  247:     if (T <= 0.0) return 1.0;
+  248:     if (t <= 0.0) return 0.0;
+  249:     if (t >= T) return 1.0;
+  250:     return 0.5 * (1.0 - std::cos(M_PI * t / T));
+  251:   };
+  252: 
+  253:   enum class Phase { Takeoff, Cruise, Landing, Done };
+  254:   Phase phase = Phase::Takeoff;
+  255:   const double fq_d = static_cast<double>(fq);
+  256:   std::int64_t phaseStart = cf4pwm::qpc_now();
+  257:   // keep meters internally for phase math
+  258:   double z0 = z0_m;
+  259:   double zLandingStart = 0.0;
+  260: 
+  261:   // --- loop ---------------------------------------------------------------
+  262:   while (phase != Phase::Done) {
+  263:     std::uint16_t m1, m2, m3, m4;
+  264:     const std::uint64_t packed = pwm.packed.load(std::memory_order_acquire);
+  265: 
+  266:     // 使用我們的 pack/unpack 介面（命名空間限定，避免撞名）
+  267:     cf4pwm::unpack4u16(packed, m1, m2, m3, m4);
+  268:     radio.send4pwm(m1, m2, m3, m4);
+  269: 
+  270:     next += period_ticks;
+  271:     const std::int64_t now = cf4pwm::qpc_now();
+  272:     const bool late = now > next;
+  273:     metrics.update(now, period_ticks, late);
+  274: 
+  275:     const double tPhase = static_cast<double>(now - phaseStart) / fq_d;
+  276: 
+  277:     if (!g_running.load(std::memory_order_relaxed)) {
+  278:       if (phase != Phase::Landing && phase != Phase::Done) {
+  279:         // convert current stored mm to meters for landing start
+  280:         zLandingStart = static_cast<double>(xyzTarget.z.load(std::memory_order_relaxed)) / 1000.0;
+  281:         phase = Phase::Landing;
+  282:         phaseStart = now;
+  283:       }
+  284:     }
+  285: 
+  286:     switch (phase) {
+  287:       case Phase::Takeoff: {
+  288:         double z = z0 + (takeoffZ - z0) * sCurve01(tPhase, takeoffT);
+  289:         xyzTarget.z.store(static_cast<float>(z * 1000.0), std::memory_order_relaxed);
+  290:         if (tPhase >= takeoffT) {
+  291:           phase = Phase::Cruise;
+  292:           phaseStart = now;
+  293:         }
+  294:         break;
+  295:       }
+  296:       case Phase::Cruise: {
+  297:         xyzTarget.z.store(static_cast<float>(takeoffZ * 1000.0), std::memory_order_relaxed);
+  298:         if (tPhase >= cruiseT) {
+  299:           zLandingStart = takeoffZ;
+  300:           phase = Phase::Landing;
+  301:           phaseStart = now;
+  302:         }
+  303:         break;
+  304:       }
+  305:       case Phase::Landing: {
+  306:         double z = zLandingStart * (1.0 - sCurve01(tPhase, landT));
+  307:         if (z < 0.0) z = 0.0;
+  308:         xyzTarget.z.store(static_cast<float>(z * 1000.0), std::memory_order_relaxed);
+  309:         if (tPhase >= landT) {
+  310:           xyzTarget.z.store(0.0f, std::memory_order_relaxed);
+  311:           phase = Phase::Done;
+  312:         }
+  313:         break;
+  314:       }
+  315:       case Phase::Done:
+  316:         break;
+  317:     }
+  318: 
+  319:     // 粗睡 + 尾端自旋（可選）
+  320:     const double slack_ms = cf4pwm::ticksToMs(next - now, fq);
+  321:     if (slack_ms > 0.6) {
+  322:       Sleep(static_cast<unsigned long>(std::max(0.0, slack_ms - 0.3)));
+  323:     }
+  324:     if (cfg.spinTail) {
+  325:       while (cf4pwm::qpc_now() < next) { /* spin */ }
+  326:     }
+  327: 
+  328:     if (metrics.maybePrintBegin(now)) {
+  329:       // Snap to integers for display to avoid transient float prints
+  330:       int px = static_cast<int>(std::lround(xyzTarget.x.load(std::memory_order_relaxed)));
+  331:       int py = static_cast<int>(std::lround(xyzTarget.y.load(std::memory_order_relaxed)));
+  332:       int pz = static_cast<int>(std::lround(xyzTarget.z.load(std::memory_order_relaxed)));
+  333:       std::cout << " | m1~m4: [" << m1 << ", " << m2 << ", " << m3 << ", " << m4
+  334:                 << "] | xyz_mm: [" << px << ", " << py << ", " << pz << "]" << std::endl;
+  335:     }
+  336:   }
+  337: 
+  338:   // --- graceful stop: 送幾次 0 PWM ---------------------------------------
+  339:   for (int i = 0; i < 10; ++i) {
+  340:     radio.send4pwm(0, 0, 0, 0);
+  341:     Sleep(10);
+  342:   }
+  343: 
+  344:   // --- teardown -----------------------------------------------------------
+  345:   // Disable 4PWM if we enabled it (unless opted out)
+  346:   if (autoDisable && !enabledParamName.empty()) {
+  347:     try {
+  348:       Crazyflie cf(uri);
+  349:       auto dot = enabledParamName.find('.');
+  350:       if (dot != std::string::npos && dot > 0 && dot + 1 < enabledParamName.size()) {
+  351:         std::string group = enabledParamName.substr(0, dot);
+  352:         std::string name  = enabledParamName.substr(dot + 1);
+  353:         uint8_t zero = 0;
+  354:         cf.setParamByName(group.c_str(), name.c_str(), zero);
+  355:       }
+  356:     } catch (const std::exception& e) {
+  357:       std::cerr << "[warn] Failed to disable 4PWM param: " << e.what() << "\n";
+  358:     }
+  359:   }
+  360: 
+  361:   radio.disconnect();
+  362:   udp.stop();
+  363:   cf4pwm::stop_xyz_stream();
+  364: 
+  365:   const std::int64_t endTicks = cf4pwm::qpc_now();
+  366:   metrics.finish(endTicks);
+  367:   cf4pwm::restore_timing();
+  368: 
+  369:   return 0;
+  370: }

@@ -138,16 +138,16 @@ if (MSVC)
     target_compile_options(crazyflie_cpp PRIVATE /FI"${_shim_abs}")
   endif()
 
-  # Your executable TU also needs pack=1 and UTF-8
-  target_compile_options(cf4pwm_runner_win PRIVATE /Zp1 /utf-8)
+  # Use UTF-8; avoid global /Zp1 which can break alignment in our TU
+  target_compile_options(cf4pwm_runner_win PRIVATE /utf-8)
 else()
   target_compile_options(cf4pwm_runner_win PRIVATE -Wall -Wextra)
 endif()
 
-# (Optional) extra safety: enforce /Zp1 on specific TU if needed
+# (Optional) ensure source files use UTF-8 consistently
 if (MSVC)
   set_source_files_properties(
     src/main_win.cpp src/radio_cfclient.cpp
-    PROPERTIES COMPILE_OPTIONS "/Zp1;/utf-8"
+    PROPERTIES COMPILE_OPTIONS "/utf-8"
   )
 endif()

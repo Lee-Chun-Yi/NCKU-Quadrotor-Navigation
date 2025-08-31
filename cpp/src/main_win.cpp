@@ -16,6 +16,7 @@
 #include <cstdint>
 #include <algorithm>
 #include <chrono>
+#include <cmath>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -39,8 +40,15 @@ int main(int argc, char** argv) {
 
   // ---- Ctrl+C handling ---------------------------------------------------
   static std::atomic<bool> g_running{true};
+  static std::atomic<int>  g_ctrlCount{0};
 #ifdef _WIN32
-  auto consoleHandler = +[](DWORD) -> BOOL { g_running = false; return TRUE; };
+  auto consoleHandler = +[](DWORD ctrlType) -> BOOL {
+    // Treat all console signals as a request to land, do not exit immediately
+    (void)ctrlType;
+    g_ctrlCount.fetch_add(1, std::memory_order_relaxed);
+    g_running.store(false, std::memory_order_release);
+    return TRUE; // signal handled; keep process alive to finish landing
+  };
   SetConsoleCtrlHandler((PHANDLER_ROUTINE)consoleHandler, TRUE);
 #endif
 
@@ -58,9 +66,19 @@ int main(int argc, char** argv) {
   // 4PWM enable/disable options
   std::string enableParamOverride; // --enable-param <name>
   bool autoDisable = true;         // --no-auto-disable -> false
-  // XYZ target streaming
-  cf4pwm::XyzTarget xyzTarget; // defaults to 0,0,0
-  double xyzRateHz = -1.0;     // mirror --rate unless overridden
+  // XYZ target streaming (all values in millimeters)
+  cf4pwm::XyzTarget xyzTarget; // stores millimeters
+  double xyzRateHz = 200.0;    // default stream rate
+  std::string xyzHost = "127.0.0.1";
+  int xyzPort = 51002;
+  // Keep user-facing XYZ in millimeters
+  double x0_mm = 0.0, y0_mm = 0.0, z0_mm = 0.0;
+  // S-curve flight sequence (millimeters)
+  double takeoffZ_mm = 700.0;
+  bool   takeoffZ_overridden = false; // track if user provided --takeoff-z
+  double takeoffT = 4.0;
+  double cruiseT  = 120.0;
+  double landT    = 4.0;
 
   for (int i = 1; i < argc; ++i) {
     std::string arg = argv[i];
@@ -93,14 +111,14 @@ int main(int argc, char** argv) {
       autoDisable = false;
     } else if (arg == "--target" && i + 1 < argc) {
       std::string s = argv[++i];
-      // parse x,y,z
-      float vals[3] = {0,0,0};
+      // parse x,y,z (millimeters)
+      double vals[3] = {0,0,0};
       int idx = 0;
       std::string cur;
       for (size_t k=0; k<=s.size(); ++k) {
         if (k==s.size() || s[k]==',') {
           if (!cur.empty() && idx < 3) {
-            try { vals[idx] = std::stof(cur); } catch (...) {}
+            try { vals[idx] = std::stod(cur); } catch (...) {}
           }
           cur.clear();
           ++idx; if (idx>=3) break;
@@ -108,11 +126,39 @@ int main(int argc, char** argv) {
           cur.push_back(s[k]);
         }
       }
-      xyzTarget.x.store(vals[0], std::memory_order_relaxed);
-      xyzTarget.y.store(vals[1], std::memory_order_relaxed);
-      xyzTarget.z.store(vals[2], std::memory_order_relaxed);
+      x0_mm = vals[0]; y0_mm = vals[1]; z0_mm = vals[2];
     } else if (arg == "--xyz-rate" && i + 1 < argc) {
       xyzRateHz = std::stod(argv[++i]);
+    } else if (arg == "--xyz" && i + 1 < argc) {
+      std::string s = argv[++i];
+      double vals[3] = {0,0,0};
+      int idx = 0; std::string cur;
+      for (size_t k=0; k<=s.size(); ++k) {
+        if (k==s.size() || s[k]==',') {
+          if (!cur.empty() && idx < 3) { try { vals[idx] = std::stod(cur); } catch (...) {} }
+          cur.clear();
+          ++idx; if (idx>=3) break;
+        } else { cur.push_back(s[k]); }
+      }
+      x0_mm = vals[0]; y0_mm = vals[1]; z0_mm = vals[2];
+    } else if (arg == "--xyz-host" && i + 1 < argc) {
+      xyzHost = argv[++i];
+    } else if (arg == "--xyz-port" && i + 1 < argc) {
+      xyzPort = std::stoi(argv[++i]);
+      if (xyzPort < 1 || xyzPort > 65535) xyzPort = 51002;
+    } else if (arg == "--takeoff-z" && i + 1 < argc) {
+      // millimeters
+      takeoffZ_mm = std::stod(argv[++i]);
+      takeoffZ_overridden = true;
+    } else if (arg == "--takeoff-T" && i + 1 < argc) {
+      takeoffT = std::stod(argv[++i]);
+      if (takeoffT < 0.0) takeoffT = 0.0;
+    } else if (arg == "--land-T" && i + 1 < argc) {
+      landT = std::stod(argv[++i]);
+      if (landT < 0.0) landT = 0.0;
+    } else if (arg == "--cruise" && i + 1 < argc) {
+      cruiseT = std::stod(argv[++i]);
+      if (cruiseT < 0.0) cruiseT = 0.0;
     }
   }
 
@@ -185,13 +231,24 @@ int main(int argc, char** argv) {
     std::cerr << "[warn] Crazyflie link/param setup failed: " << e.what() << "\n";
   }
 
+  // If user set z via --xyz/--target and did not set --takeoff-z, use it as final takeoff height
+  if (!takeoffZ_overridden && z0_mm > 0.0) {
+    takeoffZ_mm = z0_mm;
+  }
+
   // Consolidated connection message with enable parameter info
   std::cerr << "[radio] connected (ch=" << radio.channel() << ", rate=" << radio.rate()
             << ") | enable=" << (enabledParamName.empty() ? "-" : enabledParamName) << "\n";
 
+  // Initialize atomics with starting target in millimeters
+  // Always start from 0 mm on Z and ramp up in takeoff
+  xyzTarget.x.store(static_cast<float>(x0_mm), std::memory_order_relaxed);
+  xyzTarget.y.store(static_cast<float>(y0_mm), std::memory_order_relaxed);
+  xyzTarget.z.store(0.0f, std::memory_order_relaxed);
+
   // Start XYZ UDP stream to MATLAB/Simulink
-  double xyzRate = (xyzRateHz > 0.0) ? xyzRateHz : rate_hz;
-  cf4pwm::start_xyz_stream(&xyzTarget, "127.0.0.1", 51002, xyzRate);
+  double xyzRate = (xyzRateHz > 0.0) ? xyzRateHz : 200.0;
+  cf4pwm::start_xyz_stream(&xyzTarget, xyzHost.c_str(), static_cast<uint16_t>(xyzPort), xyzRate);
 
   // --- timing/metrics -----------------------------------------------------
   const std::int64_t fq = cf4pwm::qpc_freq();
@@ -201,8 +258,25 @@ int main(int argc, char** argv) {
   const std::int64_t period_ticks = cf4pwm::secondsToTicks(period_s, fq);
   std::int64_t next = cf4pwm::qpc_now();
 
+  // --- flight sequence state ---------------------------------------------
+  auto sCurve01 = [](double t, double T) -> double {
+    if (T <= 0.0) return 1.0;
+    if (t <= 0.0) return 0.0;
+    if (t >= T) return 1.0;
+    return 0.5 * (1.0 - std::cos(M_PI * t / T));
+  };
+
+  enum class Phase { Takeoff, Cruise, Landing, Done };
+  Phase phase = Phase::Takeoff;
+  const double fq_d = static_cast<double>(fq);
+  std::int64_t phaseStart = cf4pwm::qpc_now();
+  // keep millimeters internally for phase math
+  // Always ramp from 0 mm on takeoff
+  double z0 = 0.0;
+  double zLandingStart = 0.0;
+
   // --- loop ---------------------------------------------------------------
-  while (g_running.load(std::memory_order_relaxed)) {
+  while (phase != Phase::Done) {
     std::uint16_t m1, m2, m3, m4;
     const std::uint64_t packed = pwm.packed.load(std::memory_order_acquire);
 
@@ -215,6 +289,51 @@ int main(int argc, char** argv) {
     const bool late = now > next;
     metrics.update(now, period_ticks, late);
 
+    const double tPhase = static_cast<double>(now - phaseStart) / fq_d;
+
+    if (!g_running.load(std::memory_order_relaxed)) {
+      if (phase != Phase::Landing && phase != Phase::Done) {
+        // capture current mm for landing start
+        zLandingStart = static_cast<double>(xyzTarget.z.load(std::memory_order_relaxed));
+        std::cerr << "[signal] Ctrl+C received -> initiating landing...\n";
+        phase = Phase::Landing;
+        phaseStart = now;
+      }
+    }
+
+    switch (phase) {
+      case Phase::Takeoff: {
+        double z = z0 + (takeoffZ_mm - z0) * sCurve01(tPhase, takeoffT); // mm
+        xyzTarget.z.store(static_cast<float>(z), std::memory_order_relaxed);
+        if (tPhase >= takeoffT) {
+          phase = Phase::Cruise;
+          phaseStart = now;
+        }
+        break;
+      }
+      case Phase::Cruise: {
+        xyzTarget.z.store(static_cast<float>(takeoffZ_mm), std::memory_order_relaxed);
+        if (tPhase >= cruiseT) {
+          zLandingStart = takeoffZ_mm;
+          phase = Phase::Landing;
+          phaseStart = now;
+        }
+        break;
+      }
+      case Phase::Landing: {
+        double z = zLandingStart * (1.0 - sCurve01(tPhase, landT)); // mm
+        if (z < 0.0) z = 0.0;
+        xyzTarget.z.store(static_cast<float>(z), std::memory_order_relaxed);
+        if (tPhase >= landT) {
+          xyzTarget.z.store(0.0f, std::memory_order_relaxed);
+          phase = Phase::Done;
+        }
+        break;
+      }
+      case Phase::Done:
+        break;
+    }
+
     // 粗睡 + 尾端自旋（可選）
     const double slack_ms = cf4pwm::ticksToMs(next - now, fq);
     if (slack_ms > 0.6) {
@@ -225,7 +344,12 @@ int main(int argc, char** argv) {
     }
 
     if (metrics.maybePrintBegin(now)) {
-      std::cout << " | m1~m4: [" << m1 << ", " << m2 << ", " << m3 << ", " << m4 << "]" << std::endl;
+      // Snap to integers for display to avoid transient float prints
+      int px = static_cast<int>(std::lround(xyzTarget.x.load(std::memory_order_relaxed)));
+      int py = static_cast<int>(std::lround(xyzTarget.y.load(std::memory_order_relaxed)));
+      int pz = static_cast<int>(std::lround(xyzTarget.z.load(std::memory_order_relaxed)));
+      std::cout << " | m1~m4: [" << m1 << ", " << m2 << ", " << m3 << ", " << m4
+                << "] | xyz_mm: [" << px << ", " << py << ", " << pz << "]" << std::endl;
     }
   }
 

@@ -10,7 +10,9 @@
         "--uri", "${input:radiouri}",
         "--rate", "500",
         "--csv", "metrics.csv",
-        "--target", "${input:xyz}"
+        "--xyz", "${input:xyz}",
+        "--takeoff-T", "${input:takeoff_T}",
+        "--land-T", "${input:land_T}"
       ],
       "cwd": "${workspaceFolder}/build/Debug/bin/Debug",
       "console": "integratedTerminal",
@@ -27,8 +29,20 @@
     {
       "id": "xyz",
       "type": "promptString",
-      "description": "Enter target x,y,z (floats, CSV)",
+      "description": "Enter target x,y,z in mm (CSV)",
       "default": "0,0,700"
+    },
+    {
+      "id": "takeoff_T",
+      "type": "promptString",
+      "description": "Takeoff duration in seconds (S-curve)",
+      "default": "3"
+    },
+    {
+      "id": "land_T",
+      "type": "promptString",
+      "description": "Landing duration in seconds (S-curve)",
+      "default": "4"
     }
   ]
 }

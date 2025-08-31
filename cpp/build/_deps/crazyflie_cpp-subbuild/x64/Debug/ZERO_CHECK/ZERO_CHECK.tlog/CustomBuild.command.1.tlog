@@ -1,0 +1,10 @@
+^C:\USERS\USER\DESKTOP\CPP\BUILD\_DEPS\CRAZYFLIE_CPP-SUBBUILD\CMAKEFILES\33A91815B8AE24DE8D6B65C786195104\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/USER/Desktop/cpp/build/_deps/crazyflie_cpp-subbuild -BC:/Users/USER/Desktop/cpp/build/_deps/crazyflie_cpp-subbuild --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/USER/Desktop/cpp/build/_deps/crazyflie_cpp-subbuild/crazyflie_cpp-populate.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
