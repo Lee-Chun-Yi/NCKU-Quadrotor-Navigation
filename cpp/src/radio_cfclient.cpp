@@ -1,8 +1,8 @@
 #include "cf4pwm/radio_cfclient.hpp"
 
-#include <crazyflie_cpp/Crazyflie.h>
-
 namespace cf4pwm {
+
+RadioClient::~RadioClient() = default;
 
 bool RadioClient::init(const std::string& uri) {
   cf_ = std::make_unique<crazyflie_cpp::Crazyflie>(uri.c_str());
