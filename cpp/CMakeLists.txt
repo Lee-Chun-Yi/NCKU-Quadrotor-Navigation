@@ -13,8 +13,17 @@ if(CFCPP_USE_FETCHCONTENT)
     GIT_TAG master
   )
   FetchContent_MakeAvailable(crazyflie_cpp)
+  if(MSVC)
+    get_target_property(CFCPP_COMPILE_OPTIONS crazyflie_cpp INTERFACE_COMPILE_OPTIONS)
+    if(CFCPP_COMPILE_OPTIONS)
+      list(REMOVE_ITEM CFCPP_COMPILE_OPTIONS -Wall -Wextra -Werror)
+      set_property(TARGET crazyflie_cpp PROPERTY INTERFACE_COMPILE_OPTIONS "${CFCPP_COMPILE_OPTIONS}")
+    endif()
+    target_compile_options(crazyflie_cpp INTERFACE /W3)
+  endif()
 else()
   add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../crazyflie_cpp crazyflie_cpp)
+  set(crazyflie_cpp_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../crazyflie_cpp)
 endif()
 
 add_executable(cf4pwm_runner_win
@@ -26,7 +35,15 @@ add_executable(cf4pwm_runner_win
   src/pack.cpp
 )
 
-target_include_directories(cf4pwm_runner_win PRIVATE include)
+target_include_directories(cf4pwm_runner_win
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${crazyflie_cpp_SOURCE_DIR}/include
+)
+
+if(MSVC)
+  target_compile_definitions(cf4pwm_runner_win PRIVATE NOMINMAX)
+endif()
 
 target_link_libraries(cf4pwm_runner_win PRIVATE crazyflie_cpp Ws2_32)
 

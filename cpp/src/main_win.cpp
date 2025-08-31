@@ -10,11 +10,13 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+#include <chrono>
 
 #ifdef _WIN32
 #include <windows.h>
 #endif
 
+using namespace std::chrono_literals;
 using namespace cf4pwm;
 
 #ifndef _WIN32
