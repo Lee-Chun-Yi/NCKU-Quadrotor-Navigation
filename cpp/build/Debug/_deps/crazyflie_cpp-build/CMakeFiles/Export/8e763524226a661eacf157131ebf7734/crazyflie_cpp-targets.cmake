@@ -60,7 +60,7 @@ add_library(crazyflie_cpp::crazyflie_cpp STATIC IMPORTED)
 
 set_target_properties(crazyflie_cpp::crazyflie_cpp PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include/crazyflie_cpp;${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "C:/vcpkg/installed/x64-windows/lib/libusb-1.0.lib"
+  INTERFACE_LINK_LIBRARIES "C:/vcpkg/installed/x64-windows/lib/libusb-1.0.lib;C:/vcpkg/installed/x64-windows/lib/libusb-1.0.lib"
 )
 
 # Load information for each installed configuration.

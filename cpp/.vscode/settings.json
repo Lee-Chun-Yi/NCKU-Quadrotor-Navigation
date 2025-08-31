@@ -7,5 +7,9 @@
   "cmake.sourceDirectory": "${workspaceFolder}",
   "cmake.environment": {
     "VCPKG_ROOT": "${env:VCPKG_ROOT}"
+  },
+  "files.associations": {
+    "atomic": "cpp",
+    "stdexcept": "cpp"
   }
 }

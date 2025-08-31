@@ -17,8 +17,12 @@ struct PwmState {
 
 class UdpInput {
 public:
+  enum class Expect { Auto, Float, U16 };
+
   UdpInput();
   ~UdpInput();
+
+  void configure(uint16_t port, bool debug, Expect expect);
   bool start(PwmState* state);
   void stop();
 
@@ -31,7 +35,17 @@ private:
   std::thread thread_;
   std::atomic<bool> running_{false};
   PwmState* state_ = nullptr;
+
+  // config
+  uint16_t port_ = 8888;
+  bool debug_ = false;
+  Expect expect_ = Expect::Auto;
+
+  // stats
+  std::atomic<uint64_t> drops_{0};
+  std::atomic<uint64_t> bytes_{0};
+  std::atomic<uint64_t> pkts_total_{0};
+  std::atomic<int>      lastlen_{0};
 };
 
 } // namespace cf4pwm
-

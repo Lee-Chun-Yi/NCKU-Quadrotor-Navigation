@@ -19,6 +19,9 @@
     <ClCompile Include="C:\Users\USER\Desktop\cpp\src\udp_input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\USER\Desktop\cpp\src\xyz_stream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\USER\Desktop\cpp\CMakeLists.txt" />

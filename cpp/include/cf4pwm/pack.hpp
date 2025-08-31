@@ -1,39 +1,33 @@
-// include/cf4pwm/pack.hpp
 #pragma once
+#include <cstdint>
+#include <array>
 
-// 目的：只對「個別」結構做 1-byte 對齊，而不影響全域 packing。
-// 用法：
-//   CF_PACKED_STRUCT(
-//     struct MyPacket {
-//       uint8_t a;
-//       uint16_t b;
-//     };
-//   );
-//
-// 注意：不要把這個巨集套在含有 virtual 成員或需要自然對齊的型別上。
+namespace cf4pwm {
 
-#if defined(_MSC_VER)
+// 小端序 8 bytes
+using Bytes8 = std::array<std::uint8_t, 8>;
 
-// MSVC：用 __pragma 做局部 push/pop
-#define CF_PACKED_STRUCT(definition) \
-  __pragma(pack(push, 1)) definition __pragma(pack(pop))
+/* 將四個 uint16 以小端序打包到 uint64_t（a 最低位，d 最高位） */
+std::uint64_t pack4u16(std::uint16_t a, std::uint16_t b,
+                       std::uint16_t c, std::uint16_t d) noexcept;
 
-// 也可加入欄位層級的 packed 標註（留白即可）
-#define CF_PACKED /* no-op for MSVC */
+/* 從 uint64_t（小端序）解包為四個 uint16 */
+void unpack4u16(std::uint64_t v,
+                std::uint16_t& a, std::uint16_t& b,
+                std::uint16_t& c, std::uint16_t& d) noexcept;
 
-#elif defined(__GNUC__) || defined(__clang__)
+/* 將四個 uint16 以小端序打包到 8 bytes 陣列 */
+void pack4u16(std::uint16_t a, std::uint16_t b,
+              std::uint16_t c, std::uint16_t d,
+              Bytes8& out) noexcept;
 
-// GCC/Clang：用 __attribute__((packed))
-#define CF_PACKED_STRUCT(definition) \
-  definition __attribute__((packed))
+/* 從 8 bytes（小端序）解回四個 uint16 */
+void unpack4u16(const Bytes8& in,
+                std::uint16_t& a, std::uint16_t& b,
+                std::uint16_t& c, std::uint16_t& d) noexcept;
 
-#define CF_PACKED __attribute__((packed))
+/* 將四個值限制在 0..65535（uint16_t 本身即此範圍；此函式供介面一致） */
+void clamp4u16(std::uint16_t& a, std::uint16_t& b,
+               std::uint16_t& c, std::uint16_t& d) noexcept;
 
-#else
-
-// 其他編譯器：退化為原樣（至少不破壞編譯）
-#warning "Unknown compiler: CF_PACKED_STRUCT falls back without packing."
-#define CF_PACKED_STRUCT(definition) definition
-#define CF_PACKED /* no-op */
-
-#endif
+} // namespace cf4pwm

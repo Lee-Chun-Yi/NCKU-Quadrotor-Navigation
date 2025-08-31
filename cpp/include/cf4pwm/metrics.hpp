@@ -10,6 +10,7 @@ class Metrics {
 public:
   Metrics(int64_t freq, const char* csvPath = nullptr);
   void update(int64_t nowTicks, int64_t periodTicks, bool late);
+  bool maybePrintBegin(int64_t nowTicks); // prints base line without newline; returns true if printed
   void maybePrint(int64_t nowTicks);
   void finish(int64_t nowTicks);
 
@@ -30,4 +31,3 @@ private:
 };
 
 } // namespace cf4pwm
-

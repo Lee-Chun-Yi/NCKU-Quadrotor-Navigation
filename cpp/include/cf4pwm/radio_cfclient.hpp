@@ -2,42 +2,53 @@
 #include <cstdint>
 #include <memory>
 #include <string>
-#include <vector>
 #include <stdexcept>
 
-// Pull in the full Crazyflie class definition
-#include <crazyflie_cpp/Crazyflie.h>
+#include <crazyflie_cpp/Crazyradio.h>
 
 namespace cf4pwm {
 
 #pragma pack(push, 1)
 struct Pwm4Packet {
-  uint8_t header;
-  uint16_t m1;
-  uint16_t m2;
-  uint16_t m3;
-  uint16_t m4;
+  uint8_t  header;             // 高4bits=CRTP port，低4bits=CRTP channel(≠ 2.4GHz channel)
+  uint16_t m1, m2, m3, m4;
 };
+#pragma pack(pop)
 
 class RadioClient {
 public:
-  explicit RadioClient(std::string uri, uint8_t port = 0x0A, uint8_t channel = 0);
-  ~RadioClient();
+  explicit RadioClient(std::string uri, uint8_t crtpPort = 0x0A, uint8_t crtpChan = 0);
 
   void connect();
   void disconnect();
+
   void send4pwm(uint16_t m1, uint16_t m2, uint16_t m3, uint16_t m4);
-  void sendRaw(const uint8_t* data, size_t len);
-  bool isConnected() const;
+  bool isConnected() const { return static_cast<bool>(radio_); }
+
+  const std::string& uri() const { return uri_; }
+  int  channel() const { return radioCh_; }   // 2.4GHz channel (e.g. 90)
+  int  rate() const { return radioRate_; }    // 2=2M, 1=1M, 0=250K
+
+private:
+  static std::string trim(std::string s);
+  void parseUri();                               // 解析 uri_ → devid_/radioCh_/radioRate_
+  static uint8_t make_crtp_header(uint8_t port, uint8_t chan);
+
+  void sendRaw(const uint8_t* data, size_t len); // 透過 Crazyradio 送出
 
 private:
   std::string uri_;
-  uint8_t port_;
-  uint8_t chan_;
-  std::unique_ptr<Crazyflie> cf_;  // note: no crazyflie_cpp namespace
+
+  // 只影響 CRTP header（跟 2.4GHz channel 無關）
+  uint8_t crtpPort_;
+  uint8_t crtpChan_;
+
+  // 由 URI 解析而得（影響 2.4GHz 無線電）
+  int devid_ = 0;
+  int radioCh_ = 80;
+  int radioRate_ = 2; // 2=2M, 1=1M, 0=250K
+
+  std::unique_ptr<Crazyradio> radio_;
 };
 
 } // namespace cf4pwm
-
-// Balance any upstream pack(push,1) if used in our code
-#include <cf4pwm/msvc_pack_pop.hpp>

@@ -95,15 +95,16 @@ add_executable(cf4pwm_runner_win
   src/pack.cpp
   src/timing_win.cpp
   src/udp_input.cpp
+  src/xyz_stream.cpp
 )
 
-# Include paths (our headers + upstream + libusb)
+# Include paths (put UPSTREAM first to avoid picking local copies)
 set(_cf_src_dir "${crazyflie_cpp_SOURCE_DIR}")
 target_include_directories(cf4pwm_runner_win PRIVATE
-  "${CMAKE_CURRENT_SOURCE_DIR}/include"
   "${_cf_src_dir}/include"
   "${_cf_src_dir}/include/crazyflie_cpp"
   "${LIBUSB_INCLUDE_DIR}"
+  "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
 
 # Ensure crazyflie_cpp sees libusb includes/libs, and enforce MSVC packing
@@ -112,7 +113,7 @@ if (TARGET crazyflie_cpp)
   target_link_libraries(crazyflie_cpp     PRIVATE "${LIBUSB_LIBRARY}")
   if (MSVC)
     target_compile_options(crazyflie_cpp PRIVATE "/I${LIBUSB_INCLUDE_DIR}")
-    target_compile_options(crazyflie_cpp PRIVATE /Zp1)   # 1-byte struct packing to satisfy CRTP packet sizes
+    target_compile_options(crazyflie_cpp PRIVATE /Zp1 /utf-8)   # 1-byte struct packing + UTF-8
   endif()
 endif()
 
@@ -137,7 +138,16 @@ if (MSVC)
     target_compile_options(crazyflie_cpp PRIVATE /FI"${_shim_abs}")
   endif()
 
-  target_compile_options(cf4pwm_runner_win PRIVATE /W3)
+  # Your executable TU also needs pack=1 and UTF-8
+  target_compile_options(cf4pwm_runner_win PRIVATE /Zp1 /utf-8)
 else()
   target_compile_options(cf4pwm_runner_win PRIVATE -Wall -Wextra)
+endif()
+
+# (Optional) extra safety: enforce /Zp1 on specific TU if needed
+if (MSVC)
+  set_source_files_properties(
+    src/main_win.cpp src/radio_cfclient.cpp
+    PROPERTIES COMPILE_OPTIONS "/Zp1;/utf-8"
+  )
 endif()

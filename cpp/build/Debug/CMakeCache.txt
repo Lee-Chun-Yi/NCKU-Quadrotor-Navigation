@@ -269,7 +269,7 @@ crazyflie_cpp_BINARY_DIR:STATIC=C:/Users/USER/Desktop/cpp/build/Debug/_deps/craz
 crazyflie_cpp_IS_TOP_LEVEL:STATIC=OFF
 
 //Dependencies for the target
-crazyflie_cpp_LIB_DEPENDS:STATIC=general;C:/vcpkg/installed/x64-windows/lib/libusb-1.0.lib;
+crazyflie_cpp_LIB_DEPENDS:STATIC=general;C:/vcpkg/installed/x64-windows/lib/libusb-1.0.lib;general;C:/vcpkg/installed/x64-windows/lib/libusb-1.0.lib;
 
 //Value Computed by CMake
 crazyflie_cpp_SOURCE_DIR:STATIC=C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-src

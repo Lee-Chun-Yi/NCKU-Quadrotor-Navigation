@@ -1,3 +1,6 @@
+#include <Windows.h>
+#include <mmsystem.h>
+
 #include "cf4pwm/timing_win.hpp"
 
 #ifdef _WIN32

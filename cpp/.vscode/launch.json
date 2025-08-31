@@ -2,19 +2,33 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Run cf4pwm (Release)",
+      "name": "Run cf4pwm (prompt URI)",
       "type": "cppvsdbg",
       "request": "launch",
-      "program": "${command:cmake.launchTargetPath}",
+      "program": "${workspaceFolder}/build/Debug/bin/Debug/cf4pwm_runner_win.exe",
       "args": [
-        "--uri", "radio://0/80/2M",
+        "--uri", "${input:radiouri}",
         "--rate", "500",
-        "--affinity", "3",
-        "--prio", "high",
-        "--spin-tail"
+        "--csv", "metrics.csv",
+        "--target", "${input:xyz}"
       ],
-      "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal"
+      "cwd": "${workspaceFolder}/build/Debug/bin/Debug",
+      "console": "integratedTerminal",
+      "preLaunchTask": "Copy libusb dll (Debug)"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "radiouri",
+      "type": "promptString",
+      "description": "Enter radio URI (e.g. radio://0/90/2M)",
+      "default": "radio://0/90/2M"
+    },
+    {
+      "id": "xyz",
+      "type": "promptString",
+      "description": "Enter target x,y,z (floats, CSV)",
+      "default": "0,0,700"
     }
   ]
 }

@@ -86,6 +86,41 @@ void Metrics::maybePrint(int64_t nowTicks) {
   maxJitter_ = INT64_MIN;
 }
 
+bool Metrics::maybePrintBegin(int64_t nowTicks) {
+  int64_t elapsedTicks = nowTicks - lastPrintTicks_;
+  if (elapsedTicks < freq_)
+    return false; // less than a second
+
+  uint64_t diffSamples = samples_ - samplesAtPrint_;
+  uint64_t diffLate = late_ - lateAtPrint_;
+  double hz = diffSamples * static_cast<double>(freq_) / elapsedTicks;
+  double latePct = diffSamples ? (100.0 * diffLate / diffSamples) : 0.0;
+
+  std::vector<int64_t> data = ring_;
+  std::sort(data.begin(), data.end());
+  auto pct = [&](double p) -> int64_t {
+    size_t idx = static_cast<size_t>(p * (data.size() - 1));
+    return data[idx];
+  };
+  int64_t p50 = pct(0.50);
+  int64_t p90 = pct(0.90);
+  int64_t p99 = pct(0.99);
+
+  std::cout << std::fixed << std::setprecision(1)
+            << "rate=" << hz << " Hz | late=" << latePct
+            << "% | jitter_us p50=" << p50 / 1000
+            << " p90=" << p90 / 1000
+            << " p99=" << p99 / 1000
+            << " max=" << maxJitter_ / 1000;
+
+  lastPrintTicks_ = nowTicks;
+  samplesAtPrint_ = samples_;
+  lateAtPrint_ = late_;
+  minJitter_ = INT64_MAX;
+  maxJitter_ = INT64_MIN;
+  return true;
+}
+
 void Metrics::finish(int64_t nowTicks) {
   maybePrint(nowTicks);
   if (csv_)
@@ -93,4 +128,3 @@ void Metrics::finish(int64_t nowTicks) {
 }
 
 } // namespace cf4pwm
-

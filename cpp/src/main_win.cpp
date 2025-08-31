@@ -1,8 +1,16 @@
-// main_win.cpp
+// main_win.cpp (UTF-8, no BOM)
+
+#pragma pack(push, 1)
+#include <crazyflie_cpp/Crazyflie.h>
+#include <crazyflie_cpp/crtp.h>
+#pragma pack(pop)
+
+#include "cf4pwm/pack.hpp"
 #include "cf4pwm/metrics.hpp"
-#include "cf4pwm/timing_win.hpp"
 #include "cf4pwm/udp_input.hpp"
 #include "cf4pwm/radio_cfclient.hpp"
+#include "cf4pwm/timing_win.hpp"
+#include "cf4pwm/xyz_stream.hpp"
 
 #include <atomic>
 #include <cstdint>
@@ -14,45 +22,45 @@
 #include <thread>
 
 #ifdef _WIN32
-#  include <windows.h>
+  #include <Windows.h>
+#else
+  #include <unistd.h>
+  static inline void Sleep(unsigned long ms) { usleep(ms * 1000); }
 #endif
 
 using namespace std::chrono_literals;
-using namespace cf4pwm;
-
-// ---- 本地版 unpack4u16 --------------------------------------------------
-// 以 64-bit packed: [w1|w2|w3|w4] (每個16-bit, 低位在右) 取出 4 個 uint16_t
-static inline void unpack4u16(std::uint64_t packed,
-                              std::uint16_t& w1,
-                              std::uint16_t& w2,
-                              std::uint16_t& w3,
-                              std::uint16_t& w4) noexcept {
-  w1 = static_cast<std::uint16_t>( packed        & 0xFFFFu);
-  w2 = static_cast<std::uint16_t>((packed >> 16) & 0xFFFFu);
-  w3 = static_cast<std::uint16_t>((packed >> 32) & 0xFFFFu);
-  w4 = static_cast<std::uint16_t>((packed >> 48) & 0xFFFFu);
-}
-
-// ---- Ctrl+C handling -----------------------------------------------------
-static std::atomic<bool> g_running{true};
-
-#ifdef _WIN32
-static BOOL WINAPI consoleHandler(DWORD) {
-  g_running = false;
-  return TRUE;
-}
-#else
-static inline void Sleep(unsigned long) {}
-#endif
 
 int main(int argc, char** argv) {
+  using cf4pwm::Metrics;
+  using cf4pwm::RtConfig;
+  using cf4pwm::UdpInput;
+  using cf4pwm::PwmState;
+  using cf4pwm::RadioClient;
+
+  // ---- Ctrl+C handling ---------------------------------------------------
+  static std::atomic<bool> g_running{true};
+#ifdef _WIN32
+  auto consoleHandler = +[](DWORD) -> BOOL { g_running = false; return TRUE; };
+  SetConsoleCtrlHandler((PHANDLER_ROUTINE)consoleHandler, TRUE);
+#endif
+
   // --- CLI options --------------------------------------------------------
   std::string uri = "radio://0/80/2M";
   double rate_hz = 500.0;
   std::string affinityStr;   // e.g. "3" or "3,5"
   bool realtime = false;     // --prio realtime
-  bool spinTail = false;     // busy-wait 到期末
+  bool spinTail = false;     // --spin-tail
   const char* csvPath = nullptr; // --csv <file>
+  // UDP options
+  int udpPort = 8888;
+  bool udpDebug = false;
+  cf4pwm::UdpInput::Expect udpExpect = cf4pwm::UdpInput::Expect::Auto;
+  // 4PWM enable/disable options
+  std::string enableParamOverride; // --enable-param <name>
+  bool autoDisable = true;         // --no-auto-disable -> false
+  // XYZ target streaming
+  cf4pwm::XyzTarget xyzTarget; // defaults to 0,0,0
+  double xyzRateHz = -1.0;     // mirror --rate unless overridden
 
   for (int i = 1; i < argc; ++i) {
     std::string arg = argv[i];
@@ -69,12 +77,44 @@ int main(int argc, char** argv) {
       spinTail = true;
     } else if (arg == "--csv" && i + 1 < argc) {
       csvPath = argv[++i];
+    } else if (arg == "--udp-port" && i + 1 < argc) {
+      udpPort = std::stoi(argv[++i]);
+      if (udpPort < 1 || udpPort > 65535) udpPort = 8888;
+    } else if (arg == "--udp-debug") {
+      udpDebug = true;
+    } else if (arg == "--udp-expect" && i + 1 < argc) {
+      std::string v = argv[++i];
+      if (v == "auto") udpExpect = cf4pwm::UdpInput::Expect::Auto;
+      else if (v == "float") udpExpect = cf4pwm::UdpInput::Expect::Float;
+      else if (v == "u16") udpExpect = cf4pwm::UdpInput::Expect::U16;
+    } else if (arg == "--enable-param" && i + 1 < argc) {
+      enableParamOverride = argv[++i];
+    } else if (arg == "--no-auto-disable") {
+      autoDisable = false;
+    } else if (arg == "--target" && i + 1 < argc) {
+      std::string s = argv[++i];
+      // parse x,y,z
+      float vals[3] = {0,0,0};
+      int idx = 0;
+      std::string cur;
+      for (size_t k=0; k<=s.size(); ++k) {
+        if (k==s.size() || s[k]==',') {
+          if (!cur.empty() && idx < 3) {
+            try { vals[idx] = std::stof(cur); } catch (...) {}
+          }
+          cur.clear();
+          ++idx; if (idx>=3) break;
+        } else {
+          cur.push_back(s[k]);
+        }
+      }
+      xyzTarget.x.store(vals[0], std::memory_order_relaxed);
+      xyzTarget.y.store(vals[1], std::memory_order_relaxed);
+      xyzTarget.z.store(vals[2], std::memory_order_relaxed);
+    } else if (arg == "--xyz-rate" && i + 1 < argc) {
+      xyzRateHz = std::stod(argv[++i]);
     }
   }
-
-#ifdef _WIN32
-  SetConsoleCtrlHandler(consoleHandler, TRUE);
-#endif
 
   // --- RT setup -----------------------------------------------------------
   unsigned long long mask = 0ull;
@@ -90,58 +130,103 @@ int main(int argc, char** argv) {
   }
 
   RtConfig cfg;
-  cfg.realtime    = realtime;
-  cfg.affinityMask= mask;
-  cfg.spinTail    = spinTail;
-  init_timing(cfg);
+  cfg.realtime     = realtime;
+  cfg.affinityMask = mask;
+  cfg.spinTail     = spinTail;
+  cf4pwm::init_timing(cfg);
 
   // --- IO setup -----------------------------------------------------------
   PwmState pwm;
   UdpInput udp;
-  udp.start(&pwm);
+  udp.configure(static_cast<uint16_t>(udpPort), udpDebug, udpExpect);
+  udp.start(&pwm);   // 非阻塞收 8888 -> pwm.packed (atomic<uint64_t>)
 
   RadioClient radio(uri);
   try {
     radio.connect();
   } catch (const std::exception& e) {
     std::cerr << "[radio] init failed: " << e.what() << "\n";
-    restore_timing();
+    cf4pwm::restore_timing();
     return 1;
   }
 
-  // --- timing -------------------------------------------------------------
-  const std::int64_t fq = qpc_freq();
+  // Open Crazyflie link for param enable (fast path still uses Crazyradio directly)
+  std::string enabledParamName; // if non-empty, indicates which param was set
+  try {
+    Crazyflie cf(uri);
+    auto tryEnable = [&](const std::string& fullName) -> bool {
+      auto dot = fullName.find('.');
+      if (dot == std::string::npos || dot == 0 || dot + 1 >= fullName.size()) return false;
+      std::string group = fullName.substr(0, dot);
+      std::string name  = fullName.substr(dot + 1);
+      try {
+        uint8_t one = 1;
+        cf.setParamByName(group.c_str(), name.c_str(), one);
+        return true;
+      } catch (const std::exception&) {
+        return false;
+      }
+    };
+
+    bool enabled = false;
+    if (!enableParamOverride.empty()) {
+      enabled = tryEnable(enableParamOverride);
+      if (enabled) enabledParamName = enableParamOverride;
+    } else {
+      const char* candidates[] = { "crtp_pwm.enable", "pwm.enable", "motorPowerSet.enable" };
+      for (const char* cand : candidates) {
+        if (tryEnable(cand)) { enabledParamName = cand; enabled = true; break; }
+      }
+    }
+    if (!enabled) {
+      std::cerr << "[warn] Could not enable 4PWM via parameter; motors may not spin\n";
+    }
+  } catch (const std::exception& e) {
+    std::cerr << "[warn] Crazyflie link/param setup failed: " << e.what() << "\n";
+  }
+
+  // Consolidated connection message with enable parameter info
+  std::cerr << "[radio] connected (ch=" << radio.channel() << ", rate=" << radio.rate()
+            << ") | enable=" << (enabledParamName.empty() ? "-" : enabledParamName) << "\n";
+
+  // Start XYZ UDP stream to MATLAB/Simulink
+  double xyzRate = (xyzRateHz > 0.0) ? xyzRateHz : rate_hz;
+  cf4pwm::start_xyz_stream(&xyzTarget, "127.0.0.1", 51002, xyzRate);
+
+  // --- timing/metrics -----------------------------------------------------
+  const std::int64_t fq = cf4pwm::qpc_freq();
   Metrics metrics(fq, csvPath);
 
   const double period_s = 1.0 / std::max(1.0, rate_hz);
-  const std::int64_t period_ticks = secondsToTicks(period_s, fq);
-  std::int64_t next = qpc_now();
+  const std::int64_t period_ticks = cf4pwm::secondsToTicks(period_s, fq);
+  std::int64_t next = cf4pwm::qpc_now();
 
   // --- loop ---------------------------------------------------------------
   while (g_running.load(std::memory_order_relaxed)) {
     std::uint16_t m1, m2, m3, m4;
-    unpack4u16(pwm.packed.load(std::memory_order_acquire), m1, m2, m3, m4);
+    const std::uint64_t packed = pwm.packed.load(std::memory_order_acquire);
+
+    // 使用我們的 pack/unpack 介面（命名空間限定，避免撞名）
+    cf4pwm::unpack4u16(packed, m1, m2, m3, m4);
     radio.send4pwm(m1, m2, m3, m4);
 
     next += period_ticks;
-    const std::int64_t now = qpc_now();
+    const std::int64_t now = cf4pwm::qpc_now();
     const bool late = now > next;
     metrics.update(now, period_ticks, late);
 
     // 粗睡 + 尾端自旋（可選）
-    const double slack_ms = ticksToMs(next - now, fq);
+    const double slack_ms = cf4pwm::ticksToMs(next - now, fq);
     if (slack_ms > 0.6) {
-#ifdef _WIN32
-      ::Sleep(static_cast<DWORD>(std::max(0.0, slack_ms - 0.3)));
-#else
       Sleep(static_cast<unsigned long>(std::max(0.0, slack_ms - 0.3)));
-#endif
     }
     if (cfg.spinTail) {
-      while (qpc_now() < next) { /* spin */ }
+      while (cf4pwm::qpc_now() < next) { /* spin */ }
     }
 
-    metrics.maybePrint(now);
+    if (metrics.maybePrintBegin(now)) {
+      std::cout << " | m1~m4: [" << m1 << ", " << m2 << ", " << m3 << ", " << m4 << "]" << std::endl;
+    }
   }
 
   // --- graceful stop: 送幾次 0 PWM ---------------------------------------
@@ -151,12 +236,29 @@ int main(int argc, char** argv) {
   }
 
   // --- teardown -----------------------------------------------------------
+  // Disable 4PWM if we enabled it (unless opted out)
+  if (autoDisable && !enabledParamName.empty()) {
+    try {
+      Crazyflie cf(uri);
+      auto dot = enabledParamName.find('.');
+      if (dot != std::string::npos && dot > 0 && dot + 1 < enabledParamName.size()) {
+        std::string group = enabledParamName.substr(0, dot);
+        std::string name  = enabledParamName.substr(dot + 1);
+        uint8_t zero = 0;
+        cf.setParamByName(group.c_str(), name.c_str(), zero);
+      }
+    } catch (const std::exception& e) {
+      std::cerr << "[warn] Failed to disable 4PWM param: " << e.what() << "\n";
+    }
+  }
+
   radio.disconnect();
   udp.stop();
+  cf4pwm::stop_xyz_stream();
 
-  const std::int64_t endTicks = qpc_now();
+  const std::int64_t endTicks = cf4pwm::qpc_now();
   metrics.finish(endTicks);
-  restore_timing();
+  cf4pwm::restore_timing();
 
   return 0;
 }

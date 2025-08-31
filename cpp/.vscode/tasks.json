@@ -2,38 +2,15 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "CMake: Configure",
-      "type": "cmake",
-      "command": "configure",
-      "problemMatcher": []
-    },
-    {
-      "label": "CMake: Build (Release)",
-      "type": "cmake",
-      "command": "build",
-      "targets": [ "cf4pwm_runner_win" ],
-      "group": { "kind": "build", "isDefault": true },
-      "problemMatcher": []
-    },
-    {
-      "label": "CMake: Clean",
-      "type": "cmake",
-      "command": "clean",
-      "problemMatcher": []
-    },
-    {
-      "label": "Run cf4pwm (Release)",
+      "label": "Copy libusb dll (Debug)",
       "type": "shell",
-      "dependsOn": [ "CMake: Build (Release)" ],
-      "command": "${command:cmake.launchTargetPath}",
+      "command": "pwsh",
       "args": [
-        "--uri", "radio://0/80/2M",
-        "--rate", "500",
-        "--affinity", "3",
-        "--prio", "high",
-        "--spin-tail"
+        "-NoProfile",
+        "-ExecutionPolicy", "Bypass",
+        "-Command",
+        "Copy-Item -Force 'C:/vcpkg/installed/x64-windows/bin/libusb-1.0.dll' 'C:/Users/USER/Desktop/cpp/build/Debug/bin/Debug/libusb-1.0.dll'"
       ],
-      "options": { "cwd": "${workspaceFolder}" },
       "problemMatcher": []
     }
   ]
