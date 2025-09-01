@@ -41,13 +41,24 @@ int main(int argc, char** argv) {
   // ---- Ctrl+C handling ---------------------------------------------------
   static std::atomic<bool> g_running{true};
   static std::atomic<int>  g_ctrlCount{0};
+  static std::atomic<bool> g_requestLanding{false};
+  static std::atomic<bool> g_hasLanded{false};
 #ifdef _WIN32
   auto consoleHandler = +[](DWORD ctrlType) -> BOOL {
     // Treat all console signals as a request to land, do not exit immediately
     (void)ctrlType;
     g_ctrlCount.fetch_add(1, std::memory_order_relaxed);
+    g_requestLanding.store(true, std::memory_order_release);
     g_running.store(false, std::memory_order_release);
-    return TRUE; // signal handled; keep process alive to finish landing
+    // Block here until landing completes or timeout to avoid abrupt termination
+    // Allow up to 15 seconds for landing sequence to finish
+    const DWORD deadlineMs = 15000;
+    DWORD waited = 0;
+    while (!g_hasLanded.load(std::memory_order_acquire) && waited < deadlineMs) {
+      ::Sleep(50);
+      waited += 50;
+    }
+    return TRUE; // handled
   };
   SetConsoleCtrlHandler((PHANDLER_ROUTINE)consoleHandler, TRUE);
 #endif
@@ -63,6 +74,9 @@ int main(int argc, char** argv) {
   int udpPort = 8888;
   bool udpDebug = false;
   cf4pwm::UdpInput::Expect udpExpect = cf4pwm::UdpInput::Expect::Auto;
+  unsigned udpTimeoutMs = 100; // --udp-timeout-ms (optional)
+  double statusRateHz = 5.0;   // --status-rate-hz
+  int radioAckFailN = 5;       // --radio-ack-fail-N (hidden)
   // 4PWM enable/disable options
   std::string enableParamOverride; // --enable-param <name>
   bool autoDisable = true;         // --no-auto-disable -> false
@@ -105,6 +119,16 @@ int main(int argc, char** argv) {
       if (v == "auto") udpExpect = cf4pwm::UdpInput::Expect::Auto;
       else if (v == "float") udpExpect = cf4pwm::UdpInput::Expect::Float;
       else if (v == "u16") udpExpect = cf4pwm::UdpInput::Expect::U16;
+    } else if (arg == "--udp-timeout-ms" && i + 1 < argc) {
+      int v = std::stoi(argv[++i]);
+      if (v < 0) v = 0; // 0 disables watchdog engagement until first packet
+      udpTimeoutMs = static_cast<unsigned>(v);
+    } else if (arg == "--status-rate-hz" && i + 1 < argc) {
+      statusRateHz = std::stod(argv[++i]);
+      if (statusRateHz <= 0.0) statusRateHz = 5.0;
+    } else if (arg == "--radio-ack-fail-N" && i + 1 < argc) {
+      radioAckFailN = std::stoi(argv[++i]);
+      if (radioAckFailN < 1) radioAckFailN = 5;
     } else if (arg == "--enable-param" && i + 1 < argc) {
       enableParamOverride = argv[++i];
     } else if (arg == "--no-auto-disable") {
@@ -252,7 +276,7 @@ int main(int argc, char** argv) {
 
   // --- timing/metrics -----------------------------------------------------
   const std::int64_t fq = cf4pwm::qpc_freq();
-  Metrics metrics(fq, csvPath);
+  Metrics metrics(fq, csvPath, statusRateHz);
 
   const double period_s = 1.0 / std::max(1.0, rate_hz);
   const std::int64_t period_ticks = cf4pwm::secondsToTicks(period_s, fq);
@@ -276,22 +300,65 @@ int main(int argc, char** argv) {
   double zLandingStart = 0.0;
 
   // --- loop ---------------------------------------------------------------
+  // small inline clamp helper (no overhead)
+  auto clamp_u16 = [](uint32_t v) -> uint16_t {
+    return static_cast<uint16_t>(v > 65535u ? 65535u : v);
+  };
+
+  uint64_t loopCounter = 0;
+  bool udpWatchdogTripped = false;
+  bool radioWatchdogTripped = false;
+
   while (phase != Phase::Done) {
     std::uint16_t m1, m2, m3, m4;
     const std::uint64_t packed = pwm.packed.load(std::memory_order_acquire);
 
     // 使用我們的 pack/unpack 介面（命名空間限定，避免撞名）
     cf4pwm::unpack4u16(packed, m1, m2, m3, m4);
-    radio.send4pwm(m1, m2, m3, m4);
+    // Clamp defensively before sending to radio
+    m1 = clamp_u16(m1); m2 = clamp_u16(m2); m3 = clamp_u16(m3); m4 = clamp_u16(m4);
+    const bool ackOk = radio.send4pwm(m1, m2, m3, m4);
+    metrics.onAck(ackOk);
 
     next += period_ticks;
     const std::int64_t now = cf4pwm::qpc_now();
     const bool late = now > next;
     metrics.update(now, period_ticks, late);
 
+    // UDP last receive watchdog (check every ~10 loops to reduce overhead)
+    if (((++loopCounter) % 10ull) == 0ull && !udpWatchdogTripped) {
+      const int64_t lastRx = udp.last_rx_ticks.load(std::memory_order_acquire);
+      if (lastRx != 0 && udpTimeoutMs > 0) {
+        const int64_t deltaTicks = now - lastRx;
+        const double deltaMs = cf4pwm::ticksToMs(deltaTicks, fq);
+        if (deltaMs > static_cast<double>(udpTimeoutMs)) {
+          // Engage failsafe: one immediate zero PWM, then exit
+          std::cerr << "\n[FAILSAFE] UDP timeout: no packet > " << udpTimeoutMs << " ms. Stopping.\n";
+          radio.send4pwm(0, 0, 0, 0);
+          g_running.store(false, std::memory_order_release);
+          udpWatchdogTripped = true;
+          phase = Phase::Done;
+          break;
+        }
+      }
+    }
+
+    // Radio ACK consecutive failure watchdog
+    if (!radioWatchdogTripped) {
+      const int streak = metrics.ackFailStreak();
+      if (streak >= radioAckFailN) {
+        std::cerr << "\n[FAILSAFE] Radio ACK failures x" << streak << " (>= " << radioAckFailN << "). Stopping.\n";
+        radio.send4pwm(0, 0, 0, 0);
+        g_running.store(false, std::memory_order_release);
+        radioWatchdogTripped = true;
+        phase = Phase::Done;
+        break;
+      }
+    }
+
     const double tPhase = static_cast<double>(now - phaseStart) / fq_d;
 
-    if (!g_running.load(std::memory_order_relaxed)) {
+    if (g_requestLanding.load(std::memory_order_relaxed)) {
       if (phase != Phase::Landing && phase != Phase::Done) {
         // capture current mm for landing start
         zLandingStart = static_cast<double>(xyzTarget.z.load(std::memory_order_relaxed));
@@ -327,6 +394,7 @@ int main(int argc, char** argv) {
         if (tPhase >= landT) {
           xyzTarget.z.store(0.0f, std::memory_order_relaxed);
           phase = Phase::Done;
+          g_hasLanded.store(true, std::memory_order_release);
         }
         break;
       }

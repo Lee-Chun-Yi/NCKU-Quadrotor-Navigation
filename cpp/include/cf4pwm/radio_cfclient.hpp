@@ -10,7 +10,7 @@ namespace cf4pwm {
 
 #pragma pack(push, 1)
 struct Pwm4Packet {
-  uint8_t  header;             // 高4bits=CRTP port，低4bits=CRTP channel(≠ 2.4GHz channel)
+  uint8_t  header;             // CRTP port (high 4 bits) + CRTP channel (low 2 bits in link)
   uint16_t m1, m2, m3, m4;
 };
 #pragma pack(pop)
@@ -22,7 +22,8 @@ public:
   void connect();
   void disconnect();
 
-  void send4pwm(uint16_t m1, uint16_t m2, uint16_t m3, uint16_t m4);
+  // Returns true if Crazyradio reported an ACK
+  bool send4pwm(uint16_t m1, uint16_t m2, uint16_t m3, uint16_t m4);
   bool isConnected() const { return static_cast<bool>(radio_); }
 
   const std::string& uri() const { return uri_; }
@@ -31,19 +32,20 @@ public:
 
 private:
   static std::string trim(std::string s);
-  void parseUri();                               // 解析 uri_ → devid_/radioCh_/radioRate_
+  void parseUri();                               // parse uri_ into devid_/radioCh_/radioRate_
   static uint8_t make_crtp_header(uint8_t port, uint8_t chan);
 
-  void sendRaw(const uint8_t* data, size_t len); // 透過 Crazyradio 送出
+  // Send a raw packet via Crazyradio and return ACK result
+  bool sendRaw(const uint8_t* data, size_t len);
 
 private:
   std::string uri_;
 
-  // 只影響 CRTP header（跟 2.4GHz channel 無關）
+  // Prebuilt CRTP header fields
   uint8_t crtpPort_;
   uint8_t crtpChan_;
 
-  // 由 URI 解析而得（影響 2.4GHz 無線電）
+  // Parsed from URI
   int devid_ = 0;
   int radioCh_ = 80;
   int radioRate_ = 2; // 2=2M, 1=1M, 0=250K
@@ -52,3 +54,4 @@ private:
 };
 
 } // namespace cf4pwm
+

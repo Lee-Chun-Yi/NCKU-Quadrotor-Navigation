@@ -26,6 +26,10 @@ public:
   bool start(PwmState* state);
   void stop();
 
+  // Last successful receive tick (QPC). Updated on each parsed packet.
+  // 0 means no packet has been received yet.
+  std::atomic<int64_t> last_rx_ticks{0};
+
 private:
 #ifdef _WIN32
   SOCKET sock_ = INVALID_SOCKET;

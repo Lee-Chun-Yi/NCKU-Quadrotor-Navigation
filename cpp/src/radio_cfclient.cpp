@@ -89,18 +89,19 @@ void RadioClient::disconnect() {
   }
 }
 
-void RadioClient::sendRaw(const uint8_t* data, size_t len) {
+bool RadioClient::sendRaw(const uint8_t* data, size_t len) {
   if (!radio_) throw std::runtime_error("RadioClient: not connected");
-  ITransport::Ack ack; // collect ack but we don't parse it here
+  ITransport::Ack ack; // collect ack
   radio_->sendPacket(data, static_cast<uint32_t>(len), ack);
+  return ack.ack != 0;
 }
 
-void RadioClient::send4pwm(uint16_t m1, uint16_t m2, uint16_t m3, uint16_t m4) {
+bool RadioClient::send4pwm(uint16_t m1, uint16_t m2, uint16_t m3, uint16_t m4) {
   // Build CRTP packet matching Python sender: port=0x0A, channel=0, data=<HHHH>
   Pwm4Packet pkt{};
   pkt.header = make_crtp_header(0x0A, 0);
   pkt.m1 = m1; pkt.m2 = m2; pkt.m3 = m3; pkt.m4 = m4;
-  sendRaw(reinterpret_cast<const uint8_t*>(&pkt), sizeof(pkt));
+  return sendRaw(reinterpret_cast<const uint8_t*>(&pkt), sizeof(pkt));
 }
 
 } // namespace cf4pwm

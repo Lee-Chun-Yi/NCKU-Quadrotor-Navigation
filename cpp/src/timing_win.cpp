@@ -9,13 +9,16 @@
 
 namespace cf4pwm {
 namespace {
-bool g_timePeriod = false;
+// Guard to ensure timeBeginPeriod/timeEndPeriod are called exactly once
+static bool g_timePeriod = false;
 }
 
 void init_timing(const RtConfig& cfg) {
 #ifdef _WIN32
-  timeBeginPeriod(1);
-  g_timePeriod = true;
+  if (!g_timePeriod) {
+    timeBeginPeriod(1);
+    g_timePeriod = true;
+  }
   HANDLE proc = GetCurrentProcess();
   SetPriorityClass(proc, cfg.realtime ? REALTIME_PRIORITY_CLASS : HIGH_PRIORITY_CLASS);
   HANDLE th = GetCurrentThread();
@@ -74,4 +77,3 @@ int64_t ticksToNs(int64_t t, int64_t fq) {
 }
 
 } // namespace cf4pwm
-

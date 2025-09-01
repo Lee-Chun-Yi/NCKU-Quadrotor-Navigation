@@ -1,5 +1,6 @@
 #include "cf4pwm/udp_input.hpp"
 #include "cf4pwm/pack.hpp"
+#include "cf4pwm/timing_win.hpp"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -160,6 +161,7 @@ bool UdpInput::start(PwmState* state) {
         m4 = static_cast<uint16_t>(buf[6] | (static_cast<uint16_t>(buf[7]) << 8));
         const uint64_t v = pack4u16(m1, m2, m3, m4);
         state_->packed.store(v, std::memory_order_release);
+        last_rx_ticks.store(qpc_now(), std::memory_order_release);
       } else /* len_is_16 */ {
         float f[4];
         std::memcpy(f, buf, 16);
@@ -173,6 +175,7 @@ bool UdpInput::start(PwmState* state) {
         }
         const uint64_t v = pack4u16(m[0], m[1], m[2], m[3]);
         state_->packed.store(v, std::memory_order_release);
+        last_rx_ticks.store(qpc_now(), std::memory_order_release);
       }
 
       pkts_this_sec++;
