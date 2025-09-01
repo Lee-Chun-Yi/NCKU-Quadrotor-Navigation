@@ -9,18 +9,26 @@ Contact us:
 ## Project Overview
 
 ### Indoor Navigation of Quadrotors Using a Motion Capture System
-This study presents an indoor quadrotor control system achieving stable hover and point-to-point flight via a **dual-loop PID (position + velocity)**. Real-time 6DOF data from a Vicon system (100 Hz) is sent to MATLAB/Simulink, where position errors generate velocity targets, then attitude commands (Roll, Pitch, Throttle). Commands are relayed through Python to the Crazyflie 2.1. The framework will be expanded into a **four-layer PID** by adding **attitude and attitude-rate loops**.
+This study presents an indoor quadrotor control system achieving stable hover and point-to-point flight via a **dual-loop PID (position + velocity)**. Real-time 6DOF data from a Vicon system (100 Hz) is sent to MATLAB/Simulink, where position errors generate velocity targets, then attitude commands (Roll, Pitch, Throttle). Commands are relayed through Python to the Crazyflie 2.1.
 
 Relative folder:
-* [`Matlab control system`](./Matlab/2PID)
-  * [`Kalman filter design`](./Matlab/kalman_filter.mlx)
+* [Matlab control system](./Matlab/2PID)
+  * [Kalman filter design](./Matlab/kalman_filter.mlx)
 
-* [`Python control code`](./Python/2PID)
-* [`UAV platform`](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/tree/main/Crazyflie%202.1)
-* [`Motion capture system`](./Vicon)
+* [Python control code](./Python/2PID)
+* [UAV platform](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/tree/main/Crazyflie%202.1)
+* [Motion capture system](./Vicon)
 
 ### Development of a high-frequency PWM-based Quadrotor control system
 This study is an extension of **Indoor Navigation of Quadrotors Using a Motion Capture System**, aim to develop a **four-layer PID** and PWM control system.
+
+Relative folder:
+* [Matlab control system](./Matlab/4PID)
+* [C++ control code](./cpp).
+> This code is revised by the python code of previous study.
+> 
+* [Custom firmware - PWM control](https://github.com/Lee-Chun-Yi/crazyflie-firmware-pwm)
+* [Flash and Build firmware - Crazyflie](./custom_cf_firmware.md)
 
   
  ## 
