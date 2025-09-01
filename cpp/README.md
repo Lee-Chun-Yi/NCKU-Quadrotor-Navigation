@@ -14,13 +14,13 @@ Install Git
 winget install --id Git.Git -e --source winget
 ```
 
-## 2/ Install CMake
+Install CMake
 
 ```
 winget install --id Kitware.CMake -e --source winget
 ```
 
-## 3. Install Visual Studio 2022 (Community Edition)
+Install Visual Studio 2022 (Community Edition)
 
 ```
 winget install --id Microsoft.VisualStudio.2022.Community -e --source winget
