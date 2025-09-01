@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Copy libusb dll (Debug)",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy", "Bypass",
+        "-Command",
+        "Copy-Item -Force 'C:/vcpkg/installed/x64-windows/bin/libusb-1.0.dll' 'C:/Users/USER/Desktop/cpp/build/Debug/bin/Debug/libusb-1.0.dll'"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}
