@@ -16,7 +16,7 @@ Relative folder:
   * [`Kalman filter design`](./Matlab/kalman_filter.mlx)
 
 * [`Python control code`](./Python/2PID)
-* [`UAV platform`](./Crazyflie 2.1)
+* [`UAV platform`](./Crazyflie2.1)
 * [`Motion capture system`](./Vicon)
 
 ### Development of a high-frequency PWM-based Quadrotor control system
