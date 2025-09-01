@@ -1,3 +1,0 @@
-C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/crazyflie_cpp-populate.dir
-C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/ALL_BUILD.dir
-C:/Users/USER/Desktop/cpp/build/Debug/_deps/crazyflie_cpp-subbuild/CMakeFiles/ZERO_CHECK.dir
