@@ -97,7 +97,7 @@ Motors will stay **off** until an external program (MATLAB, Python, etc.) sends 
 2. Run cf4pwm_runner_win.exe (see example above)
 3. External program sends PWM packets
 4. Motors spin and follow external control
-5. Ctrl+C = immediate emergency stop
+5. Ctrl+C = Landing
 ```
 
 
