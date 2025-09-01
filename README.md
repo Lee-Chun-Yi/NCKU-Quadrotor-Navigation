@@ -4,23 +4,23 @@ This repository contains a collection of research projects completed under the g
 
 Contact us: 
 
-* Lee-Chunyi: F44111106@gs.ncku.edu.tw
-
-* Ken-Huang: e84116201@gs.ncku.edu.tw
-
-## Indoor Navigation of Quadrotors Using a Motion Capture System
-This study presents an indoor quadrotor control system achieving stable hover and point-to-point flight via a **dual-loop PID (position + velocity)**. Real-time 6DOF data from a Vicon system (100 Hz) is sent to MATLAB/Simulink, where position errors generate velocity targets, then attitude commands (Roll, Pitch, Throttle). Commands are relayed through Python to the Crazyflie 2.1. The framework will be expanded into a **four-layer PID** by adding **attitude and attitude-rate loops**.
-
+* Gmail: F44111106@gs.ncku.edu.tw
 
 ## Project Overview
 
+### Indoor Navigation of Quadrotors Using a Motion Capture System
+This study presents an indoor quadrotor control system achieving stable hover and point-to-point flight via a **dual-loop PID (position + velocity)**. Real-time 6DOF data from a Vicon system (100 Hz) is sent to MATLAB/Simulink, where position errors generate velocity targets, then attitude commands (Roll, Pitch, Throttle). Commands are relayed through Python to the Crazyflie 2.1. The framework will be expanded into a **four-layer PID** by adding **attitude and attitude-rate loops**.
 
-| Module              | Completed                                                                      | Ongoing                                                               |
-| ------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------- |
-| **Two-layer PID**   | Python control (RPYT), MATLAB control system                                   | Replace low-pass filter with Kalman filter, PID tuning, yaw alignment |
-| **GUI**             | Support for 2PID, 4PID, path flight, 3D plot                                   | Improve stability at high-frequency, migrate control core to C        |
-| **Custom Firmware** | 4PWM packet implementation, firmware build, flashing, Python integration       | —                                                                     |
-| **C++ Module**      | 4PWM packet implementation, full migration of 4PID control, improved stability | Real flight testing                                                   |
+Relative folder:
+* [`Matlab control system`](./Matlab/2PID)
+  * [`Kalman filter design`](./Matlab/kalman_filter.mlx)
+
+* [`Python control code`](./Python/2PID)
+* [`UAV platform`](./Crazyflie 2.1)
+* [`Motion capture system`](./Vicon)
+
+### Development of a high-frequency PWM-based Quadrotor control system
+This study is an extension of **Indoor Navigation of Quadrotors Using a Motion Capture System**, aim to develop a **four-layer PID** and PWM control system.
 
   
  ## 
