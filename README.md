@@ -20,7 +20,7 @@ This study presents an indoor quadrotor control system achieving stable hover an
 * [Motion capture system](./Vicon) → Configuration and integration of the Vicon
 
 ### 2. Development of a high-frequency PWM-based Quadrotor control system
-This study is an extension of **Indoor Navigation of Quadrotors Using a Motion Capture System**, aim to develop a **four-layer PID** and PWM control system.
+This study extends the previous work by developing a four-layer PID architecture (attitude and attitude-rate added) and enabling **direct PWM motor control** for high-frequency experiments.
 
 #### Relative folder:
 * [Matlab control system](./Matlab/4PID) → MATLAB model of the four-layer PID controller
