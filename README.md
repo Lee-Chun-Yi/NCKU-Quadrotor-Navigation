@@ -17,7 +17,7 @@ This study presents an indoor quadrotor control system achieving stable hover an
 
 * [Python control code](./Python/2PID) → Python control code for communication with Crazyflie
 * [UAV platform](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/tree/main/Crazyflie%202.1) → Hardware platform of the quadrotor
-* [Motion capture system](./Vicon)
+* [Motion capture system](./Vicon) → Configuration and integration of the Vicon
 
 ### 2. Development of a high-frequency PWM-based Quadrotor control system
 This study is an extension of **Indoor Navigation of Quadrotors Using a Motion Capture System**, aim to develop a **four-layer PID** and PWM control system.
