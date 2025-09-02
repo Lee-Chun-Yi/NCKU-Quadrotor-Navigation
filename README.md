@@ -15,7 +15,7 @@ Real-time 6DOF data from a Vicon system (100 Hz) is sent to MATLAB/Simulink, whe
 
 #### Relative folder:
 * [Matlab control system](./Matlab/2PID) → Main MATLAB control system 
-  * [Kalman filter design](./Matlab/kalman_filter.mlx) → Kalman filter(Nested grid search for Kalman filter hyperparameters using NIS-based loss)
+  * [Kalman filter design](./Matlab/kalman_filter.mlx) → Kalman filter (Nested grid search for Kalman filter hyperparameters using NIS-based loss)
 
 * [Python control code](./Python/2PID) → Python control code for communication with Crazyflie
 * [UAV platform](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/tree/main/Crazyflie%202.1) → Hardware platform of the quadrotor
