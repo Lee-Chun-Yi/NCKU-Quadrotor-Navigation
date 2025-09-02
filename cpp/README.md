@@ -33,8 +33,6 @@ git --version
 cmake --version
 ```
 
-Install Crazyradio PA driver (WinUSB) using [Zadig](https://zadig.akeo.ie/).
-
 ---
 
 ## 2. Clone Repositories
