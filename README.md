@@ -12,7 +12,7 @@ Contact us:
 This study presents an indoor quadrotor control system achieving stable hover and point-to-point flight via a **dual-loop PID (position + velocity)**. Real-time 6DOF data from a Vicon system (100 Hz) is sent to MATLAB/Simulink, where position errors generate velocity targets, then attitude commands (Roll, Pitch, Throttle). Commands are relayed through Python to the Crazyflie 2.1.
 
 #### Relative folder:
-* [Matlab control system](./Matlab/2PID) → Main MATLAB control system (position + velocity PID)
+* [Matlab control system](./Matlab/2PID) → Main MATLAB control system 
   * [Kalman filter design](./Matlab/kalman_filter.mlx) → Kalman filter(Nested grid search for Kalman filter hyperparameters using NIS-based loss)
 
 * [Python control code](./Python/2PID) → Python control code for communication with Crazyflie
