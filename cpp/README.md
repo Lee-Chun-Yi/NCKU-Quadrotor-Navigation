@@ -52,7 +52,7 @@ cmake --build cpp/build --config Release -j
 ```
 
 Executable path:
-`cpp\build\Release\cf4pwm_runner_win.exe`
+`cpp\build\bin\Debug\cf4pwm_runner_win.exe`
 
 
 ---
