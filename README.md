@@ -13,7 +13,7 @@ This study presents an indoor quadrotor control system achieving stable hover an
 
 #### Relative folder:
 * [Matlab control system](./Matlab/2PID) → Main MATLAB control system (position + velocity PID)
-  * [Kalman filter design](./Matlab/kalman_filter.mlx) → Kalman filter design and data processing
+  * [Kalman filter design](./Matlab/kalman_filter.mlx) → Kalman filter design and data processing (Nested grid search for Kalman filter hyperparameters using NIS-based loss)
 
 * [Python control code](./Python/2PID) → Python control code for communication with Crazyflie
 * [UAV platform](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/tree/main/Crazyflie%202.1) → Hardware platform of the quadrotor
