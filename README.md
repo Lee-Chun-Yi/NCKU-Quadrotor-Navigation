@@ -12,23 +12,23 @@ Contact us:
 This study presents an indoor quadrotor control system achieving stable hover and point-to-point flight via a **dual-loop PID (position + velocity)**. Real-time 6DOF data from a Vicon system (100 Hz) is sent to MATLAB/Simulink, where position errors generate velocity targets, then attitude commands (Roll, Pitch, Throttle). Commands are relayed through Python to the Crazyflie 2.1.
 
 #### Relative folder:
-* [Matlab control system](./Matlab/2PID)
-  * [Kalman filter design](./Matlab/kalman_filter.mlx)
+* [Matlab control system](./Matlab/2PID) → Main MATLAB control system (position + velocity PID)
+  * [Kalman filter design](./Matlab/kalman_filter.mlx) → Kalman filter design and data processing
 
-* [Python control code](./Python/2PID)
-* [UAV platform](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/tree/main/Crazyflie%202.1)
+* [Python control code](./Python/2PID) → Python control code for communication with Crazyflie
+* [UAV platform](https://github.com/Lee-Chun-Yi/NCKU-Quadrotor-Navigation/tree/main/Crazyflie%202.1) → Hardware platform of the quadrotor
 * [Motion capture system](./Vicon)
 
 ### 2. Development of a high-frequency PWM-based Quadrotor control system
 This study is an extension of **Indoor Navigation of Quadrotors Using a Motion Capture System**, aim to develop a **four-layer PID** and PWM control system.
 
 #### Relative folder:
-* [Matlab control system](./Matlab/4PID)
-* [C++ control code](./cpp).
+* [Matlab control system](./Matlab/4PID) → MATLAB model of the four-layer PID controller
+* [C++ control code](./cpp). → C++ control code for high-frequency(500Hz) PWM platform
 > This code is revised by the python code of previous study.
 > 
-* [Custom firmware - PWM control](https://github.com/Lee-Chun-Yi/crazyflie-firmware-pwm)
-* [Flash and Build firmware - Crazyflie](./custom_cf_firmware.md)
+* [Custom firmware - PWM control](https://github.com/Lee-Chun-Yi/crazyflie-firmware-pwm) → Custom Crazyflie firmware supporting PWM motor commands
+* [Flash and Build firmware - Crazyflie](./custom_cf_firmware.md) → Instructions for firmware flashing and building
 
   
  ## 
