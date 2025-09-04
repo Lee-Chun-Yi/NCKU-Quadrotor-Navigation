@@ -8,19 +8,19 @@ This document shows how to set up and run the **high-frequency 4PWM C++ runner**
 
 ## 1. Install Environment
 
-Install Git
+### 1.1 Install Git
 
 ```powershell
 winget install --id Git.Git -e --source winget
 ```
 
-Install CMake
+### 1.2 Install CMake
 
 ```
 winget install --id Kitware.CMake -e --source winget
 ```
 
-Install Visual Studio 2022 (Community Edition)
+### 1.3 Install Visual Studio 2022 (Community Edition)
 
 ```
 winget install --id Microsoft.VisualStudio.2022.Community -e --source winget
@@ -33,6 +33,25 @@ git --version
 cmake --version
 ```
 
+### 1.4 Install vcpkg
+
+```powershell
+cd C:\   # 建議放 C:\vcpkg
+git clone https://github.com/microsoft/vcpkg
+C:\vcpkg\bootstrap-vcpkg.bat
+```
+
+### 1.5 Install libusb (x64 version)
+
+```powershell
+C:\vcpkg\vcpkg install libusb:x64-windows
+```
+
+Set environment variable:
+
+```powershell
+setx VCPKG_ROOT "C:\vcpkg"
+```
 ---
 
 ## 2. Clone Repositories
